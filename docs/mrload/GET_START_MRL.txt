@@ -1,0 +1,28 @@
+Following are the getting start steps of BigDataAnalysis MRLoad:(take $BIGDATAANALYSIS_HOME/properties/conf-hdfs2hbase-sample.properties as example)
+
+Step 0: Copy the BigDataAnalysis.tar.gz into your IDH Intel Manager node, then unpack it in $BIGDATAANALYSIS_HOME dir. 
+
+Step 1: Copy core-site.xml, hdfs-site.xml from namenode, mapred-site.xml from jobtracker, hbase-site.xml from hbase master 
+		into $BIGDATAANALYSIS_HOME/conf/. 
+		Copy the whole /usr/lib/hadoop/lib/native dir from namenode into $BIGDATAANALYSIS_HOME/lib/. 
+		Replace running hadoop-core-*.jar from namenode, hbase-*.jar from hbase master, zookeeper-*.jar from zookeeper 
+		into $BIGDATAANALYSIS_HOME/lib/. 
+		Remember to comment out line "Defaults    requiretty" in /etc/sudoers.
+
+Step 2: Put data to hdfs. e.g.
+		# $BIGDATAANALYSIS_HOME/test/src/test/java/com/intel/bigdata/analysis/dataload/testdata_5red.txt /user/test/mrltest/
+
+Step 3: Customized your configuration in $BIGDATAANALYSIS_HOME/properties/conf-hdfs2hbase-sample.properties, e.g. $BIGDATAANALYSIS_HOME/properties/conf-hdfs2hbase-sample.properties
+		for each properties usage, please refer to $BIGDATAANALYSIS_HOME/docs/mrload/PROPERTIES_USAGE_MRL.txt.
+		
+		Steps for index:
+		0). deploy coprocessor(NOTICE!!! It will restart hbase cluster.)
+		    $BIGDATAANALYSIS_HOME/bin/coprocessorPrepare.sh
+		1). create and configure $BIGDATAANALYSIS_HOME/conf/[table_name]_index-conf.xml
+		2). cp $BIGDATAANALYSIS_HOME/properties/conf-hdfs2hbase-sample.properties to $BIGDATAANALYSIS_HOME/conf/current.properties
+		3). $BIGDATAANALYSIS_HOME/bin/refreshIndexConf.sh
+
+Step 4: Run "$BIGDATAANALYSIS_HOME/bin/inMemoryAndHdfs2HBase.sh $BIGDATAANALYSIS_HOME/properties/conf-hdfs2hbase-sample.properties" to run mapreduce load
+
+        Steps for index:
+        1). if it uses index, run $BIGDATAANALYSIS_HOME/bin/inMemoryAndHdfs2HBase.sh $BIGDATAANALYSIS_HOME/conf/current.properties

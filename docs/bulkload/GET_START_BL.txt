@@ -1,0 +1,58 @@
+Following are the getting start steps of BigDataAnalysis BulkLoad:(take $BIGDATAANALYSIS_HOME/properties/conf-bulkload-sample.properties as example)
+
+configuration dir: /etc/hadoop/conf.cloudera.hdfs /etc/hadoop/conf.cloudera.yarn /etc/hbase/conf.cloudera.hbase
+
+Step 0: Copy the BigDataAnalysis.tar.gz into any one of IDH cluster client nodes, then unpack it in $BIGDATAANALYSIS_HOME dir. 
+		Configure SSH password-less from client node to hbase regionserver nodes.
+		Install ant and set ant_home, java_home(export JAVA_HOME=/usr/java/latest) for bashrc.  
+
+Step 1: 
+For IDP 2.5.1, modify the build.xml with specifying corrent lib path and obfuscator pro file. Then run following commands:
+		# rm -rf $BIGDATAANALYSIS_HOME/lib
+		# mv $BIGDATAANALYSIS_HOME/lib_2 $BIGDATAANALYSIS_HOME/lib
+		
+		Copy core-site.xml, hdfs-site.xml from namenode, mapred-site.xml from jobtracker, hbase-site.xml from hbase master, hive-site.xml from hive server
+		into $BIGDATAANALYSIS_HOME/conf/. 
+		Copy the whole /opt/cloudera/parcels/CDH-5.0.0-1.cdh5.0.0.p0.47/lib/hadoop/lib/native dir from namenode into $BIGDATAANALYSIS_HOME/lib/. 
+		Replace running hadoop-core-*.jar, lib/native from namenode, hbase-*.jar from hbase master, zookeeper-*.jar from zookeeper
+		into $BIGDATAANALYSIS_HOME/lib/. 
+		Set "export LD_LIBRARY_PATH=/usr/lib/hadoop/lib/native/Linux-amd64-64" in your bashrc.
+		Remember to comment out line "Defaults    requiretty" in /etc/sudoers.
+		
+For IDP 3.1, Copy core-site.xml, hdfs-site.xml from namenode, mapred-site.xml from mapreduce history server, yarn-site.xml from yarn resource manager under /usr/lib/hadoop/etc/hadoop/ dir, hbase-site.xml from hbase master, hive-site.xml from hive server
+		into $BIGDATAANALYSIS_HOME/conf/. 
+		Copy the whole /usr/lib/hadoop/lib/native dir from namenode into $BIGDATAANALYSIS_HOME/lib/. 
+		Replace running hadoop*.jar, lib/native from namenode, hbase*.jar from hbase master, zookeeper*.jar from zookeeper, hive*.jar from hive server
+		into $BIGDATAANALYSIS_HOME/lib/.   
+		# yes | cp /usr/lib/hadoop/client/* $BIGDATAANALYSIS_HOME/lib/
+		# cp -rf /usr/lib/hadoop/lib/native/* $BIGDATAANALYSIS_HOME/lib/native/
+		# yes | cp /usr/lib/hbase/hbase.jar $BIGDATAANALYSIS_HOME/lib/
+		# yes | cp /usr/lib/zookeeper/zookeeper.jar $BIGDATAANALYSIS_HOME/lib/
+		# yes | cp /usr/lib/hive/lib/hive-exec.jar $BIGDATAANALYSIS_HOME/lib/
+		
+		Set "export LD_LIBRARY_PATH=/usr/lib/hadoop/lib/native" in your bashrc.
+		Remember to comment out line "Defaults    requiretty" in /etc/sudoers.
+
+Step 2: Put data to hdfs. e.g.
+		# $BIGDATAANALYSIS_HOME/test/src/test/java/com/intel/bigdata/analysis/dataload/testdata_5red.txt /user/test/bltest/
+
+Step 3: Customized your configuration in $BIGDATAANALYSIS_HOME/properties/conf-bulkload.properties, e.g. $BIGDATAANALYSIS_HOME/properties/conf-bulkload-sample.properties
+		for each properties usage, please refer to $BIGDATAANALYSIS_HOME/docs/bulkload/PROPERTIES_USAGE_BL.txt.	
+
+		Steps for index:
+		0). deploy coprocessor(NOTICE!!! It will restart hbase cluster.)
+		    $BIGDATAANALYSIS_HOME/bin/coprocessorPrepare.sh
+		1). create and configure $BIGDATAANALYSIS_HOME/conf/[table_name]_index-conf.xml
+		2). cp $BIGDATAANALYSIS_HOME/properties/conf-bulkload.properties to $BIGDATAANALYSIS_HOME/conf/current.properties
+		3). $BIGDATAANALYSIS_HOME/bin/refreshIndexConf.sh
+
+Step 4: Run "$BIGDATAANALYSIS_HOME/bin/bulkload.sh $BIGDATAANALYSIS_HOME/properties/conf-bulkload-sample.properties" to bulk load
+        
+        Steps for index:
+        1). if it uses index, run $BIGDATAANALYSIS_HOME/bin/bulkLoad.sh$BIGDATAANALYSIS_HOME/conf/current.properties
+           
+Step 5: If you want to clean up the previous useless bulkload work, do some edit and execute $BIGDATAANALYSIS_HOME/bin/cleanup.sh, 
+		it will delete tmp hive table, tmp dir(record count file), hfile dir and HBase table.
+		
+running following command in BigDataAnalysis client node for IDP 3.1:
+1. yum install hadoop-client
