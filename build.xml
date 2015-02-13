@@ -10,9 +10,7 @@
     <property name="final.name" value="${name}-${version}"/>
     <property name="bin.dir" value="${basedir}/bin"/>
     <property name="lib.dir" value="${basedir}/lib"/>
-    <property name="lib_2_5_1.dir" value="${lib.dir}/lib_2_5_1"/>
-    <property name="lib_3_1.dir" value="${lib.dir}/lib_3_1"/>
-    <property name="lib_cdh5.0.dir" value="${lib.dir}/lib_cdh5.0"/>
+    <property name="lib_cdh5.0.dir" value="${lib.dir}/lib_cdh5_0"/>
     <property name="lib_cdh5.2.1.dir" value="${lib.dir}/lib_cdh5_2_1"/>
     <property name="conf.dir" value="${basedir}/conf"/>
     <property name="properties.dir" value="${basedir}/properties"/>
@@ -38,9 +36,9 @@
     </taskdef>
 
     <if>
-        <equals arg1="${cdh.version}" arg2="2.5.1"/>
+        <equals arg1="${cdh.version}" arg2="5.0"/>
         <then>
-            <fileset id="idp.classpath" dir="${lib_2_5_1.dir}" includes="**/*.jar"/>
+            <fileset id="idp.classpath" dir="${lib_cdh5.0.dir}" includes="**/*.jar"/>
         </then>
         <else>
             <fileset id="idp.classpath" dir="${lib_cdh5.2.1.dir}" includes="**/*.jar"/>

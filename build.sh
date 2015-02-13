@@ -6,6 +6,7 @@ fi
 . ./bin/function.sh
 
 ant clean
+
 ant -Dcdh.version=$1 package
 
 #currentpath=$(cd "$(dirname "$0")";pwd)
