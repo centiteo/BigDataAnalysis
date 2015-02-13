@@ -127,6 +127,7 @@
 
     <target name="clean">
         <delete dir="target"/>
+        <delete dir="generated"/>
     </target>
     
     <target depends="init" name="build">
