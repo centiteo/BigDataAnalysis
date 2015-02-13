@@ -38,16 +38,16 @@
     <if>
         <equals arg1="${cdh.version}" arg2="5.0"/>
         <then>
-            <fileset id="idp.classpath" dir="${lib_cdh5.0.dir}" includes="**/*.jar"/>
+            <fileset id="version.classpath" dir="${lib_cdh5.0.dir}" includes="**/*.jar"/>
         </then>
         <else>
-            <fileset id="idp.classpath" dir="${lib_cdh5.2.1.dir}" includes="**/*.jar"/>
+            <fileset id="version.classpath" dir="${lib_cdh5.2.1.dir}" includes="**/*.jar"/>
         </else>
     </if>
 
-    <path id="BigDataAnalysis.classpath">
+    <path id="compile.classpath">
         <fileset dir="${lib.dir}" includes="*.jar"/>
-        <fileset refid="idp.classpath"/>
+        <fileset refid="version.classpath"/>
     </path>
 
     <target name="init" depends="jaxb">
@@ -149,7 +149,7 @@
             -->
             <src path="test/src/test/java"/>
 
-            <classpath refid="BigDataAnalysis.classpath"/>
+            <classpath refid="compile.classpath"/>
         </javac>
     </target>
 
@@ -164,14 +164,15 @@
             </fileset>
         </copy>
         -->
-<!--
+        
+        <!--
         <copy todir="${build.classes}/lib" >
             <fileset dir="lib">
                 <include name="*.jar"/>
             </fileset>
-            <fileset refid="idp.classpath"/>
+            <fileset refid="version.classpath"/>
         </copy>
--->
+        -->
         <jar destfile="target/${name}-${version}.jar"
         basedir="${build.classes}"
         includes="**/*.*"/>
@@ -185,24 +186,6 @@
         </xjc>
     </target>
    
-    <!-- 
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
-    -->
-
     <target name="package-mask" depends="package"
       description="Build distribution">
         <delete dir="${dist.dir}"/>

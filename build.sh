@@ -1,6 +1,7 @@
 #!/bin/sh
 if [ $# != 1 ];then
-    echo "Usage: build.sh <cdh_version>"
+    echo "Usage: build.sh <cdh_version>, the value of cdh version can be '5.0' or '5.2.1'"
+    exit
 fi
 
 . ./bin/function.sh
