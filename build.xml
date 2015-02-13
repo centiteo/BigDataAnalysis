@@ -93,13 +93,6 @@
 
         <!--        
         <copy includeemptydirs="false" todir="${build.classes}">
-            <fileset dir="util/src/main/java">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy> 
-        -->
-        <!--        
-        <copy includeemptydirs="false" todir="${build.classes}">
             <fileset dir="test/src/test/java">
                 <exclude name="**/*.java"/>
             </fileset>
@@ -107,11 +100,6 @@
         -->
 
         <!--        
-        <copy includeemptydirs="false" todir="${build.classes}">
-            <fileset dir="core/src/main/java">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
         <copy includeemptydirs="false" todir="${build.classes}">
             <fileset dir="solution/src/main/java">
                 <exclude name="**/*.java"/>
@@ -141,11 +129,10 @@
             -->
             <!--src path="datagen/src/main/java"/-->
             <!--src path="hbase/src/main/java"/-->
+            <src path="common/src/main/java"/>
             <src path="dataload/src/main/java"/>
             <src path="server/src/main/java"/>
             <!--            
-            <src path="util/src/main/java"/>
-            <src path="core/src/main/java"/>
             <src path="solution/src/main/java"/> 
             -->
             <src path="test/src/test/java"/>

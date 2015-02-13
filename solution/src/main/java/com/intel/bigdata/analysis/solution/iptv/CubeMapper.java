@@ -15,8 +15,8 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer.Context;
 
+import com.cloudera.bigdata.analysis.util.Util;
 import com.intel.bigdata.analysis.core.Constants;
-import com.intel.bigdata.analysis.util.Util;
 
 public class CubeMapper extends Mapper<LongWritable, Text, Text, IPTVMetrics> {
 	private final static int REQNUM_IDX = 2;

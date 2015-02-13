@@ -1,105 +1,101 @@
 package com.intel.bigdata.analysis.dataload.extract;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.io.FileInputStream;
+import java.util.Properties;
 
+import com.cloudera.bigdata.analysis.util.Util;
 import com.intel.bigdata.analysis.dataload.Constants;
-import com.intel.bigdata.analysis.dataload.io.ConfigReader;
+import com.intel.bigdata.analysis.dataload.exception.ETLException;
 
 public class HdfsSourceFieldSpec {
-  private Map<String, String> confMap = null;
-  private String idpHBaseMasterIpaddress = null;
-  private String hdfsSourceFileInputPath;
-  private String hdfsSourceFileEncoding;
-  private String hdfsSourceFileRecordFieldsDelimiter;
-  private String hdfsSourceFileRecordFieldsNumber;
-  private String hdfsSourceFileRecordFieldTypeInt;
+	private Properties props = null;
+	private String idpHBaseMasterIpaddress = null;
+	private String hdfsSourceFileInputPath;
+	private String hdfsSourceFileEncoding;
+	private String hdfsSourceFileRecordFieldsDelimiter;
+	private String hdfsSourceFileRecordFieldsNumber;
+	private String hdfsSourceFileRecordFieldTypeInt;
 
-  private ArrayList<String> toBeCleanedCellNames = null;
-  private Map<String, String> toBeCleanedCellMap = null;
+	public String getIdpHBaseMasterIpaddress() {
+		return idpHBaseMasterIpaddress;
+	}
 
-  public String getIdpHBaseMasterIpaddress() {
-    return idpHBaseMasterIpaddress;
-  }
+	public String getHdfsSourceFileInputPath() {
+		return hdfsSourceFileInputPath;
+	}
 
-  public String getHdfsSourceFileInputPath() {
-    return hdfsSourceFileInputPath;
-  }
+	public String getHdfsSourceFileEncoding() {
+		return hdfsSourceFileEncoding;
+	}
 
-  public String getHdfsSourceFileEncoding() {
-    return hdfsSourceFileEncoding;
-  }
+	public String getHdfsSourceFileRecordFieldsDelimiter() {
+		return hdfsSourceFileRecordFieldsDelimiter;
+	}
 
-  public String getHdfsSourceFileRecordFieldsDelimiter() {
-    return hdfsSourceFileRecordFieldsDelimiter;
-  }
+	public String getHdfsSourceFileRecordFieldsNumber() {
+		return hdfsSourceFileRecordFieldsNumber;
+	}
 
-  public String getHdfsSourceFileRecordFieldsNumber() {
-    return hdfsSourceFileRecordFieldsNumber;
-  }
+	public String getHdfsSourceFileRecordFieldTypeInt() {
+		return hdfsSourceFileRecordFieldTypeInt;
+	}
 
-  public String getHdfsSourceFileRecordFieldTypeInt() {
-    return hdfsSourceFileRecordFieldTypeInt;
-  }
+	public HdfsSourceFieldSpec(Properties props) {
+		this.props = props;
+		readAndCheckHdfsSourceFieldSpec();
+	}
 
-  public ArrayList<String> getToBeCleanedCellNames() {
-    return toBeCleanedCellNames;
-  }
+	private void readAndCheckHdfsSourceFieldSpec() {
+		idpHBaseMasterIpaddress = props.getProperty(Constants.IDP_HBASE_MASTER_IPADDRESS);
+		
+		hdfsSourceFileInputPath = props.getProperty(Constants.HDFS_SOURCE_FILE_INPUT_PATH);
+		
+		hdfsSourceFileEncoding = (!props
+				.containsKey(Constants.HDFS_SOURCE_FILE_ENCODING) ? Constants.DEFAULT_HDFS_SOURCE_FILE_ENCODING
+				: props.getProperty(Constants.HDFS_SOURCE_FILE_ENCODING));
+		
+		hdfsSourceFileRecordFieldsDelimiter = props.getProperty(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_DELIMITER);
+		
+		hdfsSourceFileRecordFieldsNumber = (!props
+				.containsKey(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_NUMBER) ? hdfsSourceFileRecordFieldsNumber
+				: props.getProperty(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_NUMBER));
+		
+		hdfsSourceFileRecordFieldTypeInt = props.getProperty(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_TYPE_INT);
+		
+		if(Util.checkIsEmpty(hdfsSourceFileInputPath)){
+			ETLException.handle("Can't find correct value for \""
+					+ Constants.HDFS_SOURCE_FILE_INPUT_PATH + "\"");
+		}
+		
+		if(Util.checkIsEmpty(hdfsSourceFileRecordFieldsDelimiter)){
+			ETLException.handle("Can't find correct value for \""
+					+ Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_DELIMITER);
+		}
+	}
 
-  public Map<String, String> getToBeCleanedCellMap() {
-    return toBeCleanedCellMap;
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("idpHBaseMasterIpaddress:").append(idpHBaseMasterIpaddress)
+				.append("\n");
+		sb.append("hdfsSourceFileInputPath:").append(hdfsSourceFileInputPath)
+				.append("\n");
+		sb.append("hdfsSourceFileEncoding:").append(hdfsSourceFileEncoding)
+				.append("\n");
+		sb.append("hdfsSourceFileRecordFieldsDelimiter:")
+				.append(hdfsSourceFileRecordFieldsDelimiter).append("\n");
+		sb.append("hdfsSourceFileRecordFieldsNumber:")
+				.append(hdfsSourceFileRecordFieldsNumber).append("\n");
+		sb.append("hdfsSourceFileRecordFieldTypeInt:").append(
+				hdfsSourceFileRecordFieldTypeInt);
 
-  public HdfsSourceFieldSpec(Map<String, String> confMap) {
-    this.confMap = confMap;
-    readHdfsSourceFieldSpecsFromConfig();
-  }
+		return sb.toString();
+	}
 
-  public void readHdfsSourceFieldSpecsFromConfig() {
-    idpHBaseMasterIpaddress = (!confMap
-        .containsKey(Constants.IDP_HBASE_MASTER_IPADDRESS) ? idpHBaseMasterIpaddress
-        : confMap.get(Constants.IDP_HBASE_MASTER_IPADDRESS));
-
-    hdfsSourceFileInputPath = (!confMap
-        .containsKey(Constants.HDFS_SOURCE_FILE_INPUT_PATH) ? hdfsSourceFileInputPath
-        : confMap.get(Constants.HDFS_SOURCE_FILE_INPUT_PATH));
-    hdfsSourceFileEncoding = (!confMap
-        .containsKey(Constants.HDFS_SOURCE_FILE_ENCODING) ? hdfsSourceFileEncoding
-        : confMap.get(Constants.HDFS_SOURCE_FILE_ENCODING));
-    hdfsSourceFileRecordFieldsDelimiter = (!confMap
-        .containsKey(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_DELIMITER) ? hdfsSourceFileRecordFieldsDelimiter
-        : confMap.get(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_DELIMITER));
-    hdfsSourceFileRecordFieldsNumber = (!confMap
-        .containsKey(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_NUMBER) ? hdfsSourceFileRecordFieldsNumber
-        : confMap.get(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_NUMBER));
-    hdfsSourceFileRecordFieldTypeInt = (!confMap
-        .containsKey(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_TYPE_INT) ? hdfsSourceFileRecordFieldTypeInt
-        : confMap.get(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_TYPE_INT));
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("idpHBaseMasterIpaddress:").append(idpHBaseMasterIpaddress)
-        .append("\n");
-
-    sb.append("hdfsSourceFileInputPath:").append(hdfsSourceFileInputPath)
-        .append("\n");
-    sb.append("hdfsSourceFileEncoding:").append(hdfsSourceFileEncoding)
-        .append("\n");
-    sb.append("hdfsSourceFileRecordFieldsDelimiter:")
-        .append(hdfsSourceFileRecordFieldsDelimiter).append("\n");
-    sb.append("hdfsSourceFileRecordFieldsNumber:")
-        .append(hdfsSourceFileRecordFieldsNumber).append("\n");
-    sb.append("hdfsSourceFileRecordFieldTypeInt:").append(
-        hdfsSourceFileRecordFieldTypeInt);
-
-    return sb.toString();
-  }
-
-  public static void main(String[] args) {
-    HdfsSourceFieldSpec hsfs = new HdfsSourceFieldSpec(new ConfigReader(
-        "etl-hdfs2hbase-conf.properties").getConfMap());
-    System.out.println(hsfs.toString());
-  }
+	public static void main(String[] args) throws Exception {
+		Properties props = new Properties();
+		props.load(new FileInputStream("etl-hdfs2hbase-conf.properties"));
+		HdfsSourceFieldSpec hsfs = new HdfsSourceFieldSpec(props);
+		System.out.println(hsfs.toString());
+	}
 }

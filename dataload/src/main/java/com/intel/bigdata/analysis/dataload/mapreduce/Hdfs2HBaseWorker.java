@@ -13,11 +13,10 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.mapreduce.Job;
-import org.apache.log4j.Logger;
+import org.slf4j.*;
 
 import com.intel.bigdata.analysis.dataload.Constants;
 import com.intel.bigdata.analysis.dataload.client.BaseWorker;
-import com.intel.bigdata.analysis.dataload.client.Worker;
 import com.intel.bigdata.analysis.dataload.exception.ETLException;
 import com.intel.bigdata.analysis.dataload.extract.HBaseTargetFieldSpec;
 import com.intel.bigdata.analysis.dataload.extract.HdfsSourceFieldSpec;
@@ -25,14 +24,16 @@ import com.intel.bigdata.analysis.dataload.transform.BulkLoadProcessFieldSpec;
 import com.intel.bigdata.analysis.dataload.util.BulkLoadUtils;
 import com.intel.bigdata.analysis.dataload.util.CommonUtils;
 
-public class Hdfs2HBaseWorker extends BaseWorker implements Worker {
-  private final static Logger LOGGER = Logger.getLogger(Hdfs2HBaseWorker.class);
-  private HdfsSourceFieldSpec hdfsSourceFieldSpec;;
+public class Hdfs2HBaseWorker extends BaseWorker{
+  private final static Logger LOG = LoggerFactory.getLogger(Hdfs2HBaseWorker.class);
+  
+  private HdfsSourceFieldSpec hdfsSourceFieldSpec;
   private HBaseTargetFieldSpec hbaseTargetFieldSpec;
   private BulkLoadProcessFieldSpec bulkLoadProcessFieldSpec;
   Map<String, String> targetTableCellMap = null;
   private StringBuffer textRecordSpec = new StringBuffer();
-  private static final String USAGE_STR = "com.intel.bigdata.analysis.dataload.etl.Hdfs2HBaseWorker <properties_file>";
+  private static final String USAGE_STR = 
+	"com.intel.bigdata.analysis.dataload.mapreduce.Hdfs2HBaseWorker <properties_file>";
   final static String EXCEPTION_LOG_TABLE_NAME = "exception_log";
   final static String EXCEPTION_LOG_TABLE_COLUMN_QUALIFIER_RAW_LINE = "line";
   final static String EXCEPTION_LOG_TABLE_COLUMN_QUALIFIER_ERROR_INFO = "info";
@@ -48,13 +49,12 @@ public class Hdfs2HBaseWorker extends BaseWorker implements Worker {
 
   public Hdfs2HBaseWorker(String configFile) {
     super(configFile);
-    // read configuration file to construct confMap
     this.hdfsSourceFieldSpec = new HdfsSourceFieldSpec(
-        configReader.getConfMap());
+        getProperties());
     this.hbaseTargetFieldSpec = new HBaseTargetFieldSpec(
-        configReader.getConfMap());
+        getProperties());
     this.bulkLoadProcessFieldSpec = new BulkLoadProcessFieldSpec(
-        configReader.getConfMap());
+        getProperties());
   }
 
   @Override
@@ -64,11 +64,11 @@ public class Hdfs2HBaseWorker extends BaseWorker implements Worker {
 
   @Override
   protected void doWork() throws Exception {
-    LOGGER.info("Parse HDFS source field spec..." + "\n"
+    LOG.info("========Parse HDFS source field spec..." + "\n"
         + hdfsSourceFieldSpec.toString());
-    LOGGER.info("Parse HBase target field spec..." + "\n"
+    LOG.info("========Parse HBase target field spec..." + "\n"
         + hbaseTargetFieldSpec.toString());
-    LOGGER.info("Parse bulkload process field spec..." + "\n"
+    LOG.info("========Parse bulkload process field spec..." + "\n"
         + bulkLoadProcessFieldSpec.toString());
 
     // set conf from configuration properties files
@@ -119,7 +119,7 @@ public class Hdfs2HBaseWorker extends BaseWorker implements Worker {
       }
     }
 
-    LOGGER.info("textRecordSpec:" + textRecordSpec.toString());
+    LOG.info("textRecordSpec:" + textRecordSpec.toString());
     conf.set("textRecordSpec", textRecordSpec.toString());
 
     // for target table definition
@@ -159,9 +159,9 @@ public class Hdfs2HBaseWorker extends BaseWorker implements Worker {
     try {
       props.load(new FileInputStream(args[0]));
     } catch (FileNotFoundException e) {
-      LOGGER.error("", e);
+      LOG.error("", e);
     } catch (IOException e) {
-      LOGGER.error("", e);
+      LOG.error("", e);
     }
 
     // set the IDP version

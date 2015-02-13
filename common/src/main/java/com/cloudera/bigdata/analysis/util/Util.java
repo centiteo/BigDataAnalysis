@@ -1,13 +1,10 @@
-package com.intel.bigdata.analysis.util;
+package com.cloudera.bigdata.analysis.util;
 
 import java.text.DecimalFormat;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.RawLocalFileSystem;
-
-import com.intel.bigdata.analysis.core.Constants;
-
 
 public class Util {
   private final static String OS_ENV = "os.name";
@@ -26,6 +23,15 @@ public class Util {
 		}
 		
 		return result;
+	}
+	
+	public static boolean checkIsEmpty(String value){
+		if(null == value
+				|| value.isEmpty()){
+			return true;
+		}
+		
+		return false;
 	}
 	
 	public static String formatDouble(DecimalFormat format, double val){

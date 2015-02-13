@@ -17,8 +17,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cloudera.bigdata.analysis.util.Util;
 import com.intel.bigdata.analysis.core.Constants;
-import com.intel.bigdata.analysis.util.Util;
 
 public class CubeGenerator {
 	private final static Logger LOG = LoggerFactory

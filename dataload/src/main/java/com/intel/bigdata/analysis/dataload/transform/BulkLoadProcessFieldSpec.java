@@ -1,13 +1,12 @@
 package com.intel.bigdata.analysis.dataload.transform;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.Properties;
 
 import com.intel.bigdata.analysis.dataload.Constants;
 
 public class BulkLoadProcessFieldSpec {
-  private Map<String, String> confMap = null;
-  private boolean buildIndex = false;
+  private Properties props = null;
+  private boolean buildIndex;
   private String regionQuantity = null;
   private String indexConfFileName = null;
   private String hbaseCoprocessorLocation = null;
@@ -21,19 +20,6 @@ public class BulkLoadProcessFieldSpec {
   private String validatorClass = "com.intel.bigdata.analysis.dataload.exception.RecordValidator";
   private boolean createMalformedTable = false;
   private boolean nativeTaskEnabled = true;
-
-  // TODO whether to clean or not
-  private boolean cleanup = false;
-  private ArrayList<String> toBeCleanedCellNames = null;
-  private Map<String, String> toBeCleanedCellMap = null;
-
-  public Map<String, String> getConfMap() {
-    return confMap;
-  }
-
-  public void setConfMap(Map<String, String> confMap) {
-    this.confMap = confMap;
-  }
 
   public boolean isBuildIndex() {
     return buildIndex;
@@ -95,30 +81,6 @@ public class BulkLoadProcessFieldSpec {
     this.inputSplitSize = inputSplitSize;
   }
 
-  public boolean isCleanup() {
-    return cleanup;
-  }
-
-  public void setCleanup(boolean cleanup) {
-    this.cleanup = cleanup;
-  }
-
-  public ArrayList<String> getToBeCleanedCellNames() {
-    return toBeCleanedCellNames;
-  }
-
-  public void setToBeCleanedCellNames(ArrayList<String> toBeCleanedCellNames) {
-    this.toBeCleanedCellNames = toBeCleanedCellNames;
-  }
-
-  public Map<String, String> getToBeCleanedCellMap() {
-    return toBeCleanedCellMap;
-  }
-
-  public void setToBeCleanedCellMap(Map<String, String> toBeCleanedCellMap) {
-    this.toBeCleanedCellMap = toBeCleanedCellMap;
-  }
-
   public String getExtendedHBaseRowConverterClass() {
     return extendedHBaseRowConverterClass;
   }
@@ -159,50 +121,47 @@ public class BulkLoadProcessFieldSpec {
   public void setNativeTaskEnabled(boolean nativeTaskEnabled) {
     this.nativeTaskEnabled = nativeTaskEnabled;
   }
-
-  public BulkLoadProcessFieldSpec(Map<String, String> confMap) {
-    this.confMap = confMap;
-    readBulkLoadProcessFieldSpecsFromConfig();
+  
+  public BulkLoadProcessFieldSpec(Properties props){
+	  this.props = props;
+	  readAndCheckBulkLoadProcessFieldSpecs();
   }
 
-  private void readBulkLoadProcessFieldSpecsFromConfig() {
-    buildIndex = (!confMap.containsKey(Constants.BUILD_INDEX) ? buildIndex
-        : Boolean.parseBoolean(confMap.get(Constants.BUILD_INDEX)));
-    regionQuantity = (!confMap.containsKey(Constants.REGION_QUANTITY) ? regionQuantity
-        : confMap.get(Constants.REGION_QUANTITY));
-    indexConfFileName = (!confMap.containsKey(Constants.INDEX_CONF_FILE_NAME) ? indexConfFileName
-        : confMap.get(Constants.INDEX_CONF_FILE_NAME));
-    hbaseCoprocessorLocation = (!confMap
-        .containsKey(Constants.HBASE_COPROCESSOR_LOCATION) ? hbaseCoprocessorLocation
-        : confMap.get(Constants.HBASE_COPROCESSOR_LOCATION));
+  private void readAndCheckBulkLoadProcessFieldSpecs() {
+    buildIndex = (!props.containsKey(Constants.BUILD_INDEX) ? Constants.DEFAULT_BUILD_INDEX
+        : Boolean.parseBoolean(props.getProperty(Constants.BUILD_INDEX)));
+    
+    regionQuantity = props.getProperty(Constants.REGION_QUANTITY);
+    
+    indexConfFileName = props.getProperty(Constants.INDEX_CONF_FILE_NAME);
+    
+    hbaseCoprocessorLocation = props.getProperty(Constants.HBASE_COPROCESSOR_LOCATION);
 
-    onlyGenerateSplitKeySpec = (!confMap
-        .containsKey(Constants.ONLY_GENERATE_SPLITKEYSPEC) ? onlyGenerateSplitKeySpec
-        : Boolean.parseBoolean(confMap
-            .get(Constants.ONLY_GENERATE_SPLITKEYSPEC)));
-    preCreateRegions = (!confMap.containsKey(Constants.PRE_CREATE_REGIONS) ? preCreateRegions
-        : Boolean.parseBoolean(confMap.get(Constants.PRE_CREATE_REGIONS)));
-    rowkeyPrefix = (!confMap.containsKey(Constants.ROWKEY_PREFIX) ? rowkeyPrefix
-        : confMap.get(Constants.ROWKEY_PREFIX));
-    recordsNumPerRegion = (!confMap
-        .containsKey(Constants.RECORDS_NUM_PER_REGION) ? recordsNumPerRegion
-        : confMap.get(Constants.RECORDS_NUM_PER_REGION));
-    inputSplitSize = (!confMap.containsKey(Constants.INPUT_SPLIT_SIZE) ? inputSplitSize
-        : confMap.get(Constants.INPUT_SPLIT_SIZE));
+    onlyGenerateSplitKeySpec = (!props
+        .containsKey(Constants.ONLY_GENERATE_SPLITKEYSPEC) ? Constants.DEFAULT_ONLY_GENERATE_SPLITKEYSPEC
+        : Boolean.parseBoolean(props.getProperty(Constants.ONLY_GENERATE_SPLITKEYSPEC)));
+    
+    preCreateRegions = (!props.containsKey(Constants.PRE_CREATE_REGIONS) ? Constants.DEFAULT_PRE_CREATE_REGIONS
+        : Boolean.parseBoolean(props.getProperty(Constants.PRE_CREATE_REGIONS)));
+    
+    rowkeyPrefix = props.getProperty(Constants.ROWKEY_PREFIX);
+    
+    recordsNumPerRegion = props.getProperty(Constants.RECORDS_NUM_PER_REGION);
+    
+    inputSplitSize = props.getProperty(Constants.INPUT_SPLIT_SIZE);
 
-    extendedHBaseRowConverterClass = (!confMap
-        .containsKey(Constants.EXTENDEDHBASEROWCONVERTER_CLASS_KEY) ? extendedHBaseRowConverterClass
-        : confMap.get(Constants.EXTENDEDHBASEROWCONVERTER_CLASS_KEY));
+    extendedHBaseRowConverterClass = props.getProperty(Constants.EXTENDEDHBASEROWCONVERTER_CLASS_KEY);
 
-    importDate = (!confMap.containsKey(Constants.IMPORT_DATE) ? importDate
-        : confMap.get(Constants.IMPORT_DATE));
-    validatorClass = (!confMap.containsKey(Constants.VALIDATOR_CLASS) ? validatorClass
-        : confMap.get(Constants.VALIDATOR_CLASS));
-    createMalformedTable = (!confMap
-        .containsKey(Constants.CREATE_MALFORMED_TABLE) ? createMalformedTable
-        : Boolean.parseBoolean(confMap.get(Constants.CREATE_MALFORMED_TABLE)));
-    nativeTaskEnabled = (!confMap.containsKey(Constants.NATIVETASK_ENABLED) ? nativeTaskEnabled
-        : Boolean.parseBoolean(confMap.get(Constants.NATIVETASK_ENABLED)));
+    importDate = props.getProperty(Constants.IMPORT_DATE);
+    
+    validatorClass = props.getProperty(Constants.VALIDATOR_CLASS);
+    
+    createMalformedTable = (!props
+        .containsKey(Constants.CREATE_MALFORMED_TABLE) ? Constants.DEFAULT_CREATE_MALFORMED_TABLE
+        : Boolean.parseBoolean(props.getProperty(Constants.CREATE_MALFORMED_TABLE)));
+    
+    nativeTaskEnabled = (!props.containsKey(Constants.NATIVETASK_ENABLED) ? Constants.DEFAULT_NATIVETASK_ENABLED
+        : Boolean.parseBoolean(props.getProperty(Constants.NATIVETASK_ENABLED)));
   }
 
   public String toString() {

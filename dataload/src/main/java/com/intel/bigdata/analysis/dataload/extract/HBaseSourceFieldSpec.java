@@ -1,8 +1,10 @@
 package com.intel.bigdata.analysis.dataload.extract;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -10,7 +12,7 @@ import com.intel.bigdata.analysis.dataload.Constants;
 import com.intel.bigdata.analysis.dataload.io.ConfigReader;
 
 public class HBaseSourceFieldSpec {
-  private Map<String, String> confMap = null;
+  private Properties props;
   private String hbaseSourceTableName;
   private String toBeCleanedRowkeyRangeSpec;
   private String toBeCleanedCellSpec;
@@ -36,26 +38,26 @@ public class HBaseSourceFieldSpec {
   public Map<String, String> getToBeCleanedCellMap() {
     return toBeCleanedCellMap;
   }
-
-  public HBaseSourceFieldSpec(Map<String, String> confMap) {
-    this.confMap = confMap;
-    readHBaseSourceFieldSpecsFromConfig();
+  
+  public HBaseSourceFieldSpec(Properties props){
+	  this.props = props;
+	  readHBaseSourceFieldSpecs();
   }
 
-  public void readHBaseSourceFieldSpecsFromConfig() {
+  public void readHBaseSourceFieldSpecs() {
 
-    hbaseSourceTableName = (!confMap
-        .containsKey(Constants.HBASE_SOURCE_TABLE_NAME) ? hbaseSourceTableName
-        : confMap.get(Constants.HBASE_SOURCE_TABLE_NAME));
-    toBeCleanedRowkeyRangeSpec = (!confMap
+    hbaseSourceTableName = props.getProperty(Constants.HBASE_SOURCE_TABLE_NAME);
+    
+    toBeCleanedRowkeyRangeSpec = (!props
         .containsKey(Constants.TO_BE_CLEANED_ROWKEY_RANGE_SPEC) ? toBeCleanedRowkeyRangeSpec
-        : confMap.get(Constants.TO_BE_CLEANED_ROWKEY_RANGE_SPEC));
-    toBeCleanedCellSpec = (!confMap
+        : props.getProperty(Constants.TO_BE_CLEANED_ROWKEY_RANGE_SPEC));
+    
+    toBeCleanedCellSpec = (!props
         .containsKey(Constants.TO_BE_CLEANED_CELL_SPEC) ? toBeCleanedCellSpec
-        : confMap.get(Constants.TO_BE_CLEANED_CELL_SPEC));
+        : props.getProperty(Constants.TO_BE_CLEANED_CELL_SPEC));
 
-    String[] toBeCleanedCellSpecs = confMap
-        .get(Constants.TO_BE_CLEANED_CELL_SPEC).trim()
+    String[] toBeCleanedCellSpecs = props
+        .getProperty(Constants.TO_BE_CLEANED_CELL_SPEC).trim()
         .split(Constants.CELL_SPLIT_CHARACTER);
 
     ArrayList<String> theToBeCleanedCellNames = new ArrayList<String>();
@@ -87,9 +89,10 @@ public class HBaseSourceFieldSpec {
     return sb.toString();
   }
 
-  public static void main(String[] args) {
-    HBaseSourceFieldSpec hsfs = new HBaseSourceFieldSpec(new ConfigReader(
-        "etl-hbase2hbase-conf.properties").getConfMap());
+  public static void main(String[] args) throws Exception {
+	  Properties props = new Properties();
+	  props.load(new FileInputStream("etl-hbase2hbase-conf.properties"));
+    HBaseSourceFieldSpec hsfs = new HBaseSourceFieldSpec(props);
     System.out.println(hsfs.toString());
   }
 }

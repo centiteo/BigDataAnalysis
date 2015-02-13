@@ -157,6 +157,7 @@ public class Constants {
   public static final String IDP_HBASE_MASTER_IPADDRESS = "idp.hbase.master.ip.address";
   public static final String HDFS_SOURCE_FILE_INPUT_PATH = "hdfs.source.file.input.path";
   public static final String HDFS_SOURCE_FILE_ENCODING = "hdfs.source.file.encoding";
+  public static final String DEFAULT_HDFS_SOURCE_FILE_ENCODING = "utf-8";
   public static final String DEFAULT_TEXT_ENCODING = "UTF-8";
   public static final String HDFS_SOURCE_FILE_RECORD_FIELDS_DELIMITER = "hdfs.source.file.record.fields.delimiter";
   public static final String DEFAULT_FIELD_DELIMITER = ",";
@@ -170,27 +171,35 @@ public class Constants {
   // to hbase target end, bulkload target definition
   public static final String HBASE_TARGET_TABLE_NAME = "hbase.target.table.name";
   public static final String HBASE_GENERATED_HFILES_OUTPUT_PATH = "hbase.generated.hfiles.output.path";
+  public static final String HBASE_TARGET_TABLE_SPLIT_KEY_SPEC = "hbase.target.table.split.key.spec";
+  public final static String PRE_CREATE_REGIONS = "preCreateRegions";
+  public static final boolean DEFAULT_PRE_CREATE_REGIONS = false;
   public static final String HBASE_TARGET_WRITE_TO_WAL_FLAG = "hbase.target.write.to.wal.flag";
+  public static final boolean DEFALUT_HBASE_TARGET_WRITE_TO_WAL_FLAG = false;
   public static final String HBASE_TARGET_TABLE_CELL_SPEC = "hbase.target.table.cell.spec";
 
   // bulkload stage definition
   public final static String BUILD_INDEX = "buildIndex";
+  public static final boolean DEFAULT_BUILD_INDEX = false;
+  public final static String ONLY_GENERATE_SPLITKEYSPEC = "onlyGenerateSplitKeySpec";
+  public static final boolean DEFAULT_ONLY_GENERATE_SPLITKEYSPEC = false;
   public final static String REGION_QUANTITY = "regionQuantity";
   public final static String INDEX_CONF_FILE_NAME = "indexConfFileName";
   // coprocessor path
   public final static String HBASE_COPROCESSOR_LOCATION = "hbaseCoprocessorLocation";
-  public final static String ONLY_GENERATE_SPLITKEYSPEC = "onlyGenerateSplitKeySpec";
+  
 
-  public final static String PRE_CREATE_REGIONS = "preCreateRegions";
   public final static String ROWKEY_PREFIX = "rowkeyPrefix";
   public final static String RECORDS_NUM_PER_REGION = "recordsNumPerRegion";
-  public static final String HBASE_TARGET_TABLE_SPLIT_KEY_SPEC = "hbase.target.table.split.key.spec";
+  
   public final static String EXTENDEDHBASEROWCONVERTER_CLASS_KEY = "extendedHbaseRowConverterClass";
   public static final String INPUT_SPLIT_SIZE = "inputSplitSize";
   public final static String IMPORT_DATE = "importDate";
   public final static String VALIDATOR_CLASS = "validatorClass";
   public final static String CREATE_MALFORMED_TABLE = "createMalformedTable";
+  public final static boolean DEFAULT_CREATE_MALFORMED_TABLE = false;
   public final static String NATIVETASK_ENABLED = "nativeTaskEnabled";
+  public static final boolean DEFAULT_NATIVETASK_ENABLED = true;
 
   public final static byte B_IDX_ROWKEY_DELIMITER = (byte) (",").charAt(0);
   public final static int ROWKEY_PREFIX_LENGTH = 4;

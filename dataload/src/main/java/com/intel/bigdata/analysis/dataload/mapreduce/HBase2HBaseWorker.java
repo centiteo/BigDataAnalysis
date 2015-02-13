@@ -31,9 +31,9 @@ public class HBase2HBaseWorker extends BaseWorker implements Worker {
   public HBase2HBaseWorker(String configFile) {
     super(configFile);
     this.hbaseSourceFieldSpec = new HBaseSourceFieldSpec(
-        configReader.getConfMap());
+        getProperties());
     this.hbaseTargetFieldSpec = new HBaseTargetFieldSpec(
-        configReader.getConfMap());
+        getProperties());
   }
 
   private Job createSubmittableJob(Configuration conf, SourceTableSpec sts)
