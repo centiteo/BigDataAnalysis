@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="endpoint/src/main/java"/>
+	<classpathentry kind="src" path="server/src/main/java"/>
+	<classpathentry kind="src" path="common/src/main/java"/>
 	<classpathentry kind="src" path="generated/src/main/java"/>
 	<classpathentry kind="src" path="datagen/src/main/java"/>
 	<classpathentry kind="src" path="solution/src/main/java"/>
-	<classpathentry kind="src" path="util/src/main/java"/>
 	<classpathentry kind="src" path="mapreduce/src/main/java"/>
 	<classpathentry kind="src" path="test/src/test/java"/>
 	<classpathentry kind="src" path="hbase/src/main/java"/>
 	<classpathentry kind="src" path="dataload/src/main/java"/>
-	<classpathentry kind="src" path="core/src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.launching.macosx.MacOSXType/Java SE 7 [1.7.0_67]"/>
 	<classpathentry kind="lib" path="conf"/>
 	<classpathentry kind="lib" path="lib/lib_cdh5_0/hbase/lib/activation-1.1.jar"/>

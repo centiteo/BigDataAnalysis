@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="endpoint/src/main/java"/>
+	<classpathentry kind="src" path="server/src/main/java"/>
 	<classpathentry kind="src" path="common/src/main/java"/>
 	<classpathentry kind="src" path="generated/src/main/java"/>
 	<classpathentry kind="src" path="datagen/src/main/java"/>

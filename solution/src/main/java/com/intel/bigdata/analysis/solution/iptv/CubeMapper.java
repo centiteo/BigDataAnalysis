@@ -1,10 +1,6 @@
 package com.intel.bigdata.analysis.solution.iptv;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,10 +9,9 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Reducer.Context;
 
+import com.cloudera.bigdata.analysis.util.Constants;
 import com.cloudera.bigdata.analysis.util.Util;
-import com.intel.bigdata.analysis.core.Constants;
 
 public class CubeMapper extends Mapper<LongWritable, Text, Text, IPTVMetrics> {
 	private final static int REQNUM_IDX = 2;
