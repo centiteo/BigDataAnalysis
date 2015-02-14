@@ -34,7 +34,6 @@ public class IndexUtil {
   private static Configuration conf;
 
   private static FileSystem fs;
-  
 
   public static String getCurrentTableName(String currentPro) {
     Properties props = new Properties();
