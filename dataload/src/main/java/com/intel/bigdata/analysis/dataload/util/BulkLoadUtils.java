@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Map;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
@@ -23,7 +22,8 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.ToolRunner;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.intel.bigdata.analysis.dataload.Constants;
 import com.intel.bigdata.analysis.dataload.exception.ETLException;
@@ -38,163 +38,115 @@ import com.intel.bigdata.analysis.dataload.transform.TargetTableSpec;
 import com.intel.bigdata.analysis.index.util.IndexUtil;
 
 public class BulkLoadUtils {
-  private final static Logger LOGGER = Logger.getLogger(BulkLoadUtils.class);
+  private final static Logger LOGGER = LoggerFactory
+      .getLogger(BulkLoadUtils.class);
   final static String EXCEPTION_LOG_TABLE_NAME = "exception_log";
 
+  public static String addPropertyPrefix(String property){
+	  return Constants.BULKLOAD_PROPERTY_PREFIX + property;
+  }
   public static void setConfFromSourceDefinition(
       HdfsSourceFieldSpec hdfsSourceFieldSpec, Configuration conf) {
-    // Source Definition, all are required
-    String idpHBaseMasterIpaddress = hdfsSourceFieldSpec
-        .getIdpHBaseMasterIpaddress();
-    String hdfsSourceFileInputPath = hdfsSourceFieldSpec
-        .getHdfsSourceFileInputPath();
-    String hdfsSourceFileEncoding = hdfsSourceFieldSpec
-        .getHdfsSourceFileEncoding();
-    String hdfsSourceFileRecordFieldsDelimiter = hdfsSourceFieldSpec
-        .getHdfsSourceFileRecordFieldsDelimiter();
-    String hdfsSourceFileRecordFieldsNumber = hdfsSourceFieldSpec
-        .getHdfsSourceFileRecordFieldsNumber();
-    String hdfsSourceFileRecordFieldTypeInt = hdfsSourceFieldSpec
-        .getHdfsSourceFileRecordFieldTypeInt();
-
-    if (idpHBaseMasterIpaddress == null || idpHBaseMasterIpaddress.isEmpty()
-        || hdfsSourceFileInputPath == null || hdfsSourceFileInputPath.isEmpty()
-        || hdfsSourceFileEncoding == null || hdfsSourceFileEncoding.isEmpty()
-        || hdfsSourceFileRecordFieldsDelimiter == null
-        || hdfsSourceFileRecordFieldsDelimiter.isEmpty()
-        || hdfsSourceFileRecordFieldsNumber == null
-        || hdfsSourceFileRecordFieldsNumber.isEmpty()
-        || hdfsSourceFileRecordFieldTypeInt == null
-        || hdfsSourceFileRecordFieldTypeInt.isEmpty()) {
-      ETLException.handle("Failed to run bulkload, need to specify value of \""
-          + Constants.IDP_HBASE_MASTER_IPADDRESS + "\" and \""
-          + Constants.HDFS_SOURCE_FILE_INPUT_PATH + "\" and \""
-          + Constants.HDFS_SOURCE_FILE_ENCODING + "\" and \""
-          + Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_DELIMITER + "\" and \""
-          + Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_TYPE_INT + "\" and \""
-          + Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_NUMBER + "\"");
-    } else {
-      conf.set("idpHBaseMasterIpaddress", idpHBaseMasterIpaddress);
-      conf.set("hdfsSourceFileInputPath", hdfsSourceFileInputPath);
-      conf.set("hdfsSourceFileEncoding", hdfsSourceFileEncoding);
-      conf.set("hdfsSourceFileRecordFieldsDelimiter",
-          hdfsSourceFileRecordFieldsDelimiter);
-      conf.set("hdfsSourceFileRecordFieldsNumber",
-          hdfsSourceFileRecordFieldsNumber);
-      conf.set("hdfsSourceFileRecordFieldTypeInt",
-          hdfsSourceFileRecordFieldTypeInt);
-    }
+    conf.set(addPropertyPrefix(Constants.IDP_HBASE_MASTER_IPADDRESS),
+    		hdfsSourceFieldSpec
+            .getIdpHBaseMasterIpaddress());
+      conf.set(addPropertyPrefix(Constants.HDFS_SOURCE_FILE_INPUT_PATH), 
+    		  hdfsSourceFieldSpec
+    	        .getHdfsSourceFileInputPath());
+      conf.set(addPropertyPrefix(Constants.HDFS_SOURCE_FILE_ENCODING), 
+    		  hdfsSourceFieldSpec
+    	        .getHdfsSourceFileEncoding());
+      conf.set(addPropertyPrefix(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_DELIMITER),
+    		  hdfsSourceFieldSpec
+    	        .getHdfsSourceFileRecordFieldsDelimiter());
+      conf.set(addPropertyPrefix(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_NUMBER),
+    		  hdfsSourceFieldSpec
+    	        .getHdfsSourceFileRecordFieldsNumber());
+    conf.set(
+        addPropertyPrefix(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_TYPE_INT),
+    		  hdfsSourceFieldSpec
+    	        .getHdfsSourceFileRecordFieldTypeInt());
   }
 
-  public static Map<String, String> setConfFromTargetDefinition(
-      HBaseTargetFieldSpec hbaseTargetFieldSpec, Configuration conf,
-      Map<String, String> targetTableCellMap) {
-    // Target HBase Definition
-    // target hbase table, all are required
-    String hbaseGeneratedHfilesOutputPath = hbaseTargetFieldSpec
-        .getHbaseGeneratedHfilesOutputPath();
-    String hbaseTargetTableName = hbaseTargetFieldSpec
-        .getHbaseTargetTableName();
-    boolean hbaseTargetWriteToWAL = hbaseTargetFieldSpec
-        .isHbaseTargetWriteToWAL();
-    if (hbaseGeneratedHfilesOutputPath == null
-        || hbaseGeneratedHfilesOutputPath.isEmpty()
-        || hbaseTargetTableName == null || hbaseTargetTableName.isEmpty()
-        || String.valueOf(hbaseTargetWriteToWAL).isEmpty()) {
-      ETLException.handle("Failed to run bulkload, need to specify value of \""
-          + Constants.HBASE_GENERATED_HFILES_OUTPUT_PATH + "\" and \""
-          + Constants.HBASE_TARGET_TABLE_NAME + "\" and \""
-          + Constants.HBASE_TARGET_WRITE_TO_WAL_FLAG + "\"");
-    }
+  public static void setConfFromTargetDefinition(
+      HBaseTargetFieldSpec hbaseTargetFieldSpec, Configuration conf) {
     // ETL for hbase rowkey, column families and column, all are required for
     // CustomizedHBaseRowMapper
-    conf.set("hbaseGeneratedHfilesOutputPath", hbaseGeneratedHfilesOutputPath);
-    conf.set("hbaseTargetTableName", hbaseTargetTableName);
-    conf.setBoolean("hbaseTargetWriteToWAL", hbaseTargetWriteToWAL);
+    conf.set(addPropertyPrefix(Constants.HBASE_GENERATED_HFILES_OUTPUT_PATH), 
+        hbaseTargetFieldSpec.getHbaseGeneratedHfilesOutputPath());
+    conf.set(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_NAME), 
+        hbaseTargetFieldSpec.getHbaseTargetTableName());
+    conf.setBoolean(addPropertyPrefix(Constants.HBASE_TARGET_WRITE_TO_WAL_FLAG), 
+        hbaseTargetFieldSpec.isHbaseTargetWriteToWAL());
 
-    targetTableCellMap = hbaseTargetFieldSpec.getTargetTableCellMap();
-    if (targetTableCellMap == null) {
-      try {
-        throw new ETLException(
-            "Failed to get targetTableCellMap from target definition.");
-      } catch (ETLException e) {
-        e.printStackTrace();
-      }
-    } else {
-      conf.set("hbaseTargetTableCellMapString", CommonUtils.getStringFromMap(
-          targetTableCellMap, Constants.COLUMN_ENTRY_SEPARATOR,
-          Constants.COLUMN_KEY_VALUE_SEPARATOR));
-      LOGGER.info("hbaseTargetTableCellMapString is "
-          + conf.get("hbaseTargetTableCellMapString"));
-    }
-
-    return targetTableCellMap;
+    conf.set(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_CELL_MAPPING), 
+    		CommonUtils.getStringFromMap(
+    		hbaseTargetFieldSpec.getTargetTableCellMap(), 
+    		Constants.COLUMN_ENTRY_SEPARATOR,
+      Constants.COLUMN_KEY_VALUE_SEPARATOR));
+    LOGGER.info("hbaseTargetTableCellMapString is "
+      + conf.get(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_CELL_MAPPING)));
   }
 
   public static void setConfFromBulkLoadStageDefinition(
       HBaseTargetFieldSpec hbaseTargetFieldSpec,
       BulkLoadProcessFieldSpec bulkLoadProcessFieldSpec, Configuration conf)
       throws Exception {
+	  
     // BulkLoad Stage Definition, all are optional
+    conf.setBoolean(addPropertyPrefix(Constants.BUILD_INDEX), 
+        bulkLoadProcessFieldSpec.isBuildIndex());
 
-    boolean buildIndex = bulkLoadProcessFieldSpec.isBuildIndex();
-    conf.setBoolean("buildIndex", buildIndex);
-
-    boolean onlyGenerateSplitKeySpec = bulkLoadProcessFieldSpec
-        .isOnlyGenerateSplitKeySpec();
-    conf.setBoolean("onlyGenerateSplitKeySpec", onlyGenerateSplitKeySpec);
+    conf.setBoolean(addPropertyPrefix(Constants.ONLY_GENERATE_SPLITKEYSPEC), 
+        bulkLoadProcessFieldSpec.isOnlyGenerateSplitKeySpec());
 
     boolean nativeTaskEnabled = bulkLoadProcessFieldSpec.isNativeTaskEnabled();
-    conf.setBoolean("nativeTaskEnabled", nativeTaskEnabled);
+    conf.setBoolean(addPropertyPrefix(Constants.NATIVETASK_ENABLED), 
+        bulkLoadProcessFieldSpec.isNativeTaskEnabled());
     // enable native task
     if (nativeTaskEnabled) {
       conf.set("mapreduce.map.output.collector.delegator.class",
           "org.apache.hadoop.mapred.nativetask.NativeMapOutputCollectorDelegator");
     }
 
-    if (conf.getBoolean("buildIndex", false)) {
+    if (conf.getBoolean(addPropertyPrefix(Constants.BUILD_INDEX), false)) {
       // make sure there is a index configuration for this current bulkload
       // table
       if (!IndexUtil.isIndexConfAvailableForLoad(conf
-          .get("hbaseTargetTableName"))) {
+          .get(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_NAME)))) {
         ETLException
             .handle("Failed to load data because there is index configuration error!");
       }
-
-      String regionQuantity = bulkLoadProcessFieldSpec.getRegionQuantity();
-      String indexConfFileName = bulkLoadProcessFieldSpec
-          .getIndexConfFileName();
-      String hbaseCoprocessorLocation = bulkLoadProcessFieldSpec
-          .getHBaseCoprocessorLocation();
-      if (regionQuantity == null || regionQuantity.isEmpty()
-          || indexConfFileName == null || indexConfFileName.isEmpty()) {
-        ETLException.handle("Need to specify value for "
-            + Constants.REGION_QUANTITY + " and "
-            + Constants.INDEX_CONF_FILE_NAME + " when buildIndex is true.");
-      } else {
-        conf.set("regionQuantity", regionQuantity);
-        conf.set("indexConfFileName", indexConfFileName);
-        conf.set("hbaseCoprocessorLocation", hbaseCoprocessorLocation);
-
-        // generate split key spec for quick index build
-        // split according to the regionQuantity
-        StringBuffer keys = new StringBuffer();
-        byte[][] splitKeys = RegionSplitKeyUtils.calcSplitKeys(Integer
-            .parseInt(conf.get("regionQuantity")));
-        for (int i = 0; i < splitKeys.length - 1; i++) {
-          keys.append(CommonUtils.convertByteArrayToString(splitKeys[i]));
-          keys.append(",");
-        }
-        keys.append(CommonUtils
-            .convertByteArrayToString(splitKeys[splitKeys.length - 1]));
-
-        String hbaseTargetTableSplitKeySpec = keys.toString();
-        conf.set("hbaseTargetTableSplitKeySpec", hbaseTargetTableSplitKeySpec);
-
-        System.out.println(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC + "="
-            + conf.get("hbaseTargetTableSplitKeySpec"));
-      }
+      
+      conf.set(addPropertyPrefix(Constants.REGION_QUANTITY),
+	    		bulkLoadProcessFieldSpec.getRegionQuantity());
+      conf.set(addPropertyPrefix(Constants.INDEX_CONF_FILE_NAME),
+          bulkLoadProcessFieldSpec.getIndexConfFileName());
+      conf.set(addPropertyPrefix(Constants.HBASE_COPROCESSOR_LOCATION),
+          bulkLoadProcessFieldSpec.getHBaseCoprocessorLocation());
+	
+	    // generate split key spec for quick index build
+	    // split according to the regionQuantity
+	    StringBuffer keys = new StringBuffer();
+      byte[][] splitKeys =
+          RegionSplitKeyUtils.calcSplitKeys(Integer.parseInt(conf
+              .get(addPropertyPrefix(Constants.REGION_QUANTITY))));
+	    for (int i = 0; i < splitKeys.length - 1; i++) {
+	      keys.append(CommonUtils.convertByteArrayToString(splitKeys[i]));
+	      keys.append(",");
+	    }
+	    keys.append(CommonUtils
+	        .convertByteArrayToString(splitKeys[splitKeys.length - 1]));
+	
+	    String hbaseTargetTableSplitKeySpec = keys.toString();
+      conf.set(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC),
+          hbaseTargetTableSplitKeySpec);
+	
+	    System.out.println(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC + "="
+          + hbaseTargetTableSplitKeySpec);
+      
     } else {
+      // if without index building
       generateHbaseTargetTableSplitKeySpec(hbaseTargetFieldSpec,
           bulkLoadProcessFieldSpec, conf);
     }
@@ -203,16 +155,18 @@ public class BulkLoadUtils {
     boolean extendedHbaseRowConverter = false;
     String extendedHBaseRowConverterClass = bulkLoadProcessFieldSpec
         .getExtendedHBaseRowConverterClass();
-    if (extendedHBaseRowConverterClass == null
-        || extendedHBaseRowConverterClass.isEmpty()) {
+    if (Util.checkIsEmpty(extendedHBaseRowConverterClass)) {
       LOGGER.info("Use CustomizedHBaseRowConverter");
     } else {
       LOGGER.info("Use ExtensibleHBaseRowConverter, Class name is: "
           + extendedHBaseRowConverterClass);
       extendedHbaseRowConverter = true;
-      conf.set("extendedHBaseRowConverterClass", extendedHBaseRowConverterClass);
+      conf.set(
+          addPropertyPrefix(Constants.EXTENDEDHBASEROWCONVERTER_CLASS_KEY),
+          extendedHBaseRowConverterClass);
     }
-    conf.setBoolean("extendedHbaseRowConverter", extendedHbaseRowConverter);
+    conf.setBoolean(addPropertyPrefix(Constants.EXTENDEDHBASEROWCONVERTER),
+        extendedHbaseRowConverter);
 
     // specify the input Split Size for combineInputFiles
     boolean combineInputFiles = false;
@@ -253,16 +207,12 @@ public class BulkLoadUtils {
               + "\"extendedHBaseRowConverterClass\" empty");
     }
 
-    String importDate = bulkLoadProcessFieldSpec.getImportDate();
-    String validatorClass = bulkLoadProcessFieldSpec.getValidatorClass();
-    boolean createMalformedTable = bulkLoadProcessFieldSpec
-        .isCreateMalformedTable();
-
-    if (conf.get("importDate") != null && !conf.get("importDate").isEmpty()) {
-      conf.set("importDate", importDate);
-    }
-    conf.set("validatorClass", validatorClass);
-    conf.setBoolean("createMalformedTable", createMalformedTable);
+    //conf.set(addPropertyPrefix(Constants.IMPORT_DATE),
+    // bulkLoadProcessFieldSpec.getImportDate());
+    //conf.set(addPropertyPrefix(Constants.VALIDATOR_CLASS),
+    // bulkLoadProcessFieldSpec.getValidatorClass());
+    conf.setBoolean(addPropertyPrefix(Constants.CREATE_MALFORMED_TABLE),
+        bulkLoadProcessFieldSpec.isCreateMalformedTable());
   }
 
   public static void generateHbaseTargetTableSplitKeySpec(
@@ -276,39 +226,27 @@ public class BulkLoadUtils {
     String hbaseTargetTableSplitKeySpec = hbaseTargetFieldSpec
         .getHbaseTargetTableSplitKeySpec();
     if (preCreateRegions) {
-      conf.setBoolean("preCreateRegions", preCreateRegions);
-      // get rowkey prefix
+      conf.setBoolean(addPropertyPrefix(Constants.PRE_CREATE_REGIONS),
+          preCreateRegions);
       rowkeyPrefix = bulkLoadProcessFieldSpec.getRowkeyPrefix();
-      // get records number per region
       recordsNumPerRegion = bulkLoadProcessFieldSpec.getRecordsNumPerRegion();
 
-      if (hbaseTargetTableSplitKeySpec != null
-          && !hbaseTargetTableSplitKeySpec.isEmpty()) {
-        if ((rowkeyPrefix == null || rowkeyPrefix.isEmpty())
-            && (recordsNumPerRegion == null || recordsNumPerRegion.isEmpty())) {
-          System.out.println(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC + "="
-              + hbaseTargetTableSplitKeySpec);
-          conf.set("hbaseTargetTableSplitKeySpec", hbaseTargetTableSplitKeySpec);
-          System.out.println("Successfully set "
-              + Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC);
-        } else {
-          ETLException.handle("No need to specify value for "
-              + Constants.ROWKEY_PREFIX + " and "
-              + Constants.RECORDS_NUM_PER_REGION
-              + " when hbase.target.table.split.key.spec is specified.");
-        }
+      if (!Util.checkIsEmpty(hbaseTargetTableSplitKeySpec)) {
+        conf.set(
+            addPropertyPrefix(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC),
+            hbaseTargetTableSplitKeySpec);
       } else {
-        if (rowkeyPrefix == null || rowkeyPrefix.isEmpty()) {
+        // generate splitKeySpec automatically
+        if (Util.checkIsEmpty(rowkeyPrefix)) {
           ETLException.handle("Failed to run " + Constants.PRE_CREATE_REGIONS
               + ", need to specify value of \"rowkeyPrefix\"");
         }
-        conf.set("rowkeyPrefix", rowkeyPrefix);
+        conf.set(addPropertyPrefix(Constants.ROWKEY_PREFIX), rowkeyPrefix);
 
-        if (recordsNumPerRegion == null || recordsNumPerRegion.isEmpty()) {
+        if (Util.checkIsEmpty(recordsNumPerRegion)) {
           // generate hive script and record count file
           recordCountFile = RecordCountHiveShellUtils.getRecordCountFile(conf);
           RecordCountHiveShellUtils.getTotalRecordNum(conf);
-
           // calculate records number per region
           recordsNumPerRegion = RecordCountHiveShellUtils
               .calculateRecordNumPerRegion(conf);
@@ -321,55 +259,52 @@ public class BulkLoadUtils {
             recordsNumPerRegion = conf.get("totalRecordNum");
           }
         }
-
-        // generate splitKeySpec string
-        if (hbaseTargetTableSplitKeySpec != null
-            && !hbaseTargetTableSplitKeySpec.isEmpty()) {
-          LOGGER
-              .warn("No need to specify hbase.target.table.split.key.spec when preCreateRegions is true");
-        }
         hbaseTargetTableSplitKeySpec = RegionSplitKeyUtils
             .genSplitKeysFromFile(recordCountFile,
                 Long.parseLong(recordsNumPerRegion));
         System.out.println(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC + "="
             + hbaseTargetTableSplitKeySpec);
-        conf.set("hbaseTargetTableSplitKeySpec", hbaseTargetTableSplitKeySpec);
+        conf.set(
+            addPropertyPrefix(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC),
+            hbaseTargetTableSplitKeySpec);
       }
     } else {
       // not pre-create regions
-      conf.set("hbaseTargetTableSplitKeySpec", "");
+      conf.set(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC),
+          "");
     }
   }
 
   public static Job createHBaseTableAndGenerateHfile(FileSystem fs,
-      HBaseAdmin hbaseAdmin, Configuration conf,
-      Map<String, String> targetTableCellMap) throws Exception {
+      HBaseAdmin hbaseAdmin, Configuration conf) throws Exception {
+    String hbaseTableName =
+        conf.get(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_NAME));
     TargetTableSpec targetTableSpec = new TargetTableSpec(
-        conf.get("hbaseTargetTableName"), CommonUtils.getStringFromMap(
-            targetTableCellMap, Constants.COLUMN_ENTRY_SEPARATOR,
-            Constants.COLUMN_KEY_VALUE_SEPARATOR),
-        conf.get("hbaseTargetTableSplitKeySpec"));
+            hbaseTableName,
+            conf.get(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_CELL_MAPPING)),
+            conf.get(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC)));
 
     // create hbase table
-    if (!CommonUtils.doesTableExist(hbaseAdmin,
-        conf.get("hbaseTargetTableName"))) {
+    if (!CommonUtils.doesTableExist(hbaseAdmin, hbaseTableName)) {
       CommonUtils.createTable(conf, hbaseAdmin, targetTableSpec);
     } else {
-      int existedRegionQuantity = CommonUtils.getExistedTableRegionsNum(
-          hbaseAdmin, conf.get("hbaseTargetTableName"));
-      System.out.println("Table " + conf.get("hbaseTargetTableName")
+      // !!!!!!Change the logic, it's totally wrong!!!!!!
+      int existedRegionQuantity =
+          CommonUtils.getExistedTableRegionsNum(hbaseAdmin, hbaseTableName);
+      System.out.println("Table " + hbaseTableName
           + " is existed. The existed region number is "
           + existedRegionQuantity);
 
-      if (conf.getBoolean("buildIndex", false)) {
+      if (conf.getBoolean(addPropertyPrefix(Constants.BUILD_INDEX), false)) {
         // update the existedRegionQuantity and split key spec
-        conf.set("regionQuantity", String.valueOf(existedRegionQuantity));
+        conf.set(addPropertyPrefix(Constants.REGION_QUANTITY),
+            String.valueOf(existedRegionQuantity));
 
         // generate split key spec for quick index build
         // split according to the regionQuantity
         StringBuffer keys = new StringBuffer();
-        byte[][] splitKeys = RegionSplitKeyUtils.calcSplitKeys(Integer
-            .parseInt(conf.get("regionQuantity")));
+        byte[][] splitKeys =
+            RegionSplitKeyUtils.calcSplitKeys(existedRegionQuantity);
         for (int i = 0; i < splitKeys.length - 1; i++) {
           keys.append(CommonUtils.convertByteArrayToString(splitKeys[i]));
           keys.append(",");
@@ -378,31 +313,31 @@ public class BulkLoadUtils {
             .convertByteArrayToString(splitKeys[splitKeys.length - 1]));
 
         String hbaseTargetTableSplitKeySpec = keys.toString();
-        conf.set("hbaseTargetTableSplitKeySpec", hbaseTargetTableSplitKeySpec);
+        conf.set(
+            addPropertyPrefix(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC),
+            hbaseTargetTableSplitKeySpec);
         System.out.println("Updated "
             + Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC + "="
-            + conf.get("hbaseTargetTableSplitKeySpec"));
+            + hbaseTargetTableSplitKeySpec);
       }
     }
 
     // create malformed table
-    if (conf.getBoolean("createMalformedTable", false)) {
+    if (conf.getBoolean(addPropertyPrefix(Constants.CREATE_MALFORMED_TABLE),
+        false)) {
       if (!CommonUtils.doesTableExist(hbaseAdmin, EXCEPTION_LOG_TABLE_NAME)) {
         CommonUtils.createMalformedLineLogTable(hbaseAdmin,
             EXCEPTION_LOG_TABLE_NAME);
       }
     }
 
-    // hbase hfile output path
-    String hbaseGeneratedHfilesOutputPath = conf
-        .get("hbaseGeneratedHfilesOutputPath");
-    if (hbaseGeneratedHfilesOutputPath != null
-        && !hbaseGeneratedHfilesOutputPath.isEmpty()) {
-      Path outputDir = new Path(hbaseGeneratedHfilesOutputPath);
+    // delete hfile output path
+    Path outputDir =
+        new Path(
+            conf.get(addPropertyPrefix(Constants.HBASE_GENERATED_HFILES_OUTPUT_PATH)));
       if (fs.exists(outputDir)) {
         fs.delete(outputDir, true);
         LOGGER.info("Delete hfile output path.");
-      }
     }
 
     // run mapreduce to generate hfile
@@ -413,9 +348,8 @@ public class BulkLoadUtils {
 
   public static void loadIncrementalHFiles(Configuration conf, Job job,
       long startTime) throws Exception {
-    String hbaseGeneratedHfilesOutputPath = conf
-        .get("hbaseGeneratedHfilesOutputPath");
-    String idpHBaseMasterIpaddress = conf.get("idpHBaseMasterIpaddress");
+    String hbaseGeneratedHfilesOutputPath =
+        conf.get(addPropertyPrefix(Constants.HBASE_GENERATED_HFILES_OUTPUT_PATH));
     if (job.isSuccessful()) {
       if (hbaseGeneratedHfilesOutputPath != null) {
         try {
@@ -423,21 +357,12 @@ public class BulkLoadUtils {
           LOGGER.info("Executing Shell:\n" + "/bin/sh -c"
               + " sudo -u hdfs hadoop fs -chmod -R 777 "
               + hbaseGeneratedHfilesOutputPath);
-//          Process prs = Runtime.getRuntime().exec(
-//              new String[] {
-//                  "/bin/sh",
-//                  "-c",
-//                  "ssh " + idpHBaseMasterIpaddress
-//                      + " sudo -u hdfs hadoop fs -chmod -R 777 "
-//                      + hbaseGeneratedHfilesOutputPath });
-          
           Process prs = Runtime.getRuntime().exec(
                   new String[] {"/bin/sh",
                 		  "-c",
                       "sudo -u hdfs hadoop fs -chmod -R 777 "
                           + hbaseGeneratedHfilesOutputPath });
           
-
           String line;
           InputStream es = prs.getErrorStream();
           BufferedReader br = new BufferedReader(new InputStreamReader(es));
@@ -454,20 +379,11 @@ public class BulkLoadUtils {
           LOGGER.info("Executing Shell:\n" + "/bin/sh -c"
               + " sudo -u hdfs hadoop fs -chown -R hbase "
               + hbaseGeneratedHfilesOutputPath);
-//          prs = Runtime.getRuntime().exec(
-//              new String[] {
-//                  "/bin/sh",
-//                  "-c",
-//                  "ssh " + idpHBaseMasterIpaddress
-//                      + " sudo -u hdfs hadoop fs -chown -R hbase "
-//                      + hbaseGeneratedHfilesOutputPath });
-          
           prs = Runtime.getRuntime().exec(
                   new String[] {"/bin/sh",
                 		  "-c",
                       "sudo -u hdfs hadoop fs -chown -R hbase "
                           + hbaseGeneratedHfilesOutputPath });
-
           es = prs.getErrorStream();
           br = new BufferedReader(new InputStreamReader(es));
           while ((line = br.readLine()) != null) {
@@ -487,7 +403,7 @@ public class BulkLoadUtils {
         // LoadIncrementalHFiles to bulk load data from hfile into hbase table
         if (hbaseGeneratedHfilesOutputPath != null) {
           String[] args = { hbaseGeneratedHfilesOutputPath,
-              conf.get("hbaseTargetTableName") };
+                  conf.get(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_NAME)) };
           int ret = ToolRunner.run(
               new LoadIncrementalHFiles(HBaseConfiguration.create()), args);
           LOGGER.info("Successfully Bulk Load data into HBase table!");
@@ -509,7 +425,8 @@ public class BulkLoadUtils {
       TargetTableSpec tableSpec) throws Exception {
     String tableName = tableSpec.getTableName();
     String jobPrefixName = null;
-    if (conf.getBoolean("extendedHbaseRowConverter", false)) {
+    if (conf.getBoolean(addPropertyPrefix(Constants.EXTENDEDHBASEROWCONVERTER),
+        false)) {
       jobPrefixName = "ExtendedBulkLoad";
     } else {
       if (conf.getBoolean("combineInputFiles", false)) {
@@ -519,9 +436,11 @@ public class BulkLoadUtils {
       }
     }
     Job job = new Job(conf, jobPrefixName + "_" + tableName);
-    FileInputFormat.setInputPaths(job, conf.get("hdfsSourceFileInputPath"));
+    FileInputFormat.setInputPaths(job,
+        conf.get(addPropertyPrefix(Constants.HDFS_SOURCE_FILE_INPUT_PATH)));
 
-    if (conf.getBoolean("extendedHbaseRowConverter", false)) {
+    if (conf.getBoolean(addPropertyPrefix(Constants.EXTENDEDHBASEROWCONVERTER),
+        false)) {
       job.setJarByClass(ExtendedHBaseRowMapper.class);
       job.setMapperClass(ExtendedHBaseRowMapper.class);
       job.setInputFormatClass(TextInputFormat.class);
@@ -537,7 +456,8 @@ public class BulkLoadUtils {
       }
     }
 
-    String hfileOutPath = conf.get("hbaseGeneratedHfilesOutputPath");
+    String hfileOutPath =
+        conf.get(addPropertyPrefix(Constants.HBASE_GENERATED_HFILES_OUTPUT_PATH));
     if (hfileOutPath != null) {
       HTable table = new HTable(conf, tableName);
       Path outputDir = new Path(hfileOutPath);
@@ -565,8 +485,9 @@ public class BulkLoadUtils {
 
   private static void addDependencyValidatorClass(Configuration conf, Job job) {
     // handle validator class
-    String validatorClassName = conf.get("validatorClass");
-    if (validatorClassName != null) {
+    String validatorClassName =
+        conf.get(addPropertyPrefix(Constants.VALIDATOR_CLASS));
+    if (!Util.checkIsEmpty(validatorClassName)) {
       try {
         Class<?> validatorClass = Class.forName(validatorClassName);
         LOGGER.info("Load " + validatorClassName);

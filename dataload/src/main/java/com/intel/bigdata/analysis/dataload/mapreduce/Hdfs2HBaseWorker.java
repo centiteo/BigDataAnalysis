@@ -30,7 +30,6 @@ public class Hdfs2HBaseWorker extends BaseWorker{
   private HdfsSourceFieldSpec hdfsSourceFieldSpec;
   private HBaseTargetFieldSpec hbaseTargetFieldSpec;
   private BulkLoadProcessFieldSpec bulkLoadProcessFieldSpec;
-  Map<String, String> targetTableCellMap = null;
   private StringBuffer textRecordSpec = new StringBuffer();
   private static final String USAGE_STR = 
 	"com.intel.bigdata.analysis.dataload.mapreduce.Hdfs2HBaseWorker <properties_file>";
@@ -75,11 +74,17 @@ public class Hdfs2HBaseWorker extends BaseWorker{
     // for source table definition
     BulkLoadUtils.setConfFromSourceDefinition(hdfsSourceFieldSpec, conf);
 
-    String fieldDelimiter = conf.get("hdfsSourceFileRecordFieldsDelimiter");
-    String fieldsNumber = conf.get("hdfsSourceFileRecordFieldsNumber");
+    String fieldDelimiter =
+        conf.get(BulkLoadUtils
+            .addPropertyPrefix(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_DELIMITER));
+    String fieldsNumber =
+        conf.get(BulkLoadUtils
+            .addPropertyPrefix(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_NUMBER));
 
     // Type int
-    String intFieldsNumber = conf.get("hdfsSourceFileRecordFieldTypeInt");
+    String intFieldsNumber =
+        conf.get(BulkLoadUtils
+            .addPropertyPrefix(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_TYPE_INT));
     List<String> intFields = Arrays.asList(StringUtils
         .splitByWholeSeparatorPreserveAllTokens(intFieldsNumber,
             Constants.DEFAULT_FIELD_DELIMITER));
@@ -123,27 +128,25 @@ public class Hdfs2HBaseWorker extends BaseWorker{
     conf.set("textRecordSpec", textRecordSpec.toString());
 
     // for target table definition
-    targetTableCellMap = BulkLoadUtils.setConfFromTargetDefinition(
-        hbaseTargetFieldSpec, conf, targetTableCellMap);
+    BulkLoadUtils.setConfFromTargetDefinition(
+        hbaseTargetFieldSpec, conf);
 
     // for bulkload process definition
     BulkLoadUtils.setConfFromBulkLoadStageDefinition(hbaseTargetFieldSpec,
         bulkLoadProcessFieldSpec, conf);
-    if (conf.getBoolean("onlyGenerateSplitKeySpec", false)) {
-      // only generate SplitKeySpec
+    
+    if (conf.getBoolean(
+        BulkLoadUtils.addPropertyPrefix(Constants.ONLY_GENERATE_SPLITKEYSPEC),
+        false)) {
+      // Option #1: only generate SplitKeySpec
     } else {
-      // run bulkload
-      if (targetTableCellMap == null) {
-        throw new ETLException(
-            "Failed to get targetTableCellMap from target definition.");
-      }
-
-      // create hbase table and generate hfile output
+      // Option #2: run bulkload
+      // try to create hbase table and generate hfile output
       long startTime = System.currentTimeMillis();
       fs = FileSystem.get(conf);
       hbaseAdmin = new HBaseAdmin(conf);
       Job job = BulkLoadUtils.createHBaseTableAndGenerateHfile(fs, hbaseAdmin,
-          conf, targetTableCellMap);
+          conf);
 
       // LoadIncrementalHFiles to bulk load data from hfile into hbase table
       BulkLoadUtils.loadIncrementalHFiles(conf, job, startTime);

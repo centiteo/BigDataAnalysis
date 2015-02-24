@@ -177,7 +177,8 @@ public class Constants {
   public static final String HBASE_TARGET_WRITE_TO_WAL_FLAG = "hbase.target.write.to.wal.flag";
   public static final boolean DEFALUT_HBASE_TARGET_WRITE_TO_WAL_FLAG = false;
   public static final String HBASE_TARGET_TABLE_CELL_SPEC = "hbase.target.table.cell.spec";
-
+  public static final String HBASE_TARGET_TABLE_CELL_MAPPING = "hbase.target.table.cell.mapping";
+  
   // bulkload stage definition
   public final static String BUILD_INDEX = "buildIndex";
   public static final boolean DEFAULT_BUILD_INDEX = false;
@@ -188,10 +189,13 @@ public class Constants {
   // coprocessor path
   public final static String HBASE_COPROCESSOR_LOCATION = "hbaseCoprocessorLocation";
   
-
+  // the following two properties are used to generate region split keys
   public final static String ROWKEY_PREFIX = "rowkeyPrefix";
   public final static String RECORDS_NUM_PER_REGION = "recordsNumPerRegion";
   
+  public final static String EXTENDEDHBASEROWCONVERTER =
+      "extendedHbaseRowConverter";
+  public final static boolean DEFAULT_EXTENDEDHBASEROWCONVERTER = false;
   public final static String EXTENDEDHBASEROWCONVERTER_CLASS_KEY = "extendedHbaseRowConverterClass";
   public static final String INPUT_SPLIT_SIZE = "inputSplitSize";
   public final static String IMPORT_DATE = "importDate";
@@ -200,6 +204,8 @@ public class Constants {
   public final static boolean DEFAULT_CREATE_MALFORMED_TABLE = false;
   public final static String NATIVETASK_ENABLED = "nativeTaskEnabled";
   public static final boolean DEFAULT_NATIVETASK_ENABLED = true;
+  
+  public static final String BULKLOAD_PROPERTY_PREFIX = "cloudera.bulkload.";
 
   public final static byte B_IDX_ROWKEY_DELIMITER = (byte) (",").charAt(0);
   public final static int ROWKEY_PREFIX_LENGTH = 4;
@@ -210,3 +216,4 @@ public class Constants {
   public final static int ROWKEY_PREFIX_MAX_VALUE = (int) Math.pow(10,
       ROWKEY_PREFIX_LENGTH);
 }
+

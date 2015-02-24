@@ -17,21 +17,24 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Counter;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.util.ReflectionUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import com.intel.bigdata.analysis.dataload.Constants;
 import com.intel.bigdata.analysis.dataload.exception.FormatException;
 import com.intel.bigdata.analysis.dataload.exception.RecordValidator;
 import com.intel.bigdata.analysis.dataload.source.ParsedLine;
 import com.intel.bigdata.analysis.dataload.source.TextRecordSpec;
 import com.intel.bigdata.analysis.dataload.transform.CustomizedHBaseRowConverter;
 import com.intel.bigdata.analysis.dataload.transform.TargetTableSpec;
+import com.intel.bigdata.analysis.dataload.util.BulkLoadUtils;
 
 /**
  * Write table content out to files in hdfs.
  */
 public class CustomizedHBaseRowMapper extends
     Mapper<LongWritable, Text, ImmutableBytesWritable, Put> {
-  private static final Logger LOGGER = Logger
+  private static final Logger LOGGER = LoggerFactory
       .getLogger(CustomizedHBaseRowMapper.class);
   private String hbaseTargetTableName;
   private String hbaseTargetTableSplitKeySpec;
@@ -87,26 +90,36 @@ public class CustomizedHBaseRowMapper extends
 
     conf = context.getConfiguration();
 
-    hbaseTargetTableName = context.getConfiguration().get(
-        "hbaseTargetTableName");
-    hbaseTargetTableSplitKeySpec = context.getConfiguration().get(
-        "hbaseTargetTableSplitKeySpec");
-    // hbaseTargetTableCellMapString means rowSpec
-    hbaseTargetTableCellMapString = context.getConfiguration().get(
-        "hbaseTargetTableCellMapString");
-    hbaseTargetWriteToWAL = context.getConfiguration().getBoolean(
-        "hbaseTargetWriteToWAL", false);
-    createMalformedTable = context.getConfiguration().getBoolean(
-        "createMalformedTable", false);
+    hbaseTargetTableName =
+        conf.get(BulkLoadUtils
+            .addPropertyPrefix(Constants.HBASE_TARGET_TABLE_NAME));
+    hbaseTargetTableSplitKeySpec =
+        conf.get(BulkLoadUtils
+            .addPropertyPrefix(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC));
+    hbaseTargetTableCellMapString =
+        conf.get(BulkLoadUtils
+            .addPropertyPrefix(Constants.HBASE_TARGET_TABLE_CELL_MAPPING));
+    hbaseTargetWriteToWAL =
+        conf.getBoolean(BulkLoadUtils
+            .addPropertyPrefix(Constants.HBASE_TARGET_WRITE_TO_WAL_FLAG), false);
+    createMalformedTable =
+        conf.getBoolean(
+            BulkLoadUtils.addPropertyPrefix(Constants.CREATE_MALFORMED_TABLE),
+            false);
+    buildIndex =
+        conf.getBoolean(BulkLoadUtils.addPropertyPrefix(Constants.BUILD_INDEX),
+            false);
 
-    buildIndex = context.getConfiguration().getBoolean("buildIndex", false);
+    String encoding =
+        conf.get(BulkLoadUtils
+            .addPropertyPrefix(Constants.HDFS_SOURCE_FILE_ENCODING));
+    String fieldDelimiter =
+        conf.get(BulkLoadUtils
+            .addPropertyPrefix(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_DELIMITER));
+    String textRecordSpec = conf.get("textRecordSpec");
 
-    String encoding = context.getConfiguration().get("hdfsSourceFileEncoding");
-    String fieldDelimiter = context.getConfiguration().get(
-        "hdfsSourceFileRecordFieldsDelimiter");
-    String textRecordSpec = context.getConfiguration().get("textRecordSpec");
-
-    String importDateString = context.getConfiguration().get("importDate");
+    String importDateString =
+        conf.get(BulkLoadUtils.addPropertyPrefix(Constants.IMPORT_DATE));
 
     try {
       TextRecordSpec recordSpec = new TextRecordSpec(textRecordSpec, encoding,
@@ -209,8 +222,9 @@ public class CustomizedHBaseRowMapper extends
     String errorMsg = "Malformat at split: " + context.getInputSplit()
         + " offset at:" + offset.get();
     LOGGER.warn(errorMsg);
-    Put put = new Put(Bytes.toBytes(context.getConfiguration().get(
-        "hbaseTargetTableName")
+    Put put =
+        new Put(Bytes.toBytes(context.getConfiguration().get(
+            BulkLoadUtils.addPropertyPrefix(Constants.HBASE_TARGET_TABLE_NAME))
         + "|" + df.format(new Date()) + "|" + UUID.randomUUID()));
     put.add(Hdfs2HBaseWorker.EXCEPTION_LOG_TABLE_COLUMN_FAMILY_BYTES,
         Hdfs2HBaseWorker.EXCEPTION_LOG_TABLE_COLUMN_QUALIFIER_RAW_LINE_BYTES,
@@ -241,7 +255,7 @@ public class CustomizedHBaseRowMapper extends
         }
       }
     } catch (IOException ex) {
-      LOGGER.warn(ex);
+      LOGGER.warn("", ex);
       throw new RuntimeException(ex);
     }
   }

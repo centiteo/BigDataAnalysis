@@ -9,37 +9,12 @@ import com.intel.bigdata.analysis.dataload.Constants;
 import com.intel.bigdata.analysis.dataload.exception.ETLException;
 
 public class TargetTableSpec extends HBaseTableSpec {
-  private String columnEntrySeparator;
-  private String columnKeyValueSeparator;
-
   ColumnSpec rowKeySpec;
   Map<String, ColumnSpec> columnMap;
 
   public TargetTableSpec(String tableName, String rowSpecString,
-      String splitKeys) throws Exception {
-    this(tableName, rowSpecString, splitKeys, Constants.COLUMN_ENTRY_SEPARATOR);
-  }
-
-  public TargetTableSpec(String tableName, String rowSpecString,
-      String splitKeys, String columnDelimiter) throws Exception {
-    this(tableName, rowSpecString, splitKeys, columnDelimiter,
-        Constants.COLUMN_KEY_VALUE_SEPARATOR);
-  }
-
-  public TargetTableSpec(String tableName, String rowSpecString,
-      String splitKeySpec, String columnEntrySeparator,
-      String columnKeyValueSeparator) throws Exception {
+      String splitKeySpec) throws Exception {
     super(tableName, rowSpecString, splitKeySpec);
-    this.columnEntrySeparator = columnEntrySeparator;
-    this.columnKeyValueSeparator = columnKeyValueSeparator;
-  }
-
-  public String getColumnEntrySeparator() {
-    return columnEntrySeparator;
-  }
-
-  public String getColumnKeyValueSeparator() {
-    return columnKeyValueSeparator;
   }
 
   public ColumnSpec getRowKeySpec() {

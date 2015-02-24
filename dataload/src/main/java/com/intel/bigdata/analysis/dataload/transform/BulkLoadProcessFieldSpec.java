@@ -2,7 +2,9 @@ package com.intel.bigdata.analysis.dataload.transform;
 
 import java.util.Properties;
 
+import com.cloudera.bigdata.analysis.util.Util;
 import com.intel.bigdata.analysis.dataload.Constants;
+import com.intel.bigdata.analysis.exception.ETLException;
 
 public class BulkLoadProcessFieldSpec {
   private Properties props = null;
@@ -162,6 +164,15 @@ public class BulkLoadProcessFieldSpec {
     
     nativeTaskEnabled = (!props.containsKey(Constants.NATIVETASK_ENABLED) ? Constants.DEFAULT_NATIVETASK_ENABLED
         : Boolean.parseBoolean(props.getProperty(Constants.NATIVETASK_ENABLED)));
+    
+    if(buildIndex){
+    	if(Util.checkIsEmpty(regionQuantity)
+    			||Util.checkIsEmpty(indexConfFileName)){
+        ETLException.handle("Need to specify value for "
+            + Constants.REGION_QUANTITY + " and "
+            + Constants.INDEX_CONF_FILE_NAME + " when buildIndex is true.");
+    	}
+    }
   }
 
   public String toString() {

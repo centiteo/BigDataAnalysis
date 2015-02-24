@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import com.intel.bigdata.analysis.dataload.exception.ETLException;
 import com.intel.bigdata.analysis.dataload.source.ParsedLine;
 import com.intel.bigdata.analysis.dataload.source.TextRecordSpec;
+import com.intel.bigdata.analysis.dataload.util.BulkLoadUtils;
 import com.intel.bigdata.analysis.dataload.util.CommonUtils;
 import com.intel.bigdata.analysis.dataload.util.ExpressionUtils;
 import com.intel.bigdata.analysis.index.Constants;
@@ -40,7 +41,11 @@ public class CustomizedHBaseRowConverter {
     this.rowSpec = tableSpec;
     this.conf = conf;
     //indexEntryBuilderGroup = IndexEntryBuilderGroup.getInstance(CommonUtils.convertStringToByteArray(Constants.CURRENT_TABLE));
-    if (LOG.isDebugEnabled()) {
+    if (conf
+        .getBoolean(
+            BulkLoadUtils
+                .addPropertyPrefix(com.intel.bigdata.analysis.dataload.Constants.BUILD_INDEX),
+            false)) {
       LOG.debug("indexEntryBuilderGroup: "
           + CommonUtils.convertByteArrayToString(Constants.CURRENT_TABLE
               .getBytes()));
@@ -97,16 +102,13 @@ public class CustomizedHBaseRowConverter {
   public Put[] convertToIndex(ParsedLine line, boolean writeToWAL,
       boolean buildIndex) throws ETLException {
     if (buildIndex) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("Intercepted Put: " + Bytes.toStringBinary(rowKey));
-      }
+      LOG.debug("Intercepted Put: " + Bytes.toStringBinary(rowKey));
       // only if a record put...
       if (RowKeyUtil.isRecord(rowKey)) {
-        if (LOG.isDebugEnabled()) {
-          LOG.debug("rowkey: " + CommonUtils.convertByteArrayToString(rowKey));
-        }
+        LOG.debug("rowkey: " + CommonUtils.convertByteArrayToString(rowKey));
         regionStartKey = CommonUtils.findRegionStarKey(
-            conf.get("hbaseTargetTableSplitKeySpec"),
+                    conf.get(BulkLoadUtils
+                        .addPropertyPrefix(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC)),
             CommonUtils.convertByteArrayToString(randomRowKeyPrefix));
         indexPuts = indexEntryBuilderGroup.build(regionStartKey, put);
       }

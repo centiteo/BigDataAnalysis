@@ -299,7 +299,7 @@ public class CommonUtils {
     }
 
     try {
-      // ensure not slit
+      // ensure not split
       htd.setValue(HTableDescriptor.SPLIT_POLICY,
           ConstantSizeRegionSplitPolicy.class.getName());
       // set index corprocessor

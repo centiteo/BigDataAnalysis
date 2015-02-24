@@ -47,6 +47,14 @@ public class Util {
     return tRand;
   }
 
+  public static boolean checkIsEmpty(String value) {
+    if (null == value || value.isEmpty()) {
+      return true;
+    }
+
+    return false;
+  }
+
   /**
    * Create an instance of DataSource
    * 
