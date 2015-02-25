@@ -53,60 +53,26 @@
     <target name="init" depends="jaxb">
         <mkdir dir="target"/>
         <mkdir dir="${build.classes}"/>
-        <!--        
-        <copy includeemptydirs="false" todir="${build.classes}">
-                <fileset dir="mapreduce/src/main/java">
-                <exclude name="**/*.java"/>
-                </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="${build.classes}">
-            <fileset dir="hive/src/main/java">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-    
+            
         <copy includeemptydirs="false" todir="${build.classes}">
             <fileset dir="datagen/src/main/java">
                <exclude name="**/*.java"/>
             </fileset>
         </copy> 
-        -->
         
-        <!--
-        <copy includeemptydirs="false" todir="${build.classes}">
-            <fileset dir="hbase/src/main/java">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-        -->
-
         <copy includeemptydirs="false" todir="${build.classes}">
             <fileset dir="dataload/src/main/java">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
+
         <copy includeemptydirs="false" todir="${build.classes}">
             <fileset dir="server/src/main/java">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
 
-        <!--        
-        <copy includeemptydirs="false" todir="${build.classes}">
-            <fileset dir="test/src/test/java">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-        -->
-
-        <!--        
-        <copy includeemptydirs="false" todir="${build.classes}">
-            <fileset dir="solution/src/main/java">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy> 
-        -->
-        <copy includeemptydirs="false" todir="${build.classes}">
+       <copy includeemptydirs="false" todir="${build.classes}">
             <fileset dir="generated/src/main/java">
                 <exclude name="**/*.java"/>
             </fileset>
@@ -127,7 +93,7 @@
             <src path="mapreduce/src/main/java"/>
             <src path="hive/src/main/java"/>   
             -->
-            <!--src path="datagen/src/main/java"/-->
+            <src path="datagen/src/main/java"/>
             <!--src path="hbase/src/main/java"/-->
             <src path="common/src/main/java"/>
             <src path="dataload/src/main/java"/>
@@ -153,17 +119,19 @@
         </copy>
         -->
         
-        <!--
         <copy todir="${build.classes}/lib" >
             <fileset dir="lib">
-                <include name="*.jar"/>
+                <include name="jopt-simple-4.5.jar"/>
+                <include name="joda-time-2.3.jar"/>
             </fileset>
-            <fileset refid="version.classpath"/>
         </copy>
-        -->
-        <jar destfile="target/${name}-${version}.jar"
-        basedir="${build.classes}"
-        includes="**/*.*"/>
+
+        <jar destfile="target/${name}-${version}.jar" basedir="${build.classes}" includes="**/*.*">
+            <!--    
+                <zipfileset includes="**/*.class" src="lib/jopt-simple-4.5.jar"/>
+                <zipfileset includes="**/*.class" src="lib/joda-time-2.3.jar"/>
+            -->
+        </jar>
     </target>
     
     <target name="jaxb">

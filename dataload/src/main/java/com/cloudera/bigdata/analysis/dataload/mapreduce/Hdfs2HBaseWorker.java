@@ -21,7 +21,6 @@ import com.cloudera.bigdata.analysis.dataload.extract.HBaseTargetFieldSpec;
 import com.cloudera.bigdata.analysis.dataload.extract.HdfsSourceFieldSpec;
 import com.cloudera.bigdata.analysis.dataload.transform.BulkLoadProcessFieldSpec;
 import com.cloudera.bigdata.analysis.dataload.util.BulkLoadUtils;
-import com.cloudera.bigdata.analysis.dataload.util.CommonUtils;
 
 public class Hdfs2HBaseWorker extends BaseWorker{
   private final static Logger LOG = LoggerFactory.getLogger(Hdfs2HBaseWorker.class);
@@ -90,7 +89,7 @@ public class Hdfs2HBaseWorker extends BaseWorker{
 
     // convert input data text specification into text record spec
     // [f1:STRING, f2:STRING, f3:INT]
-
+    // TODO: merge with general data load
     long length = Long.parseLong(fieldsNumber);
     if (textRecordSpec == null || textRecordSpec.length() == 0) {
       for (int i = 1; i < length; i++) {
@@ -108,8 +107,6 @@ public class Hdfs2HBaseWorker extends BaseWorker{
           textRecordSpec.append(fieldDelimiter);
         }
       }
-
-      // last field
       if (intFields.contains(length)) {
         textRecordSpec
             .append(Constants.HDFS_SOURCE_FILE_RECORD_FIELD_NAME_PREFIX
@@ -165,9 +162,6 @@ public class Hdfs2HBaseWorker extends BaseWorker{
     } catch (IOException e) {
       LOG.error("", e);
     }
-
-    // set the IDP version
-    CommonUtils.setIdpVersion(props.getProperty("idp.version"));
 
     Hdfs2HBaseWorker worker = new Hdfs2HBaseWorker(args[0]);
     worker.execute();

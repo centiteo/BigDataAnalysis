@@ -144,7 +144,7 @@
 	
 	<column>
 		<name>service_type</name>
-		<udfName>com.intel.bigdata.analysis.custom.datagen.ServiceTypeGenerator</udfName>
+		<udfName>com.cloudera.bigdata.analysis.custom.datagen.ServiceTypeGenerator</udfName>
 		<randomType>UDF</randomType>
 	</column>
 	
