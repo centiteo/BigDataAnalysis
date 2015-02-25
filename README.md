@@ -22,7 +22,7 @@ The BigDataAnalysis changes tracker is at [2]
 Apache-ANT:
   You should have jdk and apache-ant installed
   ant -Dcdh.version=<version> package
-      Currently, cdh.version only supports 5.0 and 5.2.1
+  Currently, we only support 5.0 and 5.2.1 for cdh.version.
 
 Maven
   You should have jdk and maven installed in build machine.
@@ -33,8 +33,8 @@ Maven
 # How to Run
 
 ## Data Generation
-Prepare an XML document specifying how the record will look like, and run the generation program. Typicall, you will run like this:
+Prepare an XML document specifying how the record will look like, and run the generation program. You can refer to schema/generator.xsd for how to create the XML instance document. Typicall, you will run like this::
 
 java -cp /etc/hadoop/conf:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop/.//*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/./:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/.//*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-yarn/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-yarn/.//*:/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/lib/*:/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/.//*:/etc/hbase/conf:/opt/cloudera/parcels/CDH/lib/hbase/*:/opt/cloudera/parcels/CDH/lib/hbase/lib/*:* com.cloudera.bigdata.analysis.datagen.GeneratorDriver &lt;args&gt;
 
-Also, you can find some pre-built examples in examples folder to understand the usage directly.
+Also, you can find some pre-built examples in examples folder to understand the usage directly..

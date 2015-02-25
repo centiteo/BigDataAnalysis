@@ -13,6 +13,7 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.hbase.generated.master.snapshot_jsp;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.JobClient;
@@ -41,7 +42,8 @@ import com.cloudera.bigdata.analysis.index.util.IndexUtil;
  */
 public class DataLoad {
   private static final Logger LOG = LoggerFactory.getLogger(DataLoad.class);
-  private static final String USAGE = "Usage: com.intel.bigdata.analysis.dataload.DataLoad <property file>";
+  private static final String USAGE =
+      "Usage: com.cloudera.bigdata.analysis.dataload.DataLoad <property file>";
   private static final String JOB_NAME_PREFIX = "DATALOAD_";
 
   private Configuration conf;
@@ -228,5 +230,23 @@ public class DataLoad {
   private static void printUsage() {
     System.err.println(USAGE);
     System.exit(1);
+  }
+
+  private static void printHelp(){
+    StringBuilder sb = new StringBuilder();
+    sb.append("You need to specify the following properties in property file: \n");
+    sb.append("\t")
+        .append(Constants.DATALOAD_MODE)
+        .append("\t")
+        .append(
+            "data load mode, should be 'mapred' or 'local'; 'local' by default").append("\n");
+    
+    sb.append("\t")
+        .append(Constants.FILE_NUM_KEY)
+        .append("\t")
+        .append(
+            "Number of files for in memory source, ignored for other source.")
+        .append("\n");
+
   }
 }
