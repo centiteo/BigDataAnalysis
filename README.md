@@ -1,4 +1,5 @@
-BigDataAnalysis is a general big data analysis project over Cloudera platform.
+# Introduction
+BigDataAnalysis is a general big data analysis project over Cloudera platform, including Data Generator simulation, Data Ingestion, Data Processing, Data Analysis and Data Exporting.
 
 ------------------------
 The delivery for customer:
@@ -16,7 +17,7 @@ The BigDataAnalysis changes tracker is at [2]
 1. https://sh-ssvn.sh.intel.com/ssg_repos/svn_hadoop/hadoop/hadoop/SOLUTIONS/BigDataAnalysis
 2. https://sh-ssvn.sh.intel.com/ssg_repos/svn_hadoop/hadoop/hadoop/SOLUTIONS/BigDataAnalysis/CHANGES.txt
 
-BUILD
+# Build
 ====================
 Apache-ANT:
   You should have jdk and apache-ant installed
@@ -29,8 +30,10 @@ Maven
   Build Steps: 
   Type mvn package to build project
 
-RUN
+# How to Run
 ====================
+Data Generation:
+
 To get started using BigDataAnalysis's different components, like BulkLoad, DataGen, etc., the full documentation for this release can be found under the docs/ directory that accompanies this README. 
 
 Also, you can find some pre-built examples in examples folder to understand the usage directly.
