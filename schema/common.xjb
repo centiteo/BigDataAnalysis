@@ -4,7 +4,7 @@
 	
 	<jxb:bindings schemaLocation="common.xsd" node="/xs:schema">
 		<jxb:schemaBindings>
-			<jxb:package name="com.intel.bigdata.analysis.generated"/>
+			<jxb:package name="com.cloudera.bigdata.analysis.generated"/>
 		</jxb:schemaBindings>
 	</jxb:bindings>
 	
