@@ -1,4 +1,4 @@
-BigDataAnalysis is a distributed big data analysis system over Intel Distributed Hadoop(IDH).
+BigDataAnalysis is a general big data analysis project over Cloudera platform.
 
 ------------------------
 The delivery for customer:
@@ -20,17 +20,14 @@ BUILD
 ====================
 Apache-ANT:
   You should have jdk and apache-ant installed
-  ant -Didp.version=<version> package
-      version can be 2.5.1 or 3.1
+  ant -Dcdh.version=<version> package
+      Currently, cdh.version only supports 5.0 and 5.2.1
 
 Maven
   You should have jdk and maven installed in build machine.
   
   Build Steps: 
-  Copy maven/setting.xml to ${USER.HOME}/.m2/
   Type mvn package to build project
-
-
 
 RUN
 ====================
