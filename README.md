@@ -18,7 +18,7 @@ The BigDataAnalysis changes tracker is at [2]
 2. https://sh-ssvn.sh.intel.com/ssg_repos/svn_hadoop/hadoop/hadoop/SOLUTIONS/BigDataAnalysis/CHANGES.txt
 
 # Build
-====================
+
 Apache-ANT:
   You should have jdk and apache-ant installed
   ant -Dcdh.version=<version> package
@@ -31,9 +31,10 @@ Maven
   Type mvn package to build project
 
 # How to Run
-====================
-Data Generation:
 
-To get started using BigDataAnalysis's different components, like BulkLoad, DataGen, etc., the full documentation for this release can be found under the docs/ directory that accompanies this README. 
+## Data Generation
+Prepare an XML document specifying how the record will look like, and run the generation program. Typicall, you will run like this:
+
+java -cp /etc/hadoop/conf:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop/.//*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/./:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/.//*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-yarn/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-yarn/.//*:/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/lib/*:/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/.//*:/etc/hbase/conf:/opt/cloudera/parcels/CDH/lib/hbase/*:/opt/cloudera/parcels/CDH/lib/hbase/lib/*:* com.cloudera.bigdata.analysis.datagen.GeneratorDriver <args>
 
 Also, you can find some pre-built examples in examples folder to understand the usage directly.
