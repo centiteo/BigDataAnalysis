@@ -69,9 +69,6 @@ public class TableManagementThread extends Thread {
   protected synchronized void createTableInner(HTableDefinition tableDefinition)
       throws Exception {
     String tableName = tableDefinition.getTableName();
-    if (LOG.isDebugEnabled()) {
-      LOG.debug("tablename" + tableName);
-    }
     if (isAvailable(tableName)) {
       return;
     }

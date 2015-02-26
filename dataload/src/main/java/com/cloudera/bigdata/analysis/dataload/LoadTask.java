@@ -17,13 +17,14 @@ import com.cloudera.bigdata.analysis.dataload.io.FileObject;
 import com.cloudera.bigdata.analysis.dataload.util.Util;
 
 /**
- * The LoadTask is the main entry for loading data to HBase. It can be used in
+ * The LoadTask is the entry for loading data to HBase. It can be used in
  * standalone mode or in mapreduce mode. In standalone mode, it's invoked by a
  * single client; while in mapred it's invoked in Mapper's map function.
  */
 public class LoadTask {
   private static final Logger LOG = LoggerFactory.getLogger(LoadTask.class);
-  private static final String USAGE_STR = "com.intel.bigdata.analysis.dataload.LoadTask <properties_file>";
+  private static final String USAGE_STR =
+      "com.cloudera.bigdata.analysis.dataload.LoadTask <properties_file>";
 
   private List<FileObject> files;
   private Configuration conf;

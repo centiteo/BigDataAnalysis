@@ -229,6 +229,7 @@ public class DataLoad {
 
   private static void printUsage() {
     System.err.println(USAGE);
+    printHelp();
     System.exit(1);
   }
 
@@ -246,6 +247,96 @@ public class DataLoad {
         .append("\t")
         .append(
             "Number of files for in memory source, ignored for other source.")
+        .append("\n");
+    
+    sb.append("\t").append(Constants.DATASOURCE_CLASS_KEY).append("\t")
+        .append(
+            "The built-in data source class name, FTPDataSource, HDFSDataSource and InMemoryDataSource.")
+        .append("\n");
+
+    sb.append("\t")
+        .append(Constants.HDFSDIRS)
+        .append("\t")
+        .append(
+            "HDFS directories contain the source files, separated by ','; only works for HDFS Data Source.")
+        .append("\n");
+
+    sb.append("\t")
+        .append(Constants.DATALOAD_SOURCE_FTP_DIR)
+        .append("\t")
+        .append(
+            "FTP directories contain the source files, separated by ','; only works for FTP Data Source.")
+        .append("\n");
+
+    sb.append("\t")
+        .append(Constants.RECORD_NUM_PER_FILE_KEY)
+        .append("\t")
+        .append(
+            "Records number in a single source file; only works for in-memory Data Source.")
+        .append("\n");
+
+    sb.append("\t").append(Constants.DATALOAD_ONLY_A_LARGE_FILE_KEY)
+        .append("\t")
+        .append("If only have a large text file to load, default is false.")
+        .append("\n");
+
+
+    sb.append("\t")
+        .append(Constants.FILEPARSER_CLASS_KEY)
+        .append("\t")
+        .append(
+            "The built-in file parser, currently we two parsers, TextFileParser and InMemoryFileParser.")
+        .append("\n");
+
+    sb.append("\t").append(Constants.PARSER_READER_BUF_SIZE_KEY).append("\t")
+        .append("Size of the reader buffer in bytes. 8192 by default.")
+        .append("\n");
+
+    sb.append("\t").append(Constants.FETCH_PARALLEL_KEY).append("\t")
+        .append(
+            "How many fetch threads (mappers) for data loading. 1 by default.")
+        .append("\n");
+
+    sb.append("\t")
+        .append(Constants.THREADS_PER_MAPPER_KEY)
+        .append("\t")
+        .append(
+            "How many workers threads per fetch (mapper) for data loading. 1 by default.")
+        .append("\n");
+
+    sb.append("\t").append(Constants.QUEUE_LENGTH_KEY).append("\t")
+        .append("Size of the buffer. 1000 by default.").append("\n");
+
+
+    sb.append("\t").append(Constants.HBASE_TARGET_TABLE_NAME).append("\t")
+        .append("Target hbase table name. required.").append("\n");
+
+    sb.append("\t").append(Constants.SPLIT_KEY_PREFIXES).append("\t")
+        .append("Prefixies for region start or end keys, empty by default")
+        .append("\n");
+
+    sb.append("\t").append(Constants.SPLIT_SIZE_KEY).append("\t")
+        .append("Split number for each prefix range. 1 by default.")
+        .append("\n");
+
+    sb.append("\t").append(Constants.CREATE_TABLE_KEY).append("\t")
+        .append(
+            "Whether to create HBase table if it does not exist. true by default.")
+        .append("\n");
+
+    sb.append("\t").append(Constants.WRITE_TO_WAL_KEY).append("\t")
+        .append("Whether to enable WAL. false by default.").append("\n");
+
+    sb.append("\t").append(Constants.AUTO_FLUSH_KEY).append("\t")
+        .append("Whether to auto flush client buffer. false by default.")
+        .append("\n");
+
+    sb.append("\t").append(Constants.WRITE_BUFFER_SIZE_KEY).append("\t")
+        .append("Size of client buffer in MB. 6MB by default.").append("\n");
+
+    sb.append("\t").append(Constants.BUILD_INDEX).append("\t")
+        .append(
+            "Whether to build index while loading data into HBase. false by default.")
         .append("\n");
 
   }

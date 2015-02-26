@@ -65,9 +65,6 @@ public class HBaseUpdater {
 
   public void update(Record record, Map<HTableDefinition, Row[]> updates)
       throws Exception {
-    if (LOG.isDebugEnabled()) {
-      LOG.debug("enter update");
-    }
     for (HTableDefinition tableDefinition : updates.keySet()) {
       if (!tableDefinition.equals(cachedTableDefinition)) {
         if (cachedTable != null) {
@@ -76,9 +73,6 @@ public class HBaseUpdater {
 
         if (createTableIfNotExist) {
           managementThread.createTable(tableDefinition);
-          if (LOG.isDebugEnabled()) {
-            LOG.debug("after create");
-          }
         }
         cachedTable = pool.getTable(tableDefinition.getTableName());
         cachedTableDefinition = tableDefinition;

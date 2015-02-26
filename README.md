@@ -1,30 +1,18 @@
 # Introduction
 BigDataAnalysis is a general big data analysis project over Cloudera platform, including Data Generator simulation, Data Ingestion, Data Processing, Data Analysis and Data Exporting.
 
-------------------------
-The delivery for customer:
-1.Run $BIGDATAANALYSIS_HOME/build.sh, it will generated a obfuscator codes package under $BIGDATAANALYSIS_HOME/target/BigDataAnalysis-1.0.tar.gz
-2.Bring the $BIGDATAANALYSIS_HOME/target/BigDataAnalysis-1.0.tar.gz to cluster side.
-
-
-
-The latest BigDataAnalysis can be downloaded from an BigDataAnalysis Mirror [1].
-
-The source code can be found at [1]
-
-The BigDataAnalysis changes tracker is at [2]
-
-1. https://sh-ssvn.sh.intel.com/ssg_repos/svn_hadoop/hadoop/hadoop/SOLUTIONS/BigDataAnalysis
-2. https://sh-ssvn.sh.intel.com/ssg_repos/svn_hadoop/hadoop/hadoop/SOLUTIONS/BigDataAnalysis/CHANGES.txt
 
 # Build
 
-Apache-ANT:
-  You should have jdk and apache-ant installed
-  ant -Dcdh.version=<version> package
-  Currently, we only support 5.0 and 5.2.1 for cdh.version.
+Requirements:
+    Oracle JDK
+    Apache Ant
+    Apache Maven
+	
+Build using Apache Ant:
+    ant -Dcdh.version=<version> package, currently, we only support 5.0 and 5.2.1 for cdh.version, and will have 5.3 soon.
 
-Maven
+Build using Apache Maven
   You should have jdk and maven installed in build machine.
   
   Build Steps: 
@@ -37,4 +25,10 @@ Prepare an XML document specifying how the record will look like, and run the ge
 
 java -cp /etc/hadoop/conf:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop/.//*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/./:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/.//*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-yarn/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-yarn/.//*:/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/lib/*:/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/.//*:/etc/hbase/conf:/opt/cloudera/parcels/CDH/lib/hbase/*:/opt/cloudera/parcels/CDH/lib/hbase/lib/*:* com.cloudera.bigdata.analysis.datagen.GeneratorDriver &lt;args&gt;
 
-Also, you can find some pre-built examples in examples folder to understand the usage directly..
+Or you can just type com.cloudera.bigdata.analysis.datagen.GeneratorDriver for help.
+
+Also, you can find some pre-built examples in examples folder to understand the usage directly.
+
+## General Data Loading
+
+## Bulk Data Loading
