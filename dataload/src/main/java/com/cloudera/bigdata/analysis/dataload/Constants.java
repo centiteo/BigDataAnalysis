@@ -35,6 +35,8 @@ public class Constants {
 
   public final static String DATASOURCE_CLASS_KEY = "dataload.source.dataSourceClass";
 
+  public final static String DATASOURCE_TYPE_KEY = "dataload.source.type";
+
   public static final String HDFSDIRS = "dataload.source.hdfsDirs";
 
   public final static String FILEPARSER_CLASS_KEY = "fileParserClass";

@@ -22,9 +22,16 @@ public abstract class DataSource {
     HANDLED_SUCCESSFUL, INTERRUPTED, IO_ERROR, PARSE_ERROR, HBASE_ERROR
   }
 
+  public static HashMap<DataSourceType, Class<? extends DataSource>> sourceClassMap;
+
   private static HashMap<Class<? extends DataSource>, DataSource> dataSources;
 
   static {
+    sourceClassMap =
+        new HashMap<DataSource.DataSourceType, Class<? extends DataSource>>();
+    sourceClassMap.put(DataSourceType.HDFS, HDFSDataSource.class);
+    sourceClassMap.put(DataSourceType.FTP, FtpDataSource.class);
+    sourceClassMap.put(DataSourceType.INMEMORY, InMemoryDataSource.class);
     dataSources = new HashMap<Class<? extends DataSource>, DataSource>();
   }
 
@@ -79,5 +86,33 @@ public abstract class DataSource {
 
   /** Return the FileObject's Class, mainly used in the mapreduce mode */
   public abstract Class<? extends FileObject> getFileObjectClass();
+
+  public static enum DataSourceType {
+    HDFS("hdfs"), INMEMORY("inmemory"), FTP("ftp");
+
+    private String typeString;
+
+    DataSourceType(String typeString) {
+      this.typeString = typeString;
+    }
+
+    public String toString() {
+      return typeString;
+    }
+
+    public static DataSourceType formValue(String typeString) {
+      if ("hdfs".equalsIgnoreCase(typeString)) {
+        return HDFS;
+      } else if ("inmemory".equalsIgnoreCase(typeString)) {
+        return INMEMORY;
+      } else if ("ftp".equalsIgnoreCase(typeString)) {
+        return FTP;
+      } else {
+        throw new RuntimeException(
+            "Not supported data source type, should be hdfs, ftp or inmemory.");
+      }
+    }
+
+  }
 
 }

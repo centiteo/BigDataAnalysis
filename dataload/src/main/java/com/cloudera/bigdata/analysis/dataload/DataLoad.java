@@ -14,6 +14,7 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.apache.hadoop.hbase.generated.master.snapshot_jsp;
+import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapred.JobClient;
@@ -22,6 +23,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.net.NetUtils;
+import org.apache.hadoop.record.compiler.Consts;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.slf4j.Logger;
@@ -34,6 +36,7 @@ import com.cloudera.bigdata.analysis.dataload.io.FileObjectArrayWritable;
 import com.cloudera.bigdata.analysis.dataload.mapreduce.DataTransformMapper;
 import com.cloudera.bigdata.analysis.dataload.mapreduce.LineRowMapper;
 import com.cloudera.bigdata.analysis.dataload.source.DataSource;
+import com.cloudera.bigdata.analysis.dataload.source.DataSource.DataSourceType;
 import com.cloudera.bigdata.analysis.dataload.util.Util;
 import com.cloudera.bigdata.analysis.index.util.IndexUtil;
 
@@ -49,7 +52,6 @@ public class DataLoad {
   private Configuration conf;
   private String propertyFolder;
   private Job job;
-  private JobClient jobClient;
 
   public DataLoad(String propertyFile) {
     try {
@@ -87,6 +89,57 @@ public class DataLoad {
       LOG.error("Streaming fetch is not supported in mapred mode");
       System.exit(1);
     }
+
+    String dataSourceType = conf.get(Constants.DATASOURCE_TYPE_KEY);
+    if (Util.checkIsEmpty(dataSourceType)) {
+      ETLException.handle("Mush specify the property: "
+          + Constants.DATASOURCE_TYPE_KEY);
+    }
+
+    if (dataSourceType.equalsIgnoreCase(DataSourceType.HDFS.toString())) {
+      String hdfsDirs = conf.get(Constants.HDFSDIRS);
+      if(Util.checkIsEmpty(hdfsDirs)){
+        ETLException.handle("Must specify the property: " + Constants.HDFSDIRS);
+      }
+    }
+    if (dataSourceType.equalsIgnoreCase(DataSourceType.INMEMORY.toString())) {
+      String fileNum = conf.get(Constants.FILE_NUM_KEY);
+      String recordNumPerFile = conf.get(Constants.RECORD_NUM_PER_FILE_KEY);
+      if (Util.checkIsEmpty(fileNum)) {
+        ETLException.handle("Must specify the property: "
+            + Constants.FILE_NUM_KEY);
+      }
+
+      if (Util.checkIsEmpty(recordNumPerFile)) {
+        ETLException.handle("Must specify the property: "
+            + Constants.RECORD_NUM_PER_FILE_KEY);
+      }
+    }
+    if (dataSourceType.equalsIgnoreCase(DataSourceType.FTP.toString())) {
+      String ftpDirs = conf.get(Constants.DATALOAD_SOURCE_FTP_DIR);
+      if (Util.checkIsEmpty(ftpDirs)) {
+        ETLException.handle("Must specify the property: "
+            + Constants.DATALOAD_SOURCE_FTP_DIR);
+      }
+    }
+    
+    String parserType = conf.get(Constants.PARSER_TYPE_KEY);
+    if (Util.checkIsEmpty(parserType)) {
+      ETLException.handle("Must specify the property: "
+          + Constants.PARSER_TYPE_KEY);
+    }
+    String instanceDocPath = conf.get(Constants.INSTANCE_DOC_PATH_KEY);
+    if (Util.checkIsEmpty(instanceDocPath)) {
+      ETLException.handle("Must specify the property: "
+          + Constants.INSTANCE_DOC_PATH_KEY);
+    }
+
+    String hbaseTableName = conf.get(Constants.HBASE_TARGET_TABLE_NAME);
+    if (Util.checkIsEmpty(hbaseTableName)) {
+      ETLException.handle("Must specify the property: "
+          + Constants.HBASE_TARGET_TABLE_NAME);
+    }
+
   }
 
   public void start() {
@@ -125,12 +178,6 @@ public class DataLoad {
   private void mapredLoad() {
     try {
       job = new Job(conf);
-      String jobTracker = conf.get(Constants.MAPRED_JOB_TRACKER_KEY);
-      int jobTrackerPort = conf.get(Constants.MAPRED_JOBTRACKER_PORT_KEY) == null ? Constants.DEFAULT_JOBTRACKER_PORT
-          : Integer.parseInt(conf.get(Constants.MAPRED_JOBTRACKER_PORT_KEY));
-      LOG.debug("jobttracker port :" + jobTrackerPort);
-      jobClient = new JobClient(NetUtils.createSocketAddr(jobTracker,
-          jobTrackerPort), new Configuration());
 
       DataSource dataSource = Util.newDataSource(conf);
       List<FileObject> files = Util.getFileList(dataSource);
@@ -180,6 +227,7 @@ public class DataLoad {
         Constants.DEFAULT_FETCH_PARALLEL);
     int fileNumPerMap = (fileNum + fetchParallel - 1) / fetchParallel;
     Configuration conf = job.getConfiguration();
+    TableMapReduceUtil.addDependencyJars(job);
     conf.setInt(Constants.FETCH_PARALLEL_KEY, fetchParallel);
     conf.set(Constants.FILEOBJECT_CLASS_KEY, clazz.getName());
     conf.setInt(Constants.LINES_PER_MAP_KEY, fileNumPerMap);
@@ -252,6 +300,13 @@ public class DataLoad {
         .append("*\t")
         .append(
             "The built-in data source class name, FTPDataSource, HDFSDataSource and InMemoryDataSource.")
+        .append("\n");
+
+    sb.append("\t*")
+        .append(Constants.DATASOURCE_TYPE_KEY)
+        .append("*\t")
+        .append(
+            "The built-in data source type, currently we only support three source types, 'hdfs', 'ftp' and 'inmemory'.")
         .append("\n");
 
     sb.append("\t*")

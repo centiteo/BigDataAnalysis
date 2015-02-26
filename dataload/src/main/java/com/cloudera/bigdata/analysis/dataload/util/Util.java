@@ -28,6 +28,7 @@ import com.cloudera.bigdata.analysis.dataload.exception.ParseException;
 import com.cloudera.bigdata.analysis.dataload.exception.TableDisabledException;
 import com.cloudera.bigdata.analysis.dataload.io.FileObject;
 import com.cloudera.bigdata.analysis.dataload.source.DataSource;
+import com.cloudera.bigdata.analysis.dataload.source.DataSource.DataSourceType;
 import com.cloudera.bigdata.analysis.dataload.source.FileParser;
 import com.cloudera.bigdata.analysis.dataload.transform.ExtensibleHBaseRowConverter;
 
@@ -66,7 +67,10 @@ public class Util {
   public static DataSource newDataSource(Configuration conf)
       throws InstantiationException, IllegalAccessException,
       ClassNotFoundException, IOException {
-    String dataSourceClass = conf.get(Constants.DATASOURCE_CLASS_KEY);
+    DataSourceType sourceType =
+        DataSourceType.formValue(conf.get(Constants.DATASOURCE_TYPE_KEY));
+    String dataSourceClass =
+        DataSource.sourceClassMap.get(sourceType).getName();
     if (LOG.isDebugEnabled()) {
       LOG.info("dataSourceClass is " + dataSourceClass);
     }
