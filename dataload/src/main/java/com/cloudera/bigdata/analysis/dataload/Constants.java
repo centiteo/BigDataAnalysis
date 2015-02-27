@@ -209,13 +209,12 @@ public class Constants {
   
   public static final String BULKLOAD_PROPERTY_PREFIX = "cloudera.bulkload.";
 
-  public final static byte B_IDX_ROWKEY_DELIMITER = (byte) (",").charAt(0);
+  public final static byte B_IDX_ROWKEY_DELIMITER = (byte) ',';
   public final static int ROWKEY_PREFIX_LENGTH = 4;
-  /** the string pattern of randdom row key */
   public final static String ROWKEY_PREFIX_PATTERN = "%0"
       + ROWKEY_PREFIX_LENGTH + "d";
   /** the max int value of random row key prefix */
-  public final static int ROWKEY_PREFIX_MAX_VALUE = (int) Math.pow(10,
+  public final static int MAX_ROWKEY_PREFIXES_NUMBER = (int) Math.pow(10,
       ROWKEY_PREFIX_LENGTH);
 }
 

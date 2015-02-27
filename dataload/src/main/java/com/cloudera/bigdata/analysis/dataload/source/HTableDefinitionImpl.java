@@ -66,24 +66,14 @@ public class HTableDefinitionImpl implements HTableDefinition {
     }
 
     for (BaseColumnFamilyType familyType : cfSpecList) {
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("family : " + familyType.getFamilyName());
-        LOG.debug("compression type : "
-            + familyType.getCompressionType().name());
-      }
+      LOG.debug("family : " + familyType.getFamilyName());
+      LOG.debug("compression type : " + familyType.getCompressionType().name());
+
       HColumnDescriptor descriptor = new HColumnDescriptor(
           familyType.getFamilyName());
       if (familyType.getCompressionType().name() != null)
         descriptor.setCompressionType(Algorithm.valueOf(familyType
             .getCompressionType().name()));
-      if (CommonUtils.getIdpVersion().startsWith("3.")) {
-        // TODO if IDP 3.X version, setReplication Interface changes.
-      } else {
-        if (LOG.isDebugEnabled()) {
-          LOG.debug("replication : " + familyType.getReplication());
-        }
-        // descriptor.set.setReplication((short) familyType.getReplication());
-      }
       descriptor.setMaxVersions(familyType.getMaxVersion());
 
       descriptors.add(descriptor);

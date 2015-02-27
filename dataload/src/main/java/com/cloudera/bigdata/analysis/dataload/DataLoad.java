@@ -243,7 +243,7 @@ public class DataLoad {
     String qualifiedPath = conf.get(Constants.PROPERTY_FOLDER_KEY) + "/"
         + instanceDocPath;
     qualifiedPath = Util.makeQualified(qualifiedPath, conf);
-    LOG.debug("instanceDocPath :" + qualifiedPath);
+    LOG.debug("dataload.source.instanceDocPath :" + qualifiedPath);
     conf.set("tmpfiles", qualifiedPath);
     job.setJobName(jobName);
     job.setJarByClass(DataTransformMapper.class);

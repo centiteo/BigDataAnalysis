@@ -102,8 +102,9 @@ public class RegionSplitKeyUtils {
    * the rest 2 prefixes.
    */
   public static byte[][] calcSplitKeys(int regionQuantity) {
-    int avgPrefixCount = Constants.ROWKEY_PREFIX_MAX_VALUE / regionQuantity;
-    int residualPrefixCount = Constants.ROWKEY_PREFIX_MAX_VALUE
+    int avgPrefixCount = Constants.MAX_ROWKEY_PREFIXES_NUMBER / regionQuantity;
+    int residualPrefixCount =
+        Constants.MAX_ROWKEY_PREFIXES_NUMBER
         % regionQuantity;
     byte[][] splitKeys = new byte[regionQuantity - 1][];
     for (int i = 1; i <= regionQuantity - 1; i++) {
