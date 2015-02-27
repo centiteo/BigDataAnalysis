@@ -13,17 +13,13 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hbase.HBaseConfiguration;
-import org.apache.hadoop.hbase.generated.master.snapshot_jsp;
 import org.apache.hadoop.hbase.mapreduce.TableMapReduceUtil;
 import org.apache.hadoop.io.MapWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.JobClient;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-import org.apache.hadoop.net.NetUtils;
-import org.apache.hadoop.record.compiler.Consts;
 import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.slf4j.Logger;
@@ -139,7 +135,6 @@ public class DataLoad {
       ETLException.handle("Must specify the property: "
           + Constants.HBASE_TARGET_TABLE_NAME);
     }
-
   }
 
   public void start() {
@@ -294,13 +289,6 @@ public class DataLoad {
         .append(
             "Number of files for in memory source, ignored for other source.")
         .append("\n");
-    
-    sb.append("\t*")
-        .append(Constants.DATASOURCE_CLASS_KEY)
-        .append("*\t")
-        .append(
-            "The built-in data source class name, FTPDataSource, HDFSDataSource and InMemoryDataSource.")
-        .append("\n");
 
     sb.append("\t*")
         .append(Constants.DATASOURCE_TYPE_KEY)
@@ -400,6 +388,20 @@ public class DataLoad {
         .append("*\t")
         .append(
             "Whether to build index while loading data into HBase. false by default.")
+        .append("\n");
+
+    sb.append("\t*")
+        .append(Constants.DATALOAD_HASH_UUID_ROWKEY)
+        .append("*\t")
+        .append(
+            "Whether to use random UUID as the RowKey. We always suggest this if you want to build index during data load. false by default. Only effective for test file.")
+        .append("\n");
+
+    sb.append("\t*").append(Constants.DATALOAD_TABLE_REGION_QUANTITY)
+        .append("*\t")
+        .append(
+            "How many regions we want to pre-create. If specified, we will ignore "
+                + Constants.SPLIT_SIZE_KEY + ". Only effective for text file.")
         .append("\n");
 
     System.err.print(sb.toString());

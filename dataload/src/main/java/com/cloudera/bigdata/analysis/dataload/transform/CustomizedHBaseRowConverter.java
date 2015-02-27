@@ -1,7 +1,6 @@
 package com.cloudera.bigdata.analysis.dataload.transform;
 
 import java.util.Map;
-import java.util.UUID;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
@@ -69,11 +68,12 @@ public class CustomizedHBaseRowConverter {
       rowKey = RowKeyUtil.genRowKey(randomRowKeyPrefix);
       rowKeyValue = CommonUtils.convertByteArrayToString(rowKey);
     } else {
-      String rowKeyValuePre = ExpressionUtils.calculate(rowSpec.getRowKeySpec()
+      rowKeyValue =
+          ExpressionUtils.calculate(rowSpec.getRowKeySpec()
           .getSpecString(), line.getFieldMap());
-      // UUID has 10000000 kinds randomly
-      rowKeyValue = rowKeyValuePre + Constants.COLUMN_ENTRY_SEPARATOR
-          + UUID.randomUUID().toString();
+      // do not suffix the row key with UUID
+      // rowKeyValue = rowKeyValuePre + Constants.COLUMN_ENTRY_SEPARATOR
+      // + UUID.randomUUID().toString();
     }
 
     put = new Put(Bytes.toBytes(rowKeyValue), timeStamp);

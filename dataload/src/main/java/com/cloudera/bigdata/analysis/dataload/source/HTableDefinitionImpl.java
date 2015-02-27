@@ -9,6 +9,7 @@ import org.apache.hadoop.hbase.io.compress.Compression.Algorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.cloudera.bigdata.analysis.dataload.Constants;
 import com.cloudera.bigdata.analysis.dataload.util.CommonUtils;
 import com.cloudera.bigdata.analysis.dataload.util.RegionSplitKeyUtils;
 import com.cloudera.bigdata.analysis.dataload.util.Util;
@@ -83,7 +84,7 @@ public class HTableDefinitionImpl implements HTableDefinition {
 
   @Override
   public byte[][] getSplitKeys() throws Exception {
-    if (regionQuantity != 1) {
+    if (regionQuantity < Constants.DEFAULT_DATALOAD_TABLE_REGION_QUANTITY) {
       byte[][] splitKeys = RegionSplitKeyUtils.calcSplitKeys(regionQuantity);
       if (LOG.isDebugEnabled()) {
         LOG.debug("splitKeys size: " + splitKeys.length);

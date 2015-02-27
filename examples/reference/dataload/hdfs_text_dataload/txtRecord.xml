@@ -1,0 +1,59 @@
+<txtRecord>
+	<useSeparator>true</useSeparator>
+	<inputSeparator>|</inputSeparator>
+	<rowKeySpec rowKeySeparator="|">
+		<rowKeyFieldSpec>
+			<fieldIndex>3</fieldIndex>
+		</rowKeyFieldSpec>
+		<rowKeyFieldSpec>
+			<fieldIndex>1</fieldIndex>
+		</rowKeyFieldSpec>
+	</rowKeySpec>
+	
+	<columnFamilySpec>
+		<familyName>f</familyName>
+		<compressionType>SNAPPY</compressionType>
+		<replication>2</replication>
+		<maxVersion>1</maxVersion>
+		
+		<qualifierSpec>
+			<qualifierName>q1</qualifierName>
+			<qualifierSeparator>|</qualifierSeparator>
+			<fields>
+				<field>
+					<fieldIndex>8</fieldIndex>
+				</field>
+				<field>
+					<fieldIndex>10</fieldIndex>
+				</field>
+			</fields>
+		</qualifierSpec>
+		
+		<qualifierSpec>
+			<qualifierName>q2</qualifierName>
+			<qualifierSeparator>$$</qualifierSeparator>
+			<fields>
+				<field>
+					<fieldIndex>9</fieldIndex>
+				</field>
+			</fields>
+		</qualifierSpec>
+	</columnFamilySpec>
+	
+	<columnFamilySpec>
+		<familyName>g</familyName>
+		<compressionType>SNAPPY</compressionType>
+		<replication>2</replication>
+		<maxVersion>1</maxVersion>
+		
+		<qualifierSpec>
+			<qualifierName>q2</qualifierName>
+			<qualifierSeparator>**</qualifierSeparator>
+			<fields>
+				<field>
+					<fieldIndex>13</fieldIndex>
+				</field>
+			</fields>
+		</qualifierSpec>
+	</columnFamilySpec>
+</txtRecord>

@@ -40,7 +40,6 @@ import com.cloudera.bigdata.analysis.dataload.source.HTableDefinitionImpl;
 import com.cloudera.bigdata.analysis.dataload.source.InnerRecord;
 import com.cloudera.bigdata.analysis.dataload.source.Record;
 import com.cloudera.bigdata.analysis.generated.ColumnFamilyType;
-import com.cloudera.bigdata.analysis.generated.MultiQualifierType;
 import com.cloudera.bigdata.analysis.generated.QualifierType;
 import com.cloudera.bigdata.analysis.generated.RowKeyFieldType;
 import com.cloudera.bigdata.analysis.generated.TxtRecordType;
@@ -254,30 +253,30 @@ public class LineRowMapper<KEYOUT, VALUEOUT> extends
         qualifierMap
             .put(qType.getQualifierName().getBytes(), qValue.getBytes());
       }
-      for (MultiQualifierType qType : cfType.getMultiQualifierSpec()) {
-        StringBuffer multiQualifyValue = new StringBuffer();
-        if (recordType.isUseSeparater()) {
-          String[] indexs = StringUtils.splitByWholeSeparator(
-              qType.getFieldIndex(), ",");
-          for (int i = 0; i < indexs.length - 1; i++) {
-            multiQualifyValue.append(fieldValues[Integer.parseInt(indexs[i])]);
-            multiQualifyValue.append("|");
-          }
-          multiQualifyValue.append(fieldValues[Integer
-              .parseInt(indexs[indexs.length - 1])]);
-          if (LOG.isDebugEnabled()) {
-            LOG.debug("multiple qValue : " + multiQualifyValue);
-          }
-        } else {
-          // TODO
-          String startPos = qType.getStartPos();
-          String length = qType.getLength();
-          // TODO
-          // qValue = cachedLine.substring(startPos, startPos + length);
-        }
-        qualifierMap.put(qType.getQualifierName().getBytes(), multiQualifyValue
-            .toString().getBytes());
-      }
+      // for (MultiQualifierType qType : cfType.getMultiQualifierSpec()) {
+      // StringBuffer multiQualifyValue = new StringBuffer();
+      // if (recordType.isUseSeparater()) {
+      // String[] indexs = StringUtils.splitByWholeSeparator(
+      // qType.getFieldIndex(), ",");
+      // for (int i = 0; i < indexs.length - 1; i++) {
+      // multiQualifyValue.append(fieldValues[Integer.parseInt(indexs[i])]);
+      // multiQualifyValue.append("|");
+      // }
+      // multiQualifyValue.append(fieldValues[Integer
+      // .parseInt(indexs[indexs.length - 1])]);
+      // if (LOG.isDebugEnabled()) {
+      // LOG.debug("multiple qValue : " + multiQualifyValue);
+      // }
+      // } else {
+      // // TODO
+      // String startPos = qType.getStartPos();
+      // String length = qType.getLength();
+      // // TODO
+      // // qValue = cachedLine.substring(startPos, startPos + length);
+      // }
+      // qualifierMap.put(qType.getQualifierName().getBytes(), multiQualifyValue
+      // .toString().getBytes());
+      // }
       cfMap.put(cfType.getFamilyName().getBytes(), qualifierMap);
     }
     return cfMap;

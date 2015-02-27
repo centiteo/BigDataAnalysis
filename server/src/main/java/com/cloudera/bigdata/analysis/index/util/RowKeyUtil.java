@@ -28,17 +28,8 @@ public abstract class RowKeyUtil {
     return Bytes.toBytes(UUID.randomUUID().toString());
   }
 
-  // public static byte[] genRowKey() {
-  // return Bytes.add(genRandomRowKeyPrefix(), genUUID());
-  // }
-
   public static byte[] genRowKey(byte[] rowKeyPrefix) {
-    // return string, not byte array
-    // pain text rowkey
     return genRowKey(rowKeyPrefix, genUUIDString());
-
-    // byte array rowkey
-    // return genRowKey(rowKeyPrefix, genUUID());
   }
 
   public static byte[] genRowKey(byte[] rowKeyPrefix, byte[] uuid) {

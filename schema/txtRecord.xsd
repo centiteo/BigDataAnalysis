@@ -41,7 +41,7 @@
 			<xs:extension base="BaseColumnFamilyType">
 				<xs:sequence>
 					<xs:element name="qualifierSpec" type="QualifierType" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="multiQualifierSpec" type="MultiQualifierType" minOccurs="0" maxOccurs="unbounded"/>
+					<!-- <xs:element name="multiQualifierSpec" type="MultiQualifierType" minOccurs="0" maxOccurs="unbounded"/> -->
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -54,11 +54,28 @@
 					<xs:element name="startPos" type="xs:int"/>
 					<xs:element name="length" type="xs:int"/>
 					<xs:element name="fieldIndex" type="xs:int"/>
+					<xs:element name="qualifierSeparator" type="xs:string" default="|" />
+					<xs:element name="fields" type="FieldsDefinition" minOccurs="1" maxOccurs="1" />
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
 	
+	<xs:complexType name="FieldsDefinition">
+		<xs:sequence>
+			<xs:element name="field" type="FieldDefinition" minOccurs="1" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="FieldDefinition">
+		<xs:sequence>
+			<xs:element name="startPos" type="xs:int" />
+			<xs:element name="length" type="xs:int" />
+			<xs:element name="fieldIndex" type="xs:int" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- 
 	<xs:complexType name="MultiQualifierType">
 		<xs:complexContent>
 			<xs:extension base="BaseQualifierType">
@@ -70,5 +87,7 @@
 			</xs:extension>
 		</xs:complexContent>
 	</xs:complexType>
+	-->
 	
 </xs:schema>
+

@@ -33,6 +33,7 @@ public class Constants {
   public final static String STREAMING_FETCH_KEY = "dataload.source.streaming.fetch";
   public final static boolean DEFAULT_STREAM_FETCH = false;
 
+  @Deprecated
   public final static String DATASOURCE_CLASS_KEY = "dataload.source.dataSourceClass";
 
   public final static String DATASOURCE_TYPE_KEY = "dataload.source.type";
@@ -58,7 +59,17 @@ public class Constants {
 
   public final static String SPLIT_SIZE_KEY = "hbase.table.splitSize";
 
+  @Deprecated
   public final static String COLUMN_REPLICATION_KEY = "hbase.table.columnReplication";
+
+  public final static String DATALOAD_HASH_UUID_ROWKEY =
+      "hbase.table.rowkey.useHashUUID";
+  public final static Boolean DEFAULT_DATALOAD_HASH_UUID_ROWKEY = false;
+
+  public final static String DATALOAD_TABLE_REGION_QUANTITY =
+      "hbase.table.regionQuantity";
+  public final static int DEFAULT_DATALOAD_TABLE_REGION_QUANTITY =
+      Integer.MAX_VALUE;
 
   public final static String DELIMITER = "|";
 

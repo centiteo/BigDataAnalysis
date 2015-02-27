@@ -12,18 +12,21 @@ import javax.xml.bind.JAXBElement;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.generated.master.snapshot_jsp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import scala.actors.threadpool.Arrays;
 
 import com.cloudera.bigdata.analysis.dataload.Constants;
+import com.cloudera.bigdata.analysis.dataload.exception.ETLException;
 import com.cloudera.bigdata.analysis.dataload.exception.ParseException;
 import com.cloudera.bigdata.analysis.dataload.io.FileObject;
 import com.cloudera.bigdata.analysis.dataload.jaxb.SchemaUnmarshaller;
 import com.cloudera.bigdata.analysis.dataload.util.CommonUtils;
 import com.cloudera.bigdata.analysis.generated.ColumnFamilyType;
-import com.cloudera.bigdata.analysis.generated.MultiQualifierType;
+import com.cloudera.bigdata.analysis.generated.FieldDefinition;
+import com.cloudera.bigdata.analysis.generated.FieldsDefinition;
 import com.cloudera.bigdata.analysis.generated.QualifierType;
 import com.cloudera.bigdata.analysis.generated.RowKeyFieldType;
 import com.cloudera.bigdata.analysis.generated.TxtRecordType;
@@ -95,41 +98,30 @@ public class TextFileParser extends FileParser {
 
     cfSpecList = recordType.getColumnFamilySpec();
 
-    // for index
-    useHashUUIDForRowkey = (conf.get("useHashUUIDForRowkey") != null
-        || !conf.get("useHashUUIDForRowkey").isEmpty() ? conf.getBoolean(
-        "useHashUUIDForRowkey", false) : false);
-    regionQuantity = (conf.get("regionQuantity") != null
-        || !conf.get("useHashUUIDForRowkey").isEmpty() ? Integer.parseInt(conf
-        .get("regionQuantity")) : Integer.parseInt("1"));
-    if (LOG.isDebugEnabled()) {
-      LOG.debug("useHashUUIDForRowkey : " + useHashUUIDForRowkey);
-      LOG.debug("regionQuantity : " + regionQuantity);
+    useHashUUIDForRowkey =
+        conf.getBoolean(Constants.DATALOAD_HASH_UUID_ROWKEY, false);
+
+    regionQuantity =
+        conf.getInt(Constants.DATALOAD_TABLE_REGION_QUANTITY,
+            Constants.DEFAULT_DATALOAD_TABLE_REGION_QUANTITY);
+    if (regionQuantity <= 0) {
+      ETLException.handle(Constants.DATALOAD_TABLE_REGION_QUANTITY
+          + " must have the positive value.");
     }
 
     if (definitionMap == null) {
       definitionMap = new HashMap<String, HTableDefinition>();
     }
 
-    // maybe we have different policies to assemble the table name
     String tableName = conf.get(Constants.HBASE_TARGET_TABLE_NAME);
 
     cachedDefinition = definitionMap.get(tableName);
     if (cachedDefinition == null) {
       String splitPrefix = conf.get(Constants.SPLIT_KEY_PREFIXES, "");
       int splitSize = conf.getInt(Constants.SPLIT_SIZE_KEY, 1);
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("tableName : " + tableName);
-        LOG.debug("splitPrefix : " + splitPrefix);
-        LOG.debug("splitSize : " + splitSize);
-      }
-      if (regionQuantity != 1) {
-        cachedDefinition = new HTableDefinitionImpl(tableName, cfSpecList,
+      cachedDefinition =
+          new HTableDefinitionImpl(tableName, cfSpecList,
             splitPrefix, splitSize, regionQuantity);
-      } else {
-        cachedDefinition = new HTableDefinitionImpl(tableName, cfSpecList,
-            splitPrefix, splitSize);
-      }
       definitionMap.put(tableName, cachedDefinition);
     }
   }
@@ -140,8 +132,6 @@ public class TextFileParser extends FileParser {
     Record record = null;
     if (!StringUtils.isEmpty(cachedLine)) {
       if (recordType.isUseSeparater()) {
-        // fieldValues = cachedLine.split(recordType.getInputSeparater());
-        // handle null fields
         String delimiter = recordType.getInputSeparater();
         fieldValues = StringUtils.splitByWholeSeparatorPreserveAllTokens(
             cachedLine, delimiter);
@@ -152,7 +142,7 @@ public class TextFileParser extends FileParser {
           LOG.debug("fieldValues : " + Arrays.toString(fieldValues));
         }
       }
-      // buildIndex
+
       if (useHashUUIDForRowkey) {
         record = new InnerRecord(cachedDefinition, CommonUtils.genRowKey(),
             getValueMap(), conf.getBoolean(Constants.WRITE_TO_WAL_KEY, false));
@@ -163,7 +153,6 @@ public class TextFileParser extends FileParser {
       return record;
     }
 
-    // TODO: null handling
     return null;
   }
 
@@ -192,44 +181,52 @@ public class TextFileParser extends FileParser {
       HashMap<byte[], byte[]> qualifierMap = new HashMap<byte[], byte[]>();
       for (QualifierType qType : cfType.getQualifierSpec()) {
         String qValue = null;
+        FieldsDefinition fields = qType.getFields();
+        List<FieldDefinition> fieldList = fields.getField();
+        StringBuilder sb = new StringBuilder();
         if (recordType.isUseSeparater()) {
-          qValue = fieldValues[qType.getFieldIndex()];
-          if (LOG.isDebugEnabled()) {
-            LOG.debug("qValue : fieldValues[" + qType.getFieldIndex() + "] = "
-                + qValue);
+          for (FieldDefinition definition : fieldList) {
+            sb.append(fieldValues[definition.getFieldIndex()]);
           }
         } else {
-          int startPos = qType.getStartPos();
-          int length = qType.getLength();
-          qValue = cachedLine.substring(startPos, startPos + length);
+          for (FieldDefinition definition : fieldList) {
+            int startPos = definition.getStartPos();
+            int length = definition.getLength();
+            sb.append(cachedLine.substring(startPos, startPos + length));
+          }
+        }
+        qValue = sb.toString();
+        if (LOG.isDebugEnabled()) {
+          LOG.debug("qValue : fieldValues[" + qType.getFieldIndex() + "] = "
+              + qValue);
         }
         qualifierMap
             .put(qType.getQualifierName().getBytes(), qValue.getBytes());
       }
-      for (MultiQualifierType qType : cfType.getMultiQualifierSpec()) {
-        StringBuffer multiQualifyValue = new StringBuffer();
-        if (recordType.isUseSeparater()) {
-          String[] indexs = StringUtils.splitByWholeSeparator(
-              qType.getFieldIndex(), ",");
-          for (int i = 0; i < indexs.length - 1; i++) {
-            multiQualifyValue.append(fieldValues[Integer.parseInt(indexs[i])]);
-            multiQualifyValue.append("|");
-          }
-          multiQualifyValue.append(fieldValues[Integer
-              .parseInt(indexs[indexs.length - 1])]);
-          if (LOG.isDebugEnabled()) {
-            LOG.debug("multiple qValue : " + multiQualifyValue);
-          }
-        } else {
-          // TODO
-          String startPos = qType.getStartPos();
-          String length = qType.getLength();
-          // TODO
-          // qValue = cachedLine.substring(startPos, startPos + length);
-        }
-        qualifierMap.put(qType.getQualifierName().getBytes(), multiQualifyValue
-            .toString().getBytes());
-      }
+      // for (MultiQualifierType qType : cfType.getMultiQualifierSpec()) {
+      // StringBuffer multiQualifyValue = new StringBuffer();
+      // if (recordType.isUseSeparater()) {
+      // String[] indexs = StringUtils.splitByWholeSeparator(
+      // qType.getFieldIndex(), ",");
+      // for (int i = 0; i < indexs.length - 1; i++) {
+      // multiQualifyValue.append(fieldValues[Integer.parseInt(indexs[i])]);
+      // multiQualifyValue.append("|");
+      // }
+      // multiQualifyValue.append(fieldValues[Integer
+      // .parseInt(indexs[indexs.length - 1])]);
+      // if (LOG.isDebugEnabled()) {
+      // LOG.debug("multiple qValue : " + multiQualifyValue);
+      // }
+      // } else {
+      // // TODO
+      // String startPos = qType.getStartPos();
+      // String length = qType.getLength();
+      // // TODO
+      // // qValue = cachedLine.substring(startPos, startPos + length);
+      // }
+      // qualifierMap.put(qType.getQualifierName().getBytes(), multiQualifyValue
+      // .toString().getBytes());
+      // }
       cfMap.put(cfType.getFamilyName().getBytes(), qualifierMap);
     }
     return cfMap;
