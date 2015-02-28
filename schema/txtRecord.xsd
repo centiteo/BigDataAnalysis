@@ -11,11 +11,11 @@
 	<xs:element name="txtRecord">
 		<xs:complexType name="TxtRecordType">
 			<xs:sequence>
-				<xs:element name="useSeparater" type="xs:boolean" />
-				<xs:element name="inputSeparater" type="xs:string" default="|" />
+				<xs:element name="inputDelimiter" type="xs:string" default="|" />
 				<xs:element name="rowKeySpec" type="RowKeyType" />
 				<xs:element name="columnFamilySpec" type="ColumnFamilyType" minOccurs="1" maxOccurs="unbounded"/>
 			</xs:sequence>
+			<xs:attribute name="useDelimiter" type="xs:boolean" defalut="true" />
 		</xs:complexType>
 	</xs:element>
 	
@@ -23,7 +23,7 @@
 		<xs:sequence>
 			<xs:element name="rowKeyFieldSpec" type="RowKeyFieldType" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
-		<xs:attribute name="rowKeySeparater" type="xs:string" default="|" />
+		<xs:attribute name="rowKeyDelimiter" type="xs:string" default="|" />
 	</xs:complexType>
 	
 	<xs:complexType name="RowKeyFieldType">
@@ -54,7 +54,7 @@
 					<xs:element name="startPos" type="xs:int"/>
 					<xs:element name="length" type="xs:int"/>
 					<xs:element name="fieldIndex" type="xs:int"/>
-					<xs:element name="qualifierSeparator" type="xs:string" default="|" />
+					<xs:element name="qualifierDelimiter" type="xs:string" default="|" />
 					<xs:element name="fields" type="FieldsDefinition" minOccurs="1" maxOccurs="1" />
 				</xs:sequence>
 			</xs:extension>

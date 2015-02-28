@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,6 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.generated.master.snapshot_jsp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import scala.actors.threadpool.Arrays;
 
 import com.cloudera.bigdata.analysis.dataload.Constants;
 import com.cloudera.bigdata.analysis.dataload.exception.ETLException;
@@ -45,7 +44,7 @@ public class TextFileParser extends FileParser {
   private Configuration conf;
 
   private TxtRecordType recordType;
-  private String rowKeySeparater;
+  private String rowKeyDelimiter;
   private List<RowKeyFieldType> fieldSpecList;
   private List<ColumnFamilyType> cfSpecList;
 
@@ -93,7 +92,7 @@ public class TextFileParser extends FileParser {
     recordType = ((JAXBElement<TxtRecordType>) SchemaUnmarshaller.getInstance()
         .unmarshallDocument(TxtRecordType.class, instanceDoc)).getValue();
 
-    rowKeySeparater = recordType.getRowKeySpec().getRowKeySeparater();
+    rowKeyDelimiter = recordType.getRowKeySpec().getRowKeyDelimiter();
     fieldSpecList = recordType.getRowKeySpec().getRowKeyFieldSpec();
 
     cfSpecList = recordType.getColumnFamilySpec();
@@ -131,15 +130,15 @@ public class TextFileParser extends FileParser {
     cachedLine = reader.readLine();
     Record record = null;
     if (!StringUtils.isEmpty(cachedLine)) {
-      if (recordType.isUseSeparater()) {
-        String delimiter = recordType.getInputSeparater();
+      if (recordType.isUseDelimiter()) {
+        String delimiter = recordType.getInputDelimiter();
         fieldValues = StringUtils.splitByWholeSeparatorPreserveAllTokens(
             cachedLine, delimiter);
         if (LOG.isDebugEnabled()) {
           LOG.debug("cachedLine : " + cachedLine);
           LOG.debug("split delimiter : " + delimiter);
           LOG.debug("fieldValues size : " + fieldValues.length);
-          LOG.debug("fieldValues : " + Arrays.toString(fieldValues));
+          LOG.debug("fieldValues : " + Arrays.asList(fieldValues));
         }
       }
 
@@ -150,6 +149,7 @@ public class TextFileParser extends FileParser {
         record = new InnerRecord(cachedDefinition, getRowKey(), getValueMap(),
             conf.getBoolean(Constants.WRITE_TO_WAL_KEY, false));
       }
+
       return record;
     }
 
@@ -160,7 +160,7 @@ public class TextFileParser extends FileParser {
     StringBuffer sb = new StringBuffer();
     for (RowKeyFieldType fieldSpec : fieldSpecList) {
       String fieldValue = null;
-      if (recordType.isUseSeparater()) {
+      if (recordType.isUseDelimiter()) {
         fieldValue = fieldValues[fieldSpec.getFieldIndex()];
       } else {
         int startPos = fieldSpec.getStartPos();
@@ -168,7 +168,7 @@ public class TextFileParser extends FileParser {
         fieldValue = cachedLine.substring(startPos, startPos + length);
       }
       sb.append(fieldValue);
-      sb.append(rowKeySeparater);
+      sb.append(rowKeyDelimiter);
     }
 
     return sb.toString().getBytes();
@@ -184,7 +184,7 @@ public class TextFileParser extends FileParser {
         FieldsDefinition fields = qType.getFields();
         List<FieldDefinition> fieldList = fields.getField();
         StringBuilder sb = new StringBuilder();
-        if (recordType.isUseSeparater()) {
+        if (recordType.isUseDelimiter()) {
           for (FieldDefinition definition : fieldList) {
             sb.append(fieldValues[definition.getFieldIndex()]);
           }

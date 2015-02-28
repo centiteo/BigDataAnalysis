@@ -77,19 +77,15 @@ public class TableManagementThread extends Thread {
       // multiple process will enter this scope, but don't worry
       // HBase master will handle the creation request in synchronized manner
       HTableDescriptor ht = new HTableDescriptor(tableName);
-
       ht.setMemStoreFlushSize(tableDefinition.getMemStoreFlushSize());
       if (LOG.isDebugEnabled()) {
         LOG.debug("column family number: "
             + tableDefinition.getColumnFamilies().length);
       }
-
       for (HColumnDescriptor family : tableDefinition.getColumnFamilies()) {
         ht.addFamily(family);
       }
-
       byte[][] splits = tableDefinition.getSplitKeys();
-
       int numRegions = splits == null ? 1 : splits.length + 1;
 
       // set index corprocessor

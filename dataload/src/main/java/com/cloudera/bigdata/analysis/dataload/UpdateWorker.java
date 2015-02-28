@@ -131,10 +131,11 @@ public class UpdateWorker implements Runnable {
           }
         }
       } catch (TableDisabledException e) {
-
+        e.printStackTrace();
         if (file != null) {
           file.setError(e);
         }
+        break;
       } catch (InterruptedException e) {
         e.getStackTrace();
       } catch (IOException e) {

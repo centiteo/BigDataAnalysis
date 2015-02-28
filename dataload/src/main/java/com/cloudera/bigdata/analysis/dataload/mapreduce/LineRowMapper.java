@@ -100,7 +100,7 @@ public class LineRowMapper<KEYOUT, VALUEOUT> extends
     recordType = ((JAXBElement<TxtRecordType>) SchemaUnmarshaller.getInstance()
         .unmarshallDocument(TxtRecordType.class, instanceDoc)).getValue();
 
-    rowKeySeparater = recordType.getRowKeySpec().getRowKeySeparater();
+    rowKeySeparater = recordType.getRowKeySpec().getRowKeyDelimiter();
     fieldSpecList = recordType.getRowKeySpec().getRowKeyFieldSpec();
 
     cfSpecList = recordType.getColumnFamilySpec();
@@ -180,10 +180,10 @@ public class LineRowMapper<KEYOUT, VALUEOUT> extends
   public Record assembleRecord(String cachedLine) {
     Record record = null;
     if (!StringUtils.isEmpty(cachedLine)) {
-      if (recordType.isUseSeparater()) {
+      if (recordType.isUseDelimiter()) {
         // fieldValues = cachedLine.split(recordType.getInputSeparater());
         // handle null fields
-        String delimiter = recordType.getInputSeparater();
+        String delimiter = recordType.getInputDelimiter();
         fieldValues = StringUtils.splitByWholeSeparatorPreserveAllTokens(
             cachedLine, delimiter);
         if (LOG.isDebugEnabled()) {
@@ -218,7 +218,7 @@ public class LineRowMapper<KEYOUT, VALUEOUT> extends
     StringBuffer sb = new StringBuffer();
     for (RowKeyFieldType fieldSpec : fieldSpecList) {
       String fieldValue = null;
-      if (recordType.isUseSeparater()) {
+      if (recordType.isUseDelimiter()) {
         fieldValue = fieldValues[fieldSpec.getFieldIndex()];
       } else {
         int startPos = fieldSpec.getStartPos();
@@ -239,7 +239,7 @@ public class LineRowMapper<KEYOUT, VALUEOUT> extends
       HashMap<byte[], byte[]> qualifierMap = new HashMap<byte[], byte[]>();
       for (QualifierType qType : cfType.getQualifierSpec()) {
         String qValue = null;
-        if (recordType.isUseSeparater()) {
+        if (recordType.isUseDelimiter()) {
           qValue = fieldValues[qType.getFieldIndex()];
           if (LOG.isDebugEnabled()) {
             LOG.debug("qValue : fieldValues[" + qType.getFieldIndex() + "] = "

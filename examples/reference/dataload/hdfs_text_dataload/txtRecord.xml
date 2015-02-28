@@ -1,7 +1,6 @@
-<txtRecord>
-	<useSeparator>true</useSeparator>
-	<inputSeparator>|</inputSeparator>
-	<rowKeySpec rowKeySeparator="|">
+<txtRecord useDelimiter="true">
+	<inputDelimiter>|</inputDelimiter>
+	<rowKeySpec rowKeyDelimiter="|">
 		<rowKeyFieldSpec>
 			<fieldIndex>3</fieldIndex>
 		</rowKeyFieldSpec>
@@ -18,7 +17,7 @@
 		
 		<qualifierSpec>
 			<qualifierName>q1</qualifierName>
-			<qualifierSeparator>|</qualifierSeparator>
+			<qualifierDelimiter>|</qualifierDelimiter>
 			<fields>
 				<field>
 					<fieldIndex>8</fieldIndex>
@@ -48,7 +47,7 @@
 		
 		<qualifierSpec>
 			<qualifierName>q2</qualifierName>
-			<qualifierSeparator>**</qualifierSeparator>
+			<qualifierDelimiter>**</qualifierDelimiter>
 			<fields>
 				<field>
 					<fieldIndex>13</fieldIndex>
