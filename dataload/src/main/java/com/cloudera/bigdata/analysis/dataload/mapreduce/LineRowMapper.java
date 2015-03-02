@@ -1,6 +1,7 @@
 package com.cloudera.bigdata.analysis.dataload.mapreduce;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,8 +27,6 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import scala.actors.threadpool.Arrays;
 
 import com.cloudera.bigdata.analysis.dataload.Constants;
 import com.cloudera.bigdata.analysis.dataload.FileInfo;

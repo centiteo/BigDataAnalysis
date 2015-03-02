@@ -1,0 +1,1076 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="file://$MODULE_DIR$/conf" />
+    <libelement value="jar://$MODULE_DIR$/lib/kafka_2.8.0-0.8.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/scala-library.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/jopt-simple-4.5.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/zookeeper/zookeeper-3.4.5-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop/hadoop-auth-2.5.0-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop/hadoop-common-2.5.0-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/activation-1.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/apacheds-i18n-2.0.0-M15.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/apacheds-kerberos-codec-2.0.0-M15.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/api-asn1-api-1.0.0-M20.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/api-util-1.0.0-M20.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/asm-3.2.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-beanutils-1.7.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-beanutils-core-1.8.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-cli-1.2.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-codec-1.7.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-collections-3.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-compress-1.4.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-configuration-1.6.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-daemon-1.0.3.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-digester-1.8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-el-1.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-httpclient-3.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-io-2.4.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-lang-2.6.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-logging-1.1.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-math-2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-math3-3.1.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-net-3.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/core-3.1.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/curator-client-2.6.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/curator-framework-2.6.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/curator-recipes-2.6.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/findbugs-annotations-1.3.9-1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/gson-2.2.4.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/guava-12.0.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hamcrest-core-1.3.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-client-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-common-0.98.6-cdh5.2.1-tests.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-common-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-examples-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-hadoop-compat-0.98.6-cdh5.2.1-tests.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-hadoop-compat-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-hadoop2-compat-0.98.6-cdh5.2.1-tests.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-hadoop2-compat-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-it-0.98.6-cdh5.2.1-tests.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-it-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-prefix-tree-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-protocol-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-server-0.98.6-cdh5.2.1-tests.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-server-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-shell-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-testing-util-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-thrift-0.98.6-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/high-scale-lib-1.1.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hsqldb-1.8.0.10.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/htrace-core-2.04.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/httpclient-4.2.5.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/httpcore-4.2.5.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jackson-core-asl-1.8.8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jackson-jaxrs-1.8.8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jackson-mapper-asl-1.8.8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jackson-xc-1.8.8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jamon-runtime-2.3.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jasper-compiler-5.5.23.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jasper-runtime-5.5.23.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/java-xmlbuilder-0.4.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jaxb-api-2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jaxb-impl-2.2.3-1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jersey-core-1.8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jersey-json-1.8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jersey-server-1.8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jets3t-0.9.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jettison-1.3.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jetty-6.1.26.cloudera.4.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jetty-sslengine-6.1.26.cloudera.4.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jetty-util-6.1.26.cloudera.4.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jruby-complete-1.6.8.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jsch-0.1.42.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jsp-2.1-6.1.14.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jsp-api-2.1-6.1.14.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jsp-api-2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jsr305-1.3.9.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/junit-4.11.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/libthrift-0.9.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/log4j-1.2.17.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/metrics-core-2.2.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/netty-3.6.6.Final.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/paranamer-2.3.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/protobuf-java-2.5.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/servlet-api-2.5-6.1.14.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/servlet-api-2.5.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/slf4j-api-1.7.5.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/snappy-java-1.0.4.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/xmlenc-0.52.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/xz-1.0.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-mapreduce/hadoop-mapreduce-client-common-2.5.0-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-mapreduce/hadoop-mapreduce-client-core-2.5.0-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-mapreduce/hadoop-mapreduce-client-jobclient-2.5.0-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-yarn/hadoop-yarn-api-2.5.0-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-yarn/hadoop-yarn-client-2.5.0-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-yarn/hadoop-yarn-common-2.5.0-cdh5.2.1.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-hdfs/hadoop-hdfs-2.5.0-cdh5.2.1.jar!/" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/endpoint/src/main/java" expected_position="0" />
+      <src_folder value="file://$MODULE_DIR$/server/src/main/java" expected_position="1" />
+      <src_folder value="file://$MODULE_DIR$/common/src/main/java" expected_position="2" />
+      <src_folder value="file://$MODULE_DIR$/generated/src/main/java" expected_position="3" />
+      <src_folder value="file://$MODULE_DIR$/datagen/src/main/java" expected_position="4" />
+      <src_folder value="file://$MODULE_DIR$/solution/src/main/java" expected_position="5" />
+      <src_folder value="file://$MODULE_DIR$/mapreduce/src/main/java" expected_position="6" />
+      <src_folder value="file://$MODULE_DIR$/test/src/test/java" expected_position="7" />
+      <src_folder value="file://$MODULE_DIR$/hbase/src/main/java" expected_position="8" />
+      <src_folder value="file://$MODULE_DIR$/dataload/src/main/java" expected_position="9" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/target/classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/endpoint/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/server/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/common/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/generated/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/datagen/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/solution/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/mapreduce/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/src/test/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hbase/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/dataload/src/main/java" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="jdk" jdkName="1.7" jdkType="JavaSDK" />
+    <orderEntry type="module-library">
+      <library name="conf">
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/conf" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="kafka_2.8.0-0.8.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/kafka_2.8.0-0.8.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="scala-library.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/scala-library.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jopt-simple-4.5.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/jopt-simple-4.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="zookeeper-3.4.5-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/zookeeper/zookeeper-3.4.5-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hadoop-auth-2.5.0-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop/hadoop-auth-2.5.0-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hadoop-common-2.5.0-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop/hadoop-common-2.5.0-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="activation-1.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/activation-1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="apacheds-i18n-2.0.0-M15.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/apacheds-i18n-2.0.0-M15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="apacheds-kerberos-codec-2.0.0-M15.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/apacheds-kerberos-codec-2.0.0-M15.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="api-asn1-api-1.0.0-M20.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/api-asn1-api-1.0.0-M20.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="api-util-1.0.0-M20.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/api-util-1.0.0-M20.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="asm-3.2.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/asm-3.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-beanutils-1.7.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-beanutils-1.7.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-beanutils-core-1.8.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-beanutils-core-1.8.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-cli-1.2.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-cli-1.2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-codec-1.7.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-codec-1.7.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-collections-3.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-collections-3.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-compress-1.4.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-compress-1.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-configuration-1.6.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-configuration-1.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-daemon-1.0.3.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-daemon-1.0.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-digester-1.8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-digester-1.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-el-1.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-el-1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-httpclient-3.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-httpclient-3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-io-2.4.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-io-2.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-lang-2.6.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-lang-2.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-logging-1.1.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-logging-1.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-math-2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-math-2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-math3-3.1.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-math3-3.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="commons-net-3.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/commons-net-3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="core-3.1.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/core-3.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="curator-client-2.6.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/curator-client-2.6.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="curator-framework-2.6.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/curator-framework-2.6.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="curator-recipes-2.6.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/curator-recipes-2.6.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="findbugs-annotations-1.3.9-1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/findbugs-annotations-1.3.9-1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="gson-2.2.4.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/gson-2.2.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="guava-12.0.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/guava-12.0.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hamcrest-core-1.3.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hamcrest-core-1.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-client-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-client-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-common-0.98.6-cdh5.2.1-tests.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-common-0.98.6-cdh5.2.1-tests.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-common-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-common-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-examples-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-examples-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-hadoop-compat-0.98.6-cdh5.2.1-tests.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-hadoop-compat-0.98.6-cdh5.2.1-tests.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-hadoop-compat-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-hadoop-compat-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-hadoop2-compat-0.98.6-cdh5.2.1-tests.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-hadoop2-compat-0.98.6-cdh5.2.1-tests.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-hadoop2-compat-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-hadoop2-compat-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-it-0.98.6-cdh5.2.1-tests.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-it-0.98.6-cdh5.2.1-tests.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-it-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-it-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-prefix-tree-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-prefix-tree-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-protocol-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-protocol-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-server-0.98.6-cdh5.2.1-tests.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-server-0.98.6-cdh5.2.1-tests.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-server-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-server-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-shell-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-shell-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-testing-util-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-testing-util-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hbase-thrift-0.98.6-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hbase-thrift-0.98.6-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="high-scale-lib-1.1.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/high-scale-lib-1.1.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hsqldb-1.8.0.10.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/hsqldb-1.8.0.10.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="htrace-core-2.04.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/htrace-core-2.04.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="httpclient-4.2.5.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/httpclient-4.2.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="httpcore-4.2.5.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/httpcore-4.2.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jackson-core-asl-1.8.8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jackson-core-asl-1.8.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jackson-jaxrs-1.8.8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jackson-jaxrs-1.8.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jackson-mapper-asl-1.8.8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jackson-mapper-asl-1.8.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jackson-xc-1.8.8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jackson-xc-1.8.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jamon-runtime-2.3.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jamon-runtime-2.3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jasper-compiler-5.5.23.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jasper-compiler-5.5.23.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jasper-runtime-5.5.23.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jasper-runtime-5.5.23.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="java-xmlbuilder-0.4.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/java-xmlbuilder-0.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jaxb-api-2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jaxb-api-2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jaxb-impl-2.2.3-1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jaxb-impl-2.2.3-1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jersey-core-1.8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jersey-core-1.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jersey-json-1.8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jersey-json-1.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jersey-server-1.8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jersey-server-1.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jets3t-0.9.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jets3t-0.9.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jettison-1.3.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jettison-1.3.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jetty-6.1.26.cloudera.4.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jetty-6.1.26.cloudera.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jetty-sslengine-6.1.26.cloudera.4.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jetty-sslengine-6.1.26.cloudera.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jetty-util-6.1.26.cloudera.4.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jetty-util-6.1.26.cloudera.4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jruby-complete-1.6.8.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jruby-complete-1.6.8.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jsch-0.1.42.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jsch-0.1.42.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jsp-2.1-6.1.14.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jsp-2.1-6.1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jsp-api-2.1-6.1.14.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jsp-api-2.1-6.1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jsp-api-2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jsp-api-2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="jsr305-1.3.9.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/jsr305-1.3.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="junit-4.11.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/junit-4.11.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="libthrift-0.9.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/libthrift-0.9.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="log4j-1.2.17.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/log4j-1.2.17.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="metrics-core-2.2.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/metrics-core-2.2.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="netty-3.6.6.Final.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/netty-3.6.6.Final.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="paranamer-2.3.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/paranamer-2.3.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="protobuf-java-2.5.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/protobuf-java-2.5.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="servlet-api-2.5-6.1.14.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/servlet-api-2.5-6.1.14.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="servlet-api-2.5.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/servlet-api-2.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="slf4j-api-1.7.5.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/slf4j-api-1.7.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="snappy-java-1.0.4.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/snappy-java-1.0.4.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xmlenc-0.52.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/xmlenc-0.52.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="xz-1.0.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hbase/xz-1.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hadoop-mapreduce-client-common-2.5.0-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-mapreduce/hadoop-mapreduce-client-common-2.5.0-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hadoop-mapreduce-client-core-2.5.0-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-mapreduce/hadoop-mapreduce-client-core-2.5.0-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hadoop-mapreduce-client-jobclient-2.5.0-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-mapreduce/hadoop-mapreduce-client-jobclient-2.5.0-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hadoop-yarn-api-2.5.0-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-yarn/hadoop-yarn-api-2.5.0-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hadoop-yarn-client-2.5.0-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-yarn/hadoop-yarn-client-2.5.0-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hadoop-yarn-common-2.5.0-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-yarn/hadoop-yarn-common-2.5.0-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="hadoop-hdfs-2.5.0-cdh5.2.1.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/lib_cdh5_2_1/hadoop-hdfs/hadoop-hdfs-2.5.0-cdh5.2.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
