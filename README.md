@@ -53,7 +53,8 @@ Or you can just type com.cloudera.bigdata.analysis.dataload.DataLoad for help.
 Also, you can find some pre-built references in examples folder to understand the usage directly.
 
 ## Bulk Data Loading
-Prepare the properties file 
+Prepare the properties file. If you want to bulkload to a snappy table, 
+please also set LD_LIBRARY_PATH=/opt/cloudera/parcels/CDH/lib/hadoop/lib/native in you execution environment.
 
 ```
 java -cp /etc/hadoop/conf:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop/.//*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/./:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-hdfs/.//*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-yarn/lib/*:/opt/cloudera/parcels/CDH-5.2.1-1.cdh5.2.1.p0.12/lib/hadoop/libexec/../../hadoop-yarn/.//*:/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/lib/*:/opt/cloudera/parcels/CDH/lib/hadoop-mapreduce/.//*:/etc/hbase/conf:/opt/cloudera/parcels/CDH/lib/hbase/*:/opt/cloudera/parcels/CDH/lib/hbase/lib/*:bigdata-analysis-0.0.9.jar com.cloudera.bigdata.analysis.dataload.mapreduce.Hdfs2HBaseWorker current.properties
