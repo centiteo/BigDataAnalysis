@@ -15,6 +15,7 @@ public class HdfsSourceFieldSpec {
 	private String hdfsSourceFileRecordFieldsDelimiter;
 	private String hdfsSourceFileRecordFieldsNumber;
 	private String hdfsSourceFileRecordFieldTypeInt;
+  private boolean hdfsSourceInputDirsRecursive;
 
 	public String getIdpHBaseMasterIpaddress() {
 		return idpHBaseMasterIpaddress;
@@ -40,6 +41,10 @@ public class HdfsSourceFieldSpec {
 		return hdfsSourceFileRecordFieldTypeInt;
 	}
 
+  public boolean getHdfsSourceInputDirsRecursive() {
+    return hdfsSourceInputDirsRecursive;
+  }
+
 	public HdfsSourceFieldSpec(Properties props) {
 		this.props = props;
 		readAndCheckHdfsSourceFieldSpec();
@@ -62,6 +67,11 @@ public class HdfsSourceFieldSpec {
 		
 		hdfsSourceFileRecordFieldTypeInt = props.getProperty(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_TYPE_INT);
 		
+    hdfsSourceInputDirsRecursive =
+        (!props.containsKey(Constants.HDFS_SOURCE_INPUT_DIRS_RECURSIVE) ? Constants.DEFAULT_HDFS_SOURCE_INPUT_DIRS_RECURSIVE
+            : Boolean.parseBoolean(props
+                .getProperty(Constants.HDFS_SOURCE_INPUT_DIRS_RECURSIVE)));
+
 		if(Util.checkIsEmpty(hdfsSourceFileInputPath)){
 			ETLException.handle("Can't find correct value for \""
 					+ Constants.HDFS_SOURCE_FILE_INPUT_PATH + "\"");

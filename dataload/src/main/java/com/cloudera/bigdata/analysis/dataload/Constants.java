@@ -99,6 +99,7 @@ public class Constants {
   public final static String WRITE_TO_WAL_KEY = "hbase.table.writeToWAL";
   public final static boolean DEFAULT_WRITE_TO_WAL = false;
 
+
   public static final String FS_DEFAULT_NAME_KEY = "fs.default.name";
 
   public static final String DATALOAD_ONLY_A_LARGE_FILE_KEY = "dataload.only.a.large.file";
@@ -180,6 +181,9 @@ public class Constants {
   public static final String DEFAULT_FIELD_NAME_TYPE_VALUE_DELIMITER = ":";
   public static final String HDFS_SOURCE_FILE_RECORD_DEFAULT_FIELD_TYPE = "STRING";
   public static final String HDFS_SOURCE_FILE_RECORD_INT_FIELD_TYPE = "INT";
+  public static final String HDFS_SOURCE_INPUT_DIRS_RECURSIVE =
+      "hdfs.source.input.dirs.recursive";
+  public static final Boolean DEFAULT_HDFS_SOURCE_INPUT_DIRS_RECURSIVE = true;
 
   // to hbase target end, bulkload target definition
   public static final String HBASE_TARGET_TABLE_NAME = "hbase.target.table.name";
@@ -191,6 +195,9 @@ public class Constants {
   public static final boolean DEFALUT_HBASE_TARGET_WRITE_TO_WAL_FLAG = false;
   public static final String HBASE_TARGET_TABLE_CELL_SPEC = "hbase.target.table.cell.spec";
   public static final String HBASE_TARGET_TABLE_CELL_MAPPING = "hbase.target.table.cell.mapping";
+  public static final String HFILE_COMPRESSION = "hfile.compression";
+  public static final String HBASE_TARGET_TABLE_COMPRESSION =
+      "hbase.target.table.compression";
   
   // bulkload stage definition
   public final static String BUILD_INDEX = "buildIndex";

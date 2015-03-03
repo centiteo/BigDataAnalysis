@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.hadoop.hbase.io.compress.Compression;
+
 import com.cloudera.bigdata.analysis.dataload.Constants;
 import com.cloudera.bigdata.analysis.dataload.exception.ETLException;
 import com.cloudera.bigdata.analysis.dataload.util.CommonUtils;
@@ -14,7 +16,8 @@ public class HBaseTargetFieldSpec {
 	private Properties props;
 	private String hbaseGeneratedHfilesOutputPath;
 	private String hbaseTargetTableName;
-	private boolean hbaseTargetWriteToWAL = false;
+  private boolean hbaseTargetWriteToWAL;
+  private String hbaseCompression;
 	private String hbaseTargetTableSplitKeySpec;
 	private String hbaseTargetTableCellSpec;
 	private Map<String, String> targetTableCellMap;
@@ -43,6 +46,10 @@ public class HBaseTargetFieldSpec {
 		return targetTableCellMap;
 	}
 
+  public String getHbaseTargetTableCompression() {
+    return hbaseCompression;
+  }
+
 	public HBaseTargetFieldSpec(Properties props) {
 		this.props = props;
 		readAndCheckHBaseTargetFieldSpecs();
@@ -58,9 +65,13 @@ public class HBaseTargetFieldSpec {
 				.getProperty(Constants.HBASE_TARGET_TABLE_NAME);
 
 		hbaseTargetWriteToWAL = (!props
-				.containsKey(Constants.HBASE_TARGET_WRITE_TO_WAL_FLAG) ? Constants.DEFALUT_HBASE_TARGET_WRITE_TO_WAL_FLAG
+.containsKey(Constants.HBASE_TARGET_WRITE_TO_WAL_FLAG)) ? Constants.DEFALUT_HBASE_TARGET_WRITE_TO_WAL_FLAG
 				: Boolean.parseBoolean(props
-						.getProperty(Constants.HBASE_TARGET_WRITE_TO_WAL_FLAG)));
+                .getProperty(Constants.HBASE_TARGET_WRITE_TO_WAL_FLAG));
+    hbaseCompression =
+        (!props.containsKey(Constants.HBASE_TARGET_TABLE_COMPRESSION)) ? Compression.Algorithm.NONE
+            .getName() :
+        props.getProperty(Constants.HBASE_TARGET_TABLE_COMPRESSION);
 
 		hbaseTargetTableSplitKeySpec = props
 				.getProperty(Constants.HBASE_TARGET_TABLE_SPLIT_KEY_SPEC);

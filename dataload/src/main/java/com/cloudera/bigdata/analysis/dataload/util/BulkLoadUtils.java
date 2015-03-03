@@ -13,6 +13,7 @@ import org.apache.hadoop.hbase.client.HBaseAdmin;
 import org.apache.hadoop.hbase.client.HTable;
 import org.apache.hadoop.hbase.client.Put;
 import org.apache.hadoop.hbase.io.ImmutableBytesWritable;
+import org.apache.hadoop.hbase.io.compress.Compression;
 import org.apache.hadoop.hbase.mapreduce.HFileOutputFormat2;
 import org.apache.hadoop.hbase.mapreduce.LoadIncrementalHFiles;
 import org.apache.hadoop.hbase.mapreduce.PutSortReducer;
@@ -66,6 +67,9 @@ public class BulkLoadUtils {
         addPropertyPrefix(Constants.HDFS_SOURCE_FILE_RECORD_FIELDS_TYPE_INT),
     		  hdfsSourceFieldSpec
     	        .getHdfsSourceFileRecordFieldTypeInt());
+    conf.setBoolean(
+        addPropertyPrefix(Constants.HDFS_SOURCE_INPUT_DIRS_RECURSIVE),
+        hdfsSourceFieldSpec.getHdfsSourceInputDirsRecursive());
   }
 
   public static void setConfFromTargetDefinition(
@@ -78,6 +82,8 @@ public class BulkLoadUtils {
         hbaseTargetFieldSpec.getHbaseTargetTableName());
     conf.setBoolean(addPropertyPrefix(Constants.HBASE_TARGET_WRITE_TO_WAL_FLAG), 
         hbaseTargetFieldSpec.isHbaseTargetWriteToWAL());
+    conf.set(Constants.HFILE_COMPRESSION,
+        hbaseTargetFieldSpec.getHbaseTargetTableCompression());
 
     conf.set(addPropertyPrefix(Constants.HBASE_TARGET_TABLE_CELL_MAPPING), 
     		CommonUtils.getStringFromMap(
@@ -438,6 +444,8 @@ public class BulkLoadUtils {
     Job job = new Job(conf, jobPrefixName + "_" + tableName);
     FileInputFormat.setInputPaths(job,
         conf.get(addPropertyPrefix(Constants.HDFS_SOURCE_FILE_INPUT_PATH)));
+    FileInputFormat.setInputDirRecursive(job, conf.getBoolean(
+        addPropertyPrefix(Constants.HDFS_SOURCE_INPUT_DIRS_RECURSIVE), false));
 
     if (conf.getBoolean(addPropertyPrefix(Constants.EXTENDEDHBASEROWCONVERTER),
         false)) {
