@@ -1,4 +1,7 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.cloudera.com/txtRecord"
+	xmlns:cn="http://www.cloudera.com/common"
+	xmlns:td="http://www.cloudera.com/txtRecord">
 	<xs:annotation>
 		<xs:documentation>
 			HBase record schema for TXT files. 
@@ -6,22 +9,23 @@
 		</xs:documentation>
 	</xs:annotation>
 	
-	<xs:import schemaLocation="common.xsd"/>
+	<xs:import namespace="http://www.cloudera.com/common" schemaLocation="common.xsd"/>
 	
-	<xs:element name="txtRecord">
+	<xs:element name="txtRecord" type="td:TxtRecordType"/>
+	
 		<xs:complexType name="TxtRecordType">
 			<xs:sequence>
 				<xs:element name="inputDelimiter" type="xs:string" default="|" />
-				<xs:element name="rowKeySpec" type="RowKeyType" />
-				<xs:element name="columnFamilySpec" type="ColumnFamilyType" minOccurs="1" maxOccurs="unbounded"/>
+				<xs:element name="rowKeySpec" type="td:RowKeyType" />
+				<xs:element name="columnFamilySpec" type="td:ColumnFamilyType" minOccurs="1" maxOccurs="unbounded"/>
 			</xs:sequence>
-			<xs:attribute name="useDelimiter" type="xs:boolean" defalut="true" />
+			<xs:attribute name="useDelimiter" type="xs:boolean" default="true" />
 		</xs:complexType>
-	</xs:element>
+	
 	
 	<xs:complexType name="RowKeyType">
 		<xs:sequence>
-			<xs:element name="rowKeyFieldSpec" type="RowKeyFieldType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="rowKeyFieldSpec" type="td:RowKeyFieldType" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="rowKeyDelimiter" type="xs:string" default="|" />
 	</xs:complexType>
@@ -38,9 +42,9 @@
 	
 	<xs:complexType name="ColumnFamilyType">
 		<xs:complexContent>
-			<xs:extension base="BaseColumnFamilyType">
+			<xs:extension base="cn:BaseColumnFamilyType">
 				<xs:sequence>
-					<xs:element name="qualifierSpec" type="QualifierType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="qualifierSpec" type="td:QualifierType" minOccurs="0" maxOccurs="unbounded"/>
 					<!-- <xs:element name="multiQualifierSpec" type="MultiQualifierType" minOccurs="0" maxOccurs="unbounded"/> -->
 				</xs:sequence>
 			</xs:extension>
@@ -49,13 +53,13 @@
 	
 	<xs:complexType name="QualifierType">
 		<xs:complexContent>
-			<xs:extension base="BaseQualifierType">
+			<xs:extension base="cn:BaseQualifierType">
 				<xs:sequence>
 					<xs:element name="startPos" type="xs:int"/>
 					<xs:element name="length" type="xs:int"/>
 					<xs:element name="fieldIndex" type="xs:int"/>
 					<xs:element name="qualifierDelimiter" type="xs:string" default="|" />
-					<xs:element name="fields" type="FieldsDefinition" minOccurs="1" maxOccurs="1" />
+					<xs:element name="fields" type="td:FieldsDefinition" minOccurs="1" maxOccurs="1" />
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -63,7 +67,7 @@
 	
 	<xs:complexType name="FieldsDefinition">
 		<xs:sequence>
-			<xs:element name="field" type="FieldDefinition" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="field" type="td:FieldDefinition" minOccurs="1" maxOccurs="unbounded" />
 		</xs:sequence>
 	</xs:complexType>
 	

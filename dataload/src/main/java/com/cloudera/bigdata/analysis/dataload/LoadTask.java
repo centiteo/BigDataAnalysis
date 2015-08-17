@@ -58,7 +58,7 @@ public class LoadTask {
     context = new RuntimeContext(files, this.conf, fetchParallel, numWorkers);
   }
 
-  public void submitJob() throws IOException {
+  public Integer submitJob() throws IOException {
     fetchThreads = new FetchThread[fetchParallel];
     updateWorkers = new UpdateWorker[numWorkers];
 
@@ -78,6 +78,8 @@ public class LoadTask {
     }
 
     execService.shutdown();
+
+    return new Integer(0);
   }
 
   public static void main(String args[]) {

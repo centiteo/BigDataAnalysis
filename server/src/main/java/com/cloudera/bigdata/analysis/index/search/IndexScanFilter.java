@@ -10,8 +10,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.exceptions.DeserializationException;
 import org.apache.hadoop.hbase.filter.FilterBase;
+import org.apache.hadoop.hbase.filter.Filter.ReturnCode;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hdfs.util.ByteArray;
 import org.slf4j.Logger;
@@ -48,6 +50,17 @@ public class IndexScanFilter extends FilterBase {
   public IndexScanFilter(List<Index.Field> indexFields, IndexRange indexRange) {
     this.indexFields = indexFields;
     this.indexRange = indexRange;
+  }
+
+  /*
+   * For CDH 5.4.4 compatibility (non-Javadoc)
+   * 
+   * @see
+   * org.apache.hadoop.hbase.filter.FilterBase#filterKeyValue(org.apache.hadoop
+   * .hbase.Cell)
+   */
+  public ReturnCode filterKeyValue(Cell cell) {
+    return ReturnCode.SKIP;
   }
 
   /*-------------------------------------------   Major Logic Methods   --------------------------------------------*/

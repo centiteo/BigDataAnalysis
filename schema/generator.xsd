@@ -1,21 +1,24 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.cloudera.com/generator"
+	xmlns:cn="http://www.cloudera.com/common"
+	xmlns:gen="http://www.cloudera.com/generator">
 	<xs:annotation>
 		<xs:documentation>
 			Schema for record description.
 		</xs:documentation>
 	</xs:annotation>
 	
-	<xs:import schemaLocation="common.xsd"/>
+	<xs:import namespace="http://www.cloudera.com/common" 
+		schemaLocation="common.xsd"/>
 	
-	<xs:element name="record">
-		<xs:complexType name="RecordSpec">
-			<xs:sequence>
-				<xs:element name="type" type="StorageType"/>
-				<xs:element name="separator" type="xs:string"/>
-				<xs:element name="column" type="ColumnSpec" minOccurs="1" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+	<xs:element name="record" type="gen:RecordSpec"/>
+	<xs:complexType name="RecordSpec">
+		<xs:sequence>
+			<xs:element name="type" type="gen:StorageType"/>
+			<xs:element name="separator" type="xs:string"/>
+			<xs:element name="column" type="gen:ColumnSpec" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 	
 	<xs:complexType name="ColumnSpec">
 		<xs:sequence>
@@ -26,9 +29,9 @@
 			<xs:element name="length" type="xs:long"/>
 			<xs:element name="pattern" type="xs:string"/>
 			<xs:element name="udfName" type="xs:string"/>
-			<xs:element name="ref" type="ColumnRef"/> <!-- ref element means it refers to another element -->
-			<xs:element name="randomPattern" type="RandomPattern"/>
-			<xs:element name="randomType" type="RandomType"/>
+			<xs:element name="ref" type="gen:ColumnRef"/> <!-- ref element means it refers to another element -->
+			<xs:element name="randomPattern" type="gen:RandomPattern"/>
+			<xs:element name="randomType" type="gen:RandomType"/>
 		</xs:sequence>
 	</xs:complexType>
 	
@@ -38,7 +41,7 @@
 			<xs:element name="refColumn" type="xs:string"/>
 			<xs:element name="refStart" type="xs:int"/>
 			<xs:element name="refEnd" type="xs:int"/>
-			<xs:element name="refOp" type="OpType"/>
+			<xs:element name="refOp" type="gen:OpType"/>
 		</xs:sequence>
 	</xs:complexType>
 	

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.hadoop.hbase.Cell;
 import org.apache.hadoop.hbase.KeyValue;
 import org.apache.hadoop.hbase.exceptions.DeserializationException;
 import org.apache.hadoop.hbase.filter.FilterBase;
@@ -79,7 +80,6 @@ public class FullTableScanFilter extends FilterBase {
    * @param keyValueList
    *          the key value list of a row.
    */
-  @Override
   public void filterRow(List<KeyValue> keyValueList) {
     Condition condition = query.getCondition();
     if (match(condition, keyValueList)) {
@@ -92,6 +92,17 @@ public class FullTableScanFilter extends FilterBase {
   @Override
   public boolean filterRow() {
     return !rowMatched;
+  }
+
+  /*
+   * For CDH 5.4.4 compatibility (non-Javadoc)
+   * 
+   * @see
+   * org.apache.hadoop.hbase.filter.FilterBase#filterKeyValue(org.apache.hadoop
+   * .hbase.Cell)
+   */
+  public ReturnCode filterKeyValue(Cell cell) {
+    return ReturnCode.SKIP;
   }
 
   /**

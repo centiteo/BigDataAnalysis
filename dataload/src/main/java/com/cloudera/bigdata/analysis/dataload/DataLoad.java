@@ -88,7 +88,7 @@ public class DataLoad {
 
     String dataSourceType = conf.get(Constants.DATASOURCE_TYPE_KEY);
     if (Util.checkIsEmpty(dataSourceType)) {
-      ETLException.handle("Mush specify the property: "
+      ETLException.handle("Must specify the property: "
           + Constants.DATASOURCE_TYPE_KEY);
     }
 
@@ -223,6 +223,7 @@ public class DataLoad {
     int fileNumPerMap = (fileNum + fetchParallel - 1) / fetchParallel;
     Configuration conf = job.getConfiguration();
     TableMapReduceUtil.addDependencyJars(job);
+    TableMapReduceUtil.initCredentials(job);
     conf.setInt(Constants.FETCH_PARALLEL_KEY, fetchParallel);
     conf.set(Constants.FILEOBJECT_CLASS_KEY, clazz.getName());
     conf.setInt(Constants.LINES_PER_MAP_KEY, fileNumPerMap);
@@ -239,7 +240,10 @@ public class DataLoad {
         + instanceDocPath;
     qualifiedPath = Util.makeQualified(qualifiedPath, conf);
     LOG.debug("dataload.source.instanceDocPath :" + qualifiedPath);
-    conf.set("tmpfiles", qualifiedPath);
+    String keyTabFile = "/root/demo/usera.keytab";
+    String qualifiedKeytabPath = Util.makeQualified(keyTabFile, conf);
+    System.out.println(qualifiedPath + "," + qualifiedKeytabPath);
+    conf.set("tmpfiles", qualifiedPath + "," + qualifiedKeytabPath);
     job.setJobName(jobName);
     job.setJarByClass(DataTransformMapper.class);
     if (!conf.getBoolean(Constants.DATALOAD_ONLY_A_LARGE_FILE_KEY, false)) {

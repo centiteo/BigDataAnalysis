@@ -1,14 +1,25 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	targetNamespace="http://www.cloudera.com/common"
+	xmlns:cn="http://www.cloudera.com/common">
 	<xs:annotation>
 		<xs:documentation>
 			This is a common schema file will be imported to others.
 		</xs:documentation>
 	</xs:annotation>
 	
+	<xs:simpleType name="CompressionType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SNAPPY"/>
+			<xs:enumeration value="LZO"/>
+			<xs:enumeration value="GZ"/>
+			<xs:enumeration value="NONE"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
 	<xs:complexType name="BaseColumnFamilyType">
 		<xs:sequence>
 			<xs:element name="familyName" type="xs:string" />
-			<xs:element name="compressionType" type="CompressionType" />
+			<xs:element name="compressionType" type="cn:CompressionType" />
 			<xs:element name="replication" type="xs:short" />
 			<xs:element name="maxVersion" type="xs:int" />
 		</xs:sequence>
@@ -30,13 +41,6 @@
 		</xs:restriction>
 	</xs:simpleType>
 	
-	<xs:simpleType name="CompressionType">
-		<xs:restriction base="xs:string">
-			<xs:enumeration value="SNAPPY"/>
-			<xs:enumeration value="LZO"/>
-			<xs:enumeration value="GZ"/>
-			<xs:enumeration value="NONE"/>
-		</xs:restriction>
-	</xs:simpleType>
+	
 	
 </xs:schema>

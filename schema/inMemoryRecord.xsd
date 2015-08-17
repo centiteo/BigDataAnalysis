@@ -1,4 +1,7 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.cloudera.com/inMemoryRecord"
+	xmlns:cn="http://www.cloudera.com/common"
+	xmlns:im="http://www.cloudera.com/inMemoryRecord">
 	<xs:annotation>
 		<xs:documentation>
 			HBase record schema for In Memory data. 
@@ -6,42 +9,42 @@
 		</xs:documentation>
 	</xs:annotation>
 	
-	<xs:import schemaLocation="common.xsd"/>
+	<xs:import namespace="http://www.cloudera.com/common" 
+		schemaLocation="common.xsd"/>
 	
-	<xs:element name="inMemoryRecord">
-		<xs:complexType name="InMemoryRecordType">
-			<xs:sequence>
-				<xs:element name="rowKeySpec" type="InMemoryRowKeyType" />
-				<xs:element name="columnFamilySpec" type="InMemoryColumnFamilyType" minOccurs="1" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+	<xs:element name="inMemoryRecord" type="im:InMemoryRecordType"/>
+	<xs:complexType name="InMemoryRecordType">
+		<xs:sequence>
+			<xs:element name="rowKeySpec" type="im:InMemoryRowKeyType" />
+			<xs:element name="columnFamilySpec" type="im:InMemoryColumnFamilyType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
 	
 	<xs:complexType name="InMemoryRowKeyType">
 		<xs:sequence>
-			<xs:element name="rowKeyFieldSpec" type="InMemoryRowKeyFieldType" minOccurs="1" maxOccurs="unbounded"/>
+			<xs:element name="rowKeyFieldSpec" type="im:InMemoryRowKeyFieldType" minOccurs="1" maxOccurs="unbounded"/>
 		</xs:sequence>
 		<xs:attribute name="rowKeySeparator" type="xs:string" default="|" />
 	</xs:complexType>
 	
 	<xs:complexType name="InMemoryRowKeyFieldType">
 		<xs:sequence>
-			<xs:element name="fieldType" type="FieldType"/>
+			<xs:element name="fieldType" type="cn:FieldType"/>
 			<xs:element name="fixedLength" type="xs:boolean" />
 			<xs:element name="length" type="xs:int" />
 			
 			<!-- If the fieldType is String, fieldPattern can be DIGIT or ALPHANUMERIC -->
-			<xs:element name="fieldPattern" type="FieldPattern" />
-			<xs:element name="randomAlgorithm" type="RandomAlgorithm" />
+			<xs:element name="fieldPattern" type="im:FieldPattern" />
+			<xs:element name="randomAlgorithm" type="im:RandomAlgorithm" />
 		</xs:sequence>
 	</xs:complexType>
 	
 	<xs:complexType name="InMemoryColumnFamilyType">
 		<xs:complexContent>
-			<xs:extension base="BaseColumnFamilyType">
+			<xs:extension base="cn:BaseColumnFamilyType">
 				<xs:sequence>
-					<xs:element name="qualifierSpec" type="InMemoryQualifierType" minOccurs="0" maxOccurs="unbounded"/>
-					<xs:element name="multiQualifierSpec" type="MultiInMemoryQualifierType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="qualifierSpec" type="im:InMemoryQualifierType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="multiQualifierSpec" type="im:MultiInMemoryQualifierType" minOccurs="0" maxOccurs="unbounded"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -49,12 +52,12 @@
 	
 	<xs:complexType name="InMemoryQualifierType">
 		<xs:complexContent>
-			<xs:extension base="BaseQualifierType">
+			<xs:extension base="cn:BaseQualifierType">
 				<xs:sequence>
 					<xs:element name="length" type="xs:int"/>
-					<xs:element name="fieldType" type="FieldType"/>
-					<xs:element name="fieldPattern" type="FieldPattern"/>
-					<xs:element name="randomAlgorithm" type="RandomAlgorithm"/>
+					<xs:element name="fieldType" type="cn:FieldType"/>
+					<xs:element name="fieldPattern" type="im:FieldPattern"/>
+					<xs:element name="randomAlgorithm" type="im:RandomAlgorithm"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
@@ -62,7 +65,7 @@
 	
 	<xs:complexType name="MultiInMemoryQualifierType">
 		<xs:complexContent>
-			<xs:extension base="InMemoryQualifierType">
+			<xs:extension base="im:InMemoryQualifierType">
 				<xs:sequence>
 					<xs:element name="qualifierNum" type="xs:int"/>
 					<xs:element name="qualifierPrefix" type="xs:string"/>
