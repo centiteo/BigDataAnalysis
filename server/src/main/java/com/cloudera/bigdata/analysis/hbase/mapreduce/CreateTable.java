@@ -36,7 +36,10 @@ public class CreateTable {
 
     String tableName = args[0];
     int splitSize = Integer.parseInt(args[1]);
-    String splitPrefix = args[2];
+    String splitPrefix = "";
+    if (args.length > 2) {
+      splitPrefix = args[2];
+    }
 
     createTableInner(tableName, splitSize, splitPrefix);
   }
