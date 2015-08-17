@@ -26,7 +26,6 @@ public class CreateTable {
    * @throws Exception
    */
   public static void main(String[] args) throws Exception {
-    System.out.println(Util.genSplitKeysAlphaDig("", 62));
 
     if (args.length < 2) {
       System.out.println("Usage: "
@@ -55,7 +54,8 @@ public class CreateTable {
     HTableDescriptor descriptor =
         new HTableDescriptor(TableName.valueOf(tableName));
     descriptor.addFamily(columnDescriptor);
-    hAdmin.createTable(descriptor, Util.genSplitKeys(splitPrefix, splitSize));
+    hAdmin.createTable(descriptor,
+        Util.genSplitKeysAlphaDig(splitPrefix, splitSize));
 
     hAdmin.close();
   }
