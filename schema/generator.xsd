@@ -25,6 +25,7 @@
 			<xs:element name="name" type="xs:string"/>
 			<xs:element name="start" type="xs:string"/>
 			<xs:element name="end" type="xs:string"/>
+			<xs:element name="interval" type="xs:string"/>
 			<xs:element name="value" type="xs:string"/>
 			<xs:element name="length" type="xs:long"/>
 			<xs:element name="pattern" type="xs:string"/>

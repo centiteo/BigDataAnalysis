@@ -12,6 +12,7 @@ public class RandomLongGenerator extends FieldGenerator {
   
   private long min = 0L;
   private long max = 10000L;
+  private long interval = 1L;
 
   private Random rand = new Random();
   
@@ -30,6 +31,10 @@ public class RandomLongGenerator extends FieldGenerator {
       if(columnSpec.getEnd()!=null){
         max = Long.parseLong(columnSpec.getEnd());
       }
+
+      if (columnSpec.getInterval() != null) {
+        interval = Long.parseLong(columnSpec.getInterval());
+      }
     }catch (NumberFormatException e) {
       LOG.error("Format exception for " + this, e);
     }
@@ -38,7 +43,8 @@ public class RandomLongGenerator extends FieldGenerator {
   
   @Override
   public String generate() {
-    return String.valueOf(Math.abs(rand.nextInt()) % (max - min) + min);
+    return String.valueOf(((Math.abs(rand.nextInt()) % (max - min)) / interval)
+        * interval + min);
   }
 
 }
