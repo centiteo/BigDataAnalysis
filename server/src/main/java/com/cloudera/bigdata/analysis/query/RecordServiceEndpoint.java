@@ -39,8 +39,8 @@ public class RecordServiceEndpoint extends RecordService implements
     Query query = ProtoUtil.toQuery(request);
     licenseStatus = true;
     if (licenseStatus) {
-      LOG.info("Receive query request on region: ["
-          + region.getRegionNameAsString() + "]: " + request.toString());
+      // LOG.info("Receive query request on region: ["
+      // + region.getRegionNameAsString() + "]: " + request.toString());
       SearchStrategy searchStrategy = searchStrategyDecider.decide(query);
       QueryResult recordQueryResult = searchStrategy.doSearch(region, query);
       LOG.debug("Result:" + recordQueryResult.proto.getRecordsCount());
@@ -57,14 +57,14 @@ public class RecordServiceEndpoint extends RecordService implements
 
   @Override
   public void start(CoprocessorEnvironment env) throws IOException {
-    if (env instanceof RegionCoprocessorEnvironment) {
-      this.env = (RegionCoprocessorEnvironment) env;
-      region = this.env.getRegion();
-      conf = this.env.getConfiguration();
-      searchStrategyDecider = new SearchStrategyDecider();
-    } else {
-      throw new CoprocessorException("Must be loaded on a table region!");
-    }
+    // if (env instanceof RegionCoprocessorEnvironment) {
+    // this.env = (RegionCoprocessorEnvironment) env;
+    // region = this.env.getRegion();
+    // conf = this.env.getConfiguration();
+    // searchStrategyDecider = new SearchStrategyDecider();
+    // } else {
+    // throw new CoprocessorException("Must be loaded on a table region!");
+    // }
 
   }
 

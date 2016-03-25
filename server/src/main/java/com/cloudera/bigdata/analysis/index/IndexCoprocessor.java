@@ -50,30 +50,30 @@ public class IndexCoprocessor extends BaseRegionObserver {
   @Override
   public void start(CoprocessorEnvironment e) throws IOException {
     // this coprocessor is only running on region.
-    if (e instanceof RegionCoprocessorEnvironment) {
-      regionEnv = (RegionCoprocessorEnvironment) e;
-      region = regionEnv.getRegion();
-      conf = regionEnv.getConfiguration();
-      regionStartKey = RegionUtil.getRegionStartKey(region);
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("region id: " + region.getRegionId() + " toString:"
-            + region.toString());
-        LOG.debug("regionStartKey: "
-            + IndexUtil.convertByteArrayToString(regionStartKey));
-        LOG.debug("table name: " + Constants.CURRENT_TABLE);
-      }
+    // if (e instanceof RegionCoprocessorEnvironment) {
+    // regionEnv = (RegionCoprocessorEnvironment) e;
+    // region = regionEnv.getRegion();
+    // conf = regionEnv.getConfiguration();
+    // regionStartKey = RegionUtil.getRegionStartKey(region);
+    // if (LOG.isDebugEnabled()) {
+    // LOG.debug("region id: " + region.getRegionId() + " toString:"
+    // + region.toString());
+    // LOG.debug("regionStartKey: "
+    // + IndexUtil.convertByteArrayToString(regionStartKey));
+    // LOG.debug("table name: " + Constants.CURRENT_TABLE);
+    // }
       // fix bug here
-      indexEntryBuilderGroup = IndexEntryBuilderGroup.getInstance(IndexUtil
-          .convertStringToByteArray(Constants.CURRENT_TABLE));
-      if (LOG.isDebugEnabled()) {
-        LOG.debug("indexEntryBuilderGroup: " + Constants.CURRENT_TABLE);
-      }
-      searchStrategyDecider = new SearchStrategyDecider();
-      LOG.info("Coprocessor: [" + getClass().getName() + "] has started!");
-    } else {
-      throw new RuntimeException(IndexCoprocessor.class.getName()
-          + "is only running on region!");
-    }
+    // indexEntryBuilderGroup = IndexEntryBuilderGroup.getInstance(IndexUtil
+    // .convertStringToByteArray(Constants.CURRENT_TABLE));
+    // if (LOG.isDebugEnabled()) {
+    // LOG.debug("indexEntryBuilderGroup: " + Constants.CURRENT_TABLE);
+    // }
+    // searchStrategyDecider = new SearchStrategyDecider();
+    // LOG.info("Coprocessor: [" + getClass().getName() + "] has started!");
+    // } else {
+    // throw new RuntimeException(IndexCoprocessor.class.getName()
+    // + "is only running on region!");
+    // }
   }
 
   /*-----------------------------------------   Region-Observer Methods   ------------------------------------------*/
