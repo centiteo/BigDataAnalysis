@@ -55,6 +55,7 @@ public class GeneratorDriver {
   private static final String MIN_NUM_KEY = "minNum";
   private static final String DEBUG_KEY = "debug";
   private static final String NEVERSTOP_KEY = "neverStop";
+  private static final String USE_KAFKF = "useKafka";
   private static final String DEFAULT_RUNNING_MODE = "mapred";
   private static final String LOCAL_RUNNING_MODE = "local";
   private static final String GENERATOR_CONF_FOLDER_HDFS = "generator/tmp/";
@@ -232,6 +233,9 @@ public class GeneratorDriver {
     OptionSpec<Boolean> neverStopOption = optionParser.accepts(NEVERSTOP_KEY, 
         "if the generation never stops")
         .withOptionalArg().ofType(Boolean.class);
+    OptionSpec<Boolean> useKafkaOption =
+        optionParser.accepts(USE_KAFKF, "Will use Kafka for data output")
+            .withOptionalArg().ofType(Boolean.class);
     
     OptionSpec<Long> totalSizeOption = addOption(
         optionParser, TOTAL_SIZE_KEY, "total size (GB) need to be generated", DEFAULT_TOTAL_SIZE);
@@ -294,6 +298,11 @@ public class GeneratorDriver {
       neverStop = optionSet.valueOf(neverStopOption);
     }
     
+    boolean useKafka = false;
+    if (optionSet.has(useKafkaOption)) {
+      useKafka = optionSet.valueOf(useKafkaOption);
+    }
+
     boolean useSize = true;
     long totalSize = DEFAULT_TOTAL_SIZE;
     long totalNum = DEFAULT_TOTAL_NUM;
@@ -347,6 +356,7 @@ public class GeneratorDriver {
     parameterSet.maxNum = maxNum;
     parameterSet.debug = debug;
     parameterSet.neverStop = neverStop;
+    parameterSet.useKafka = useKafka;
     
     preCheck(parameterSet);
     
@@ -399,6 +409,7 @@ public class GeneratorDriver {
     long maxNum;
     boolean debug;
     boolean neverStop;
+    boolean useKafka;
     
     public String toString(){
       return ("instanceDoc: " + instanceDoc
