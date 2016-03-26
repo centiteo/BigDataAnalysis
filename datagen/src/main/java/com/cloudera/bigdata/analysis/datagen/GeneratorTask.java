@@ -88,7 +88,7 @@ public class GeneratorTask implements Runnable, Progressable {
   public void run() {
 
     // For streaming generation
-    if (parameterSet.neverStop || parameterSet.useKafka) {
+    if (parameterSet.neverStop && parameterSet.useKafka) {
       rp = new RecordProducer();
     }
 
